@@ -10,6 +10,26 @@
 
 #import "WGFilePathModel.h"
 #import "FMDB.h"
+
+#pragma mark - 子类继承后，可以复写的方法
+@protocol WGFMDBDataBaseManagerSubClass <NSObject>
+
+@required
+/**
+ *  db文件不存在的情况下，创建数据库结构，
+ 子类可继承
+ */
+- (BOOL)onCreate:(FMDatabaseQueue *)db;
+@optional
+/**
+ *  开库，子类可继承修改特定的配置
+ */
+- (FMDatabase *)getDB;
+
+@end
+
+
+#pragma mark -
 /**
  *  数据库 文件控制管理
  */
@@ -23,8 +43,15 @@
 @property (nonatomic,readonly) FMDatabaseQueue *writeableQueue;
 
 
+/**
+ *  db文件不存在的情况下，创建数据库结构，
+    子类可继承
+ */
+- (BOOL)onCreate:(FMDatabaseQueue *)db;
+
 - (BOOL)open;
 - (void)closeAll;
 - (void)closeAndRemoveDBFile;
+
 
 @end
