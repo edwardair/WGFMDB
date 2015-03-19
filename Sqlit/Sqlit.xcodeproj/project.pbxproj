@@ -7,15 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180B59711ABAFC8A00EAFD3C /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 180B59701ABAFC8A00EAFD3C /* Test.m */; };
+		180B59741ABB07EC00EAFD3C /* WGBaseDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 180B59731ABB07EC00EAFD3C /* WGBaseDao.m */; };
 		F7197B5D1AB91D370038A8AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5C1AB91D370038A8AD /* main.m */; };
 		F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5F1AB91D370038A8AD /* AppDelegate.m */; };
 		F7197B621AB91D370038A8AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7197B611AB91D370038A8AD /* Images.xcassets */; };
 		F7197B651AB91D370038A8AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7197B631AB91D370038A8AD /* LaunchScreen.xib */; };
 		F7197B711AB91D370038A8AD /* SqlitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B701AB91D370038A8AD /* SqlitTests.m */; };
-		F7197BAB1AB9206F0038A8AD /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = F7197B981AB9206F0038A8AD /* LICENSE.txt */; };
-		F7197BAC1AB9206F0038A8AD /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = F7197B981AB9206F0038A8AD /* LICENSE.txt */; };
-		F7197BAD1AB9206F0038A8AD /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = F7197B991AB9206F0038A8AD /* README.markdown */; };
-		F7197BAE1AB9206F0038A8AD /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = F7197B991AB9206F0038A8AD /* README.markdown */; };
 		F7197BAF1AB9206F0038A8AD /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B9D1AB9206F0038A8AD /* FMDatabase.m */; };
 		F7197BB01AB9206F0038A8AD /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B9D1AB9206F0038A8AD /* FMDatabase.m */; };
 		F7197BB11AB9206F0038A8AD /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B9F1AB9206F0038A8AD /* FMDatabaseAdditions.m */; };
@@ -28,8 +26,8 @@
 		F7197BB81AB9206F0038A8AD /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BA61AB9206F0038A8AD /* FMResultSet.m */; };
 		F7197BB91AB9206F0038A8AD /* WGFilePathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BA81AB9206F0038A8AD /* WGFilePathModel.m */; };
 		F7197BBA1AB9206F0038A8AD /* WGFilePathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BA81AB9206F0038A8AD /* WGFilePathModel.m */; };
-		F7197BBB1AB9206F0038A8AD /* WGFMDBDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BAA1AB9206F0038A8AD /* WGFMDBDataBaseManager.m */; };
-		F7197BBC1AB9206F0038A8AD /* WGFMDBDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BAA1AB9206F0038A8AD /* WGFMDBDataBaseManager.m */; };
+		F7197BBB1AB9206F0038A8AD /* WGFMDBDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */; };
+		F7197BBC1AB9206F0038A8AD /* WGFMDBDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */; };
 		F7197BBE1AB921180038A8AD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7197BBD1AB921180038A8AD /* libsqlite3.dylib */; };
 		F7197BBF1AB9213C0038A8AD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7197BBD1AB921180038A8AD /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
@@ -45,6 +43,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		180B596F1ABAFC8A00EAFD3C /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		180B59701ABAFC8A00EAFD3C /* Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		180B59721ABB07EC00EAFD3C /* WGBaseDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGBaseDao.h; sourceTree = "<group>"; };
+		180B59731ABB07EC00EAFD3C /* WGBaseDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGBaseDao.m; sourceTree = "<group>"; };
 		F7197B571AB91D360038A8AD /* Sqlit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sqlit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7197B5B1AB91D370038A8AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7197B5C1AB91D370038A8AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -55,8 +57,6 @@
 		F7197B6A1AB91D370038A8AD /* SqlitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqlitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7197B6F1AB91D370038A8AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7197B701AB91D370038A8AD /* SqlitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SqlitTests.m; sourceTree = "<group>"; };
-		F7197B981AB9206F0038A8AD /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		F7197B991AB9206F0038A8AD /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		F7197B9C1AB9206F0038A8AD /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		F7197B9D1AB9206F0038A8AD /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		F7197B9E1AB9206F0038A8AD /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -70,8 +70,8 @@
 		F7197BA61AB9206F0038A8AD /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		F7197BA71AB9206F0038A8AD /* WGFilePathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFilePathModel.h; sourceTree = "<group>"; };
 		F7197BA81AB9206F0038A8AD /* WGFilePathModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFilePathModel.m; sourceTree = "<group>"; };
-		F7197BA91AB9206F0038A8AD /* WGFMDBDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBDataBaseManager.h; sourceTree = "<group>"; };
-		F7197BAA1AB9206F0038A8AD /* WGFMDBDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBDataBaseManager.m; sourceTree = "<group>"; };
+		F7197BA91AB9206F0038A8AD /* WGFMDBDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBDataBase.h; sourceTree = "<group>"; };
+		F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBDataBase.m; sourceTree = "<group>"; };
 		F7197BBD1AB921180038A8AD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -122,8 +122,12 @@
 				F7197B971AB9206F0038A8AD /* FMDB */,
 				F7197BA71AB9206F0038A8AD /* WGFilePathModel.h */,
 				F7197BA81AB9206F0038A8AD /* WGFilePathModel.m */,
-				F7197BA91AB9206F0038A8AD /* WGFMDBDataBaseManager.h */,
-				F7197BAA1AB9206F0038A8AD /* WGFMDBDataBaseManager.m */,
+				F7197BA91AB9206F0038A8AD /* WGFMDBDataBase.h */,
+				F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */,
+				180B59721ABB07EC00EAFD3C /* WGBaseDao.h */,
+				180B59731ABB07EC00EAFD3C /* WGBaseDao.m */,
+				180B596F1ABAFC8A00EAFD3C /* Test.h */,
+				180B59701ABAFC8A00EAFD3C /* Test.m */,
 				F75C729D1AB9556100067399 /* DataModels */,
 				F7197B611AB91D370038A8AD /* Images.xcassets */,
 				F7197B631AB91D370038A8AD /* LaunchScreen.xib */,
@@ -161,8 +165,6 @@
 		F7197B971AB9206F0038A8AD /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
-				F7197B981AB9206F0038A8AD /* LICENSE.txt */,
-				F7197B991AB9206F0038A8AD /* README.markdown */,
 				F7197B9A1AB9206F0038A8AD /* src */,
 			);
 			path = FMDB;
@@ -281,7 +283,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7197BAB1AB9206F0038A8AD /* LICENSE.txt in Resources */,
 				F7197B651AB91D370038A8AD /* LaunchScreen.xib in Resources */,
 				F7197B621AB91D370038A8AD /* Images.xcassets in Resources */,
 			);
@@ -291,7 +292,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7197BAC1AB9206F0038A8AD /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,15 +303,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */,
+				180B59741ABB07EC00EAFD3C /* WGBaseDao.m in Sources */,
+				180B59711ABAFC8A00EAFD3C /* Test.m in Sources */,
 				F7197BB91AB9206F0038A8AD /* WGFilePathModel.m in Sources */,
 				F7197BB31AB9206F0038A8AD /* FMDatabasePool.m in Sources */,
 				F7197B5D1AB91D370038A8AD /* main.m in Sources */,
 				F7197BB51AB9206F0038A8AD /* FMDatabaseQueue.m in Sources */,
-				F7197BAD1AB9206F0038A8AD /* README.markdown in Sources */,
 				F7197BAF1AB9206F0038A8AD /* FMDatabase.m in Sources */,
 				F7197BB71AB9206F0038A8AD /* FMResultSet.m in Sources */,
 				F7197BB11AB9206F0038A8AD /* FMDatabaseAdditions.m in Sources */,
-				F7197BBB1AB9206F0038A8AD /* WGFMDBDataBaseManager.m in Sources */,
+				F7197BBB1AB9206F0038A8AD /* WGFMDBDataBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,9 +322,8 @@
 			files = (
 				F7197BBA1AB9206F0038A8AD /* WGFilePathModel.m in Sources */,
 				F7197BB01AB9206F0038A8AD /* FMDatabase.m in Sources */,
-				F7197BAE1AB9206F0038A8AD /* README.markdown in Sources */,
 				F7197BB81AB9206F0038A8AD /* FMResultSet.m in Sources */,
-				F7197BBC1AB9206F0038A8AD /* WGFMDBDataBaseManager.m in Sources */,
+				F7197BBC1AB9206F0038A8AD /* WGFMDBDataBase.m in Sources */,
 				F7197BB41AB9206F0038A8AD /* FMDatabasePool.m in Sources */,
 				F7197B711AB91D370038A8AD /* SqlitTests.m in Sources */,
 				F7197BB21AB9206F0038A8AD /* FMDatabaseAdditions.m in Sources */,

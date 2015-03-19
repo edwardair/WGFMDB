@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "Test.h"
 @interface AppDelegate ()
 
 @end
@@ -22,6 +22,12 @@
     [self.window makeKeyAndVisible];
     
 
+    Test *test = [[Test alloc]init];
+    test.pathModel = [WGFilePathModel modelWithType:Documents FileInDirectory:@"test"];
+    test.pathModel.fileName = @"test.db";
+    if ([test open]) {
+        NSLog(@"打开成功");
+    }
 
     return YES;
 }
