@@ -42,10 +42,16 @@
     NSAssert(NO, @"子类实现");
     
     return NO;
+    
+    
+    __block BOOL flag = NO;
+    
+    return flag;
+
 }
 
 
-#pragma mark - 
+#pragma mark - SQL语句封装
 
 
 @end

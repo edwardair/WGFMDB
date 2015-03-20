@@ -30,6 +30,7 @@
 		F7197BBC1AB9206F0038A8AD /* WGFMDBDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */; };
 		F7197BBE1AB921180038A8AD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7197BBD1AB921180038A8AD /* libsqlite3.dylib */; };
 		F7197BBF1AB9213C0038A8AD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7197BBD1AB921180038A8AD /* libsqlite3.dylib */; };
+		F7A446E81ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A446E71ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		F7197BA91AB9206F0038A8AD /* WGFMDBDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBDataBase.h; sourceTree = "<group>"; };
 		F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBDataBase.m; sourceTree = "<group>"; };
 		F7197BBD1AB921180038A8AD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F7A446E61ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WGSQLModelHelper.h"; sourceTree = "<group>"; };
+		F7A446E71ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WGSQLModelHelper.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				F7197BAA1AB9206F0038A8AD /* WGFMDBDataBase.m */,
 				180B59721ABB07EC00EAFD3C /* WGBaseDao.h */,
 				180B59731ABB07EC00EAFD3C /* WGBaseDao.m */,
+				F7A446E61ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.h */,
+				F7A446E71ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.m */,
 				180B596F1ABAFC8A00EAFD3C /* Test.h */,
 				180B59701ABAFC8A00EAFD3C /* Test.m */,
 				F75C729D1AB9556100067399 /* DataModels */,
@@ -306,6 +311,7 @@
 				180B59741ABB07EC00EAFD3C /* WGBaseDao.m in Sources */,
 				180B59711ABAFC8A00EAFD3C /* Test.m in Sources */,
 				F7197BB91AB9206F0038A8AD /* WGFilePathModel.m in Sources */,
+				F7A446E81ABB9CFF0003B726 /* NSObject+WGSQLModelHelper.m in Sources */,
 				F7197BB31AB9206F0038A8AD /* FMDatabasePool.m in Sources */,
 				F7197B5D1AB91D370038A8AD /* main.m in Sources */,
 				F7197BB51AB9206F0038A8AD /* FMDatabaseQueue.m in Sources */,
