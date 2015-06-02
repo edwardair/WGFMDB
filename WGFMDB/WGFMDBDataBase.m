@@ -14,11 +14,14 @@
 
 @property (nonatomic,assign) BOOL isOpened;//是否已打开
 
+@property (nonatomic,strong) WGFilePathModel *lastFilePath;//记录上一次dataBase的路径，方便下一次开库前检测路径是否更改
+
 @end
 
 
 
 @implementation WGFMDBDataBase
+@synthesize pathModel = _pathModel;
 
 #pragma mark - outer methods
 
@@ -35,8 +38,16 @@
     @synchronized(self){
         
         if (_isOpened) {
-            NSLog(@"数据库已打开");
-            return YES;
+            /**
+             *  如果数据库打开状态，检测数据库路径是否相同，不同的则关闭数据库，重新初始化数据库
+             *  路径相同，则直接返回YES
+             */
+            if ([self.lastFilePath.fullPath isEqualToString:self.pathModel.fullPath]) {
+                return YES;
+            }else{
+                [self closeAll];
+            }
+            
         }
         
         //先检测db文件是否存在，不存在，后面需要初始化db的数据库
@@ -56,7 +67,7 @@
         //数据库文件不存在情况下，需要创建需要的表
         if (!isDBFileExist) {
             //如果“子类”未引用WGFMDBDataBaseDelegate协议（本类未引用此协议，故可以区分父子类），则会报错，必须由子类实现必要方法
-            if (![[self class]conformsToProtocol:@protocol(WGFMDBDataBaseDelegate)]) {
+            if (![[self class]conformsToProtocol:@protocol(WGFMDBDataBaseProtocol)]) {
                 [self closeAndRemoveDBFile];
 
                 NSAssert(NO, @"需要子类引用WGFMDBDataBaseDelegate协议并实现必要的方法");
@@ -104,51 +115,38 @@
     [self removeDBFile];
 }
 
-/**
- *  需要子类实现具体方法
- *
- */
-- (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue{
-    [self closeAndRemoveDBFile];
-
-    NSAssert(NO, @"数据库不存在情况下，需要创建表，子类需要实现onCreate: 方法");
-    
-    return NO;
-}
 
 #pragma mark - getter
-- (FMDatabaseQueue *)readOnlyQueue{
+- (FMDatabaseQueue *)readonlyQueue{
     @synchronized(self){
         return _readOnlyQueue;
     }
 }
-- (FMDatabaseQueue *)writableQueue{
+- (FMDatabaseQueue *)writeableQueue{
     @synchronized(self){
         return _writableQueue;
     }
 }
 
 
-- (FMDatabase *)getDB{
-    FMDatabase *db = [FMDatabase databaseWithPath:_pathModel.fullPath];
-    if (!db) {
-        return nil;
+- (WGFilePathModel *)pathModel{
+    if (!_pathModel) {
+        _pathModel = [WGFilePathModel modelWithType:Tmp FileInDirectory:nil];
+        _pathModel.fileName = @"WGDefaultDB.db";
     }
-    
-    if (![db open]) {
-        assert(@"DB开库失败");
-        return nil;
-    }
-    
-    return db;
+    return _pathModel;
 }
-
-
+- (void)setPathModel:(WGFilePathModel *)pathModel{
+    //临时赋值给_lastFilePath，以便记录上一次更改状态
+    _lastFilePath = _pathModel;
+    
+    _pathModel = pathModel;
+}
 
 
 #pragma mark - privite methods
 - (BOOL )isDBFileExist{
-    return [[NSFileManager defaultManager] fileExistsAtPath:_pathModel.fullPath isDirectory:NULL];
+    return [[NSFileManager defaultManager] fileExistsAtPath:self.pathModel.fullPath isDirectory:NULL];
 }
 
 - (BOOL )setupDatabaseQueue{
@@ -177,15 +175,31 @@
 
 
 #pragma mark - Initializer
-- (id)init{
-    self = [super init];
-    if (self) {
-        [self setup];
+
+
+#pragma mark - 需要子类实现具体方法  必须overwrite
+- (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue{
+    [self closeAndRemoveDBFile];
+    
+    NSAssert(NO, @"数据库不存在情况下，需要创建表，子类需要实现onCreate: 方法");
+    
+    return NO;
+}
+
+
+#pragma mark - 需要子类实现具体方法  一般无须overwrite
+- (FMDatabase *)getDB{
+    FMDatabase *db = [FMDatabase databaseWithPath:self.pathModel.fullPath];
+    if (!db) {
+        return nil;
     }
-    return self;
+    
+    if (![db open]) {
+        assert(@"DB开库失败");
+        return nil;
+    }
+    
+    return db;
 }
-- (void)setup{
-    _pathModel = [WGFilePathModel modelWithType:Caches FileInDirectory:nil];
-    _pathModel.fileName = @"WGDefaultDB.db";
-}
+
 @end

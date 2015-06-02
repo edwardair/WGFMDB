@@ -1,0 +1,26 @@
+PODS:
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
+  - WGCategory (0.0.1)
+
+DEPENDENCIES:
+  - FMDB (~> 2.5)
+  - WGCategory (from `https://github.com/edwardair/WGCategory.git`)
+
+EXTERNAL SOURCES:
+  WGCategory:
+    :git: https://github.com/edwardair/WGCategory.git
+
+CHECKOUT OPTIONS:
+  WGCategory:
+    :commit: 778806c19e1e89308b66c34f2021deed64ff63cb
+    :git: https://github.com/edwardair/WGCategory.git
+
+SPEC CHECKSUMS:
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  WGCategory: 9ee48a5a5f4791bb8db8d7a8c047cb50882a83bd
+
+COCOAPODS: 0.37.1

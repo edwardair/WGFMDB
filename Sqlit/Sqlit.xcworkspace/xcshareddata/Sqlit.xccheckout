@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2F5FB9E8-9AE8-4FC9-840D-0993409BC1CB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Sqlit</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EE5ED02C2D8CDC37D8B543612BAD9DB708337392</key>
+		<string>https://git.oschina.net/eduoduo/WGFMDB.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Sqlit/Sqlit.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EE5ED02C2D8CDC37D8B543612BAD9DB708337392</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://git.oschina.net/eduoduo/WGFMDB.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EE5ED02C2D8CDC37D8B543612BAD9DB708337392</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EE5ED02C2D8CDC37D8B543612BAD9DB708337392</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WGFMDB</string>
+		</dict>
+	</array>
+</dict>
+</plist>

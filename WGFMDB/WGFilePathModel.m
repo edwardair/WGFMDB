@@ -9,7 +9,7 @@
 #define Component @"/"
 
 #import "WGFilePathModel.h"
-
+#import <WGCategory/WGDefines.h>
 @interface WGFilePathModel()
 
 @property (nonatomic,assign) WGPathType type;
@@ -72,7 +72,7 @@
 - (void)setFileName:(NSString *)fileName{
     
     //验证 文件名是否合法
-    if (!fileName) {
+    if (fileName.length==0) {
         NSLog(@"ERROR:%s,文件名不能为空",__FUNCTION__);
         return;
     }
@@ -89,8 +89,15 @@
         return nil;
     }
     
-    return [self.directoryPath
-            stringByAppendingPathComponent:_fileName];
+    NSString *fullPath = [self.directoryPath
+                          stringByAppendingPathComponent:_fileName];
+#ifdef DEBUG
+    
+    WGLogFormatMsg(@"fullPath:%@",fullPath);
+    
+#endif
+    
+    return fullPath;
 }
 - (NSString *)directoryPath{
     if (!_isDirectoryUnable) {

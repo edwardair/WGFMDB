@@ -8,6 +8,6 @@
 
 #import "WGFMDBDataBase.h"
 
-@interface Test : WGFMDBDataBase<WGFMDBDataBaseDelegate>
+@interface Test : WGFMDBDataBase<WGFMDBDataBaseProtocol>
 
 @end

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "WGFilePathModel.h"
-#import "FMDB.h"
 
 @interface SqlitTests : XCTestCase
 
