@@ -2,14 +2,14 @@
 //  SqlitTests.m
 //  SqlitTests
 //
-//  Created by RayMi on 15/3/18.
+//  Created by RayMi on 15/6/4.
 //  Copyright (c) 2015年 RayMi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "WGFilePathModel.h"
-
+#import "WGFMDB.h"
+#import "FMDB.h"
 @interface SqlitTests : XCTestCase
 
 @end
@@ -27,7 +27,8 @@
 }
 
 - (void)testExample {
-
+    // This is an example of a functional test case.
+    XCTAssert(YES, @"Pass");
 }
 
 - (void)testPerformanceExample {
@@ -36,21 +37,6 @@
         // Put the code you want to measure the time of here.
     }];
 }
-
-
-- (void)testPath{
-    NSString *path = NSHomeDirectory();//主目录
-    NSLog(@"NSHomeDirectory:%@",path);
-    NSString *userName = NSUserName();//与上面相同
-    NSLog(@"userName:%@",userName);
-
-    NSString *rootPath = NSHomeDirectoryForUser(userName);
-    NSLog(@"NSHomeDirectoryForUser:%@",rootPath);
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory=[paths objectAtIndex:0];//Documents目录
-    NSLog(@"NSDocumentDirectory:%@",documentsDirectory);
-}
-
 - (void)testCreateFolder{
     
     WGFilePathModel *model = [WGFilePathModel modelWithType:Documents
@@ -81,17 +67,16 @@
     
     model.fileName = @"test.db";
     NSLog(@"full:%@,dir:%@",model.fullPath,model.directoryPath);
-
+    
     FMDatabase *database = [FMDatabase databaseWithPath:model.fullPath];
     
     if ([database open]) {
         [database close];
-
+        
     }
     
-
+    
     
 }
-
 
 @end

@@ -11,13 +11,6 @@
 #import "WGFilePathModel.h"
 #import <WGCategory/WGDefines.h>
 @interface WGFilePathModel()
-
-@property (nonatomic,assign) WGPathType type;
-
-/**
- *  自定义目录名，可为nil
- */
-@property (nonatomic,copy) NSString *directory;
 /**
  *  目录是否可用
     如果目录创建失败，或者对应的目录并不是 “文件夹”类型，则为NO
@@ -25,8 +18,7 @@
 @property (nonatomic,assign) BOOL isDirectoryUnable;//
 @end
 
-
-
+#pragma mark -
 @implementation WGFilePathModel
 + (instancetype)modelWithType:(WGPathType)type FileInDirectory:(NSString *)directory{
     return [[[self class]alloc]initWithType:type FileInDirectory:directory];
@@ -48,7 +40,7 @@
         BOOL exist = [[NSFileManager defaultManager]fileExistsAtPath:self.directoryPath isDirectory:&isDirectory];
         
         if (exist && !isDirectory) {
-            NSLog(@"将要创建的目录名已存在，但类型不是文件夹，无法创建目录");
+            WGLogError(@"将要创建的目录名已存在，但类型不是文件夹，无法创建目录");
             _isDirectoryUnable = NO;
         }
         else{
@@ -57,12 +49,18 @@
             if (![[NSFileManager defaultManager]createDirectoryAtPath:self.directoryPath withIntermediateDirectories:YES attributes:nil error:&error]) {
                 _isDirectoryUnable = NO;
 
-                NSLog(@"%s:创建目录失败,%@",__FUNCTION__,error.description);
+                WGLogFormatError(@"创建目录失败,%@",error.description);
             }else{
                 _isDirectoryUnable = YES;//创建目录成功，置为YES
             }
         }
 
+        
+    }
+    return self;
+}
+- (id)init{
+    if (self=[self initWithType:kWGPathTypeCaches FileInDirectory:nil]) {
         
     }
     return self;
@@ -73,7 +71,7 @@
     
     //验证 文件名是否合法
     if (fileName.length==0) {
-        NSLog(@"ERROR:%s,文件名不能为空",__FUNCTION__);
+        WGLogError(@"文件名不能为空");
         return;
     }
     
@@ -85,7 +83,7 @@
 #pragma mark - getter
 - (NSString *)fullPath{
     if (!_isDirectoryUnable) {
-        NSLog(@"%s:目录不存在或不可用",__FUNCTION__);
+        WGLogError(@"目录不存在或不可用");
         return nil;
     }
     
@@ -93,7 +91,7 @@
                           stringByAppendingPathComponent:_fileName];
 #ifdef DEBUG
     
-    WGLogFormatMsg(@"fullPath:%@",fullPath);
+    WGLogFormatMsg(@"读取文件完整路径:%@",fullPath);
     
 #endif
     
@@ -101,7 +99,7 @@
 }
 - (NSString *)directoryPath{
     if (!_isDirectoryUnable) {
-        NSLog(@"%s:目录不存在或不可用",__FUNCTION__);
+        WGLogError(@"目录不存在或不可用");
         return nil;
     }
 
@@ -114,18 +112,18 @@
     [self checkTypeUseable:type];
     
     switch (type) {
-        case Home:
+        case kWGPathTypeHome:
             return NSHomeDirectory();
-        case Documents:
+        case kWGPathTypeDocuments:
             return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-        case Library:
+        case kWGPathTypeLibrary:
             return NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
-        case Tmp:
+        case kWGPathTypeTmp:
             return NSTemporaryDirectory();
-            case Caches:
+            case kWGPathTypeCaches:
             return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
         default:{
-            NSLog(@"WARN:WGPathType定义，但未实现具体路径！！");
+            WGLogWarn(@"WGPathType定义，但未实现具体路径！！");
         }
             return @"";//返回空值
     }
@@ -134,8 +132,8 @@
 
 #pragma mark - 错误检测，检测type是否为当前封装所支持
 - (void)checkTypeUseable:(WGPathType )type{
-    if (type <= WGPathEnableStart || type >= WGPathEnableEnd) {
-        assert(@"WGFilePathModel 暂不支持此type，可以自行扩展");
+    if (type <= kWGPathTypeEnableStart || type >= kWGPathTypeEnableEnd) {
+        WGLogError(@"WGFilePathModel 暂不支持此type，可以自行扩展");
     }
 }
 

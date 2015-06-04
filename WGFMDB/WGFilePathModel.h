@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 //文件所处于的沙盒路径
 typedef NS_ENUM(NSInteger, WGPathType) {
-    WGPathEnableStart = 0,//验证 model是否支持设置的路径，不支持则报错
+    kWGPathTypeEnableStart = 0,//验证 model是否支持设置的路径，不支持则报错
     
     //外部使用值
-    Home,
+    kWGPathTypeHome,
     
-    Documents,
-    Library,
-    Tmp,
-    Caches,
+    kWGPathTypeDocuments,
+    kWGPathTypeLibrary,
+    kWGPathTypeTmp,
+    kWGPathTypeCaches,
     
-    NeedAppend,//...后期可扩展，但需要修改 WGPathEnableEnd的值
+    //...后期可扩展
     
-    WGPathEnableEnd = NeedAppend,//验证 model是否支持设置的路径，不支持则报错
+    kWGPathTypeEnableEnd,//验证 model是否支持设置的路径，不支持则报错
 };
 
 /**
@@ -41,29 +41,27 @@ typedef NS_ENUM(NSInteger, WGPathType) {
 + (instancetype)modelWithType:(WGPathType )type FileInDirectory:(NSString *)directory;
 
 /**
+ *  文件所处的沙盒目录类型
+ */
+@property (nonatomic,assign) WGPathType type;
+/**
+ *  自定义目录名，see modelWithType:FileInDirectory:
+ */
+@property (nonatomic,copy) NSString *directory;
+/**
  *  文件名，格式为： test.png
  */
 @property (nonatomic,copy) NSString *fileName;
-
 
 
 /**
  *  根据type 读取fileName对应的完整绝对路径
  */
 @property (nonatomic,readonly) NSString *fullPath;
-
 /**
  *  文件夹路径
  */
 @property (nonatomic,readonly) NSString *directoryPath;
-
-
-/**
- *  文件所处的沙盒目录类型
- */
-@property (nonatomic,readonly) WGPathType type;
-
-
 
 
 @end

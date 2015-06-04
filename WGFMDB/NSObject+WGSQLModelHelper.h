@@ -7,7 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FMResultSet.h"
+#import <FMDB/FMResultSet.h>
+
+/**
+ *  数据类型
+ */
+@interface WGSQLModelHelper : NSObject
+@property NSString *TEXT;
+@property int INT;
+@property float FLOAT;
+@property double DOUBLE;
+@end
 
 /**
  *  间接获取Model的属性名字，通过Xcode的代码补全功能，对属性名称进行提示
@@ -26,6 +36,9 @@
 + (NSString *)getPropertyNameWitmMethod:(SEL )selector;
 
 + (instancetype)modelWithResultSet:(FMResultSet*)rs;
+
++ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName;
+
 
 @end
 

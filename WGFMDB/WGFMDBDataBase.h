@@ -10,6 +10,12 @@
 
 #import "WGFilePathModel.h"
 #import <FMDB/FMDB.h>
+#import "WGFMDBBridgeProtocol.h"
+#import <objc/runtime.h>
+
+
+
+
 
 /**
  *  子类根据@required、@optional可相应overwrite
@@ -17,12 +23,29 @@
 @protocol WGFMDBDataBaseProtocol <NSObject>
 @required
 /**
+ *  表名，子类必需重写
+ */
+- (NSString *)getTableName;
+/**
+ *  检测表的column是否都存在，不存在的，需要添加
+ */
+- (void)checkTableColumnIfExist;
+/**
+ *  获取继承WGFMDBBridgeProtocol的子协议，需要读取协议中定义的字段名
+ *
+ */
+- (Protocol *)getModelBridgeToDBColumnProtocol;
+/**
+ *  获取与数据库交互的数据模型
+ */
+- (Class)getModelClass;
+@optional
+/**
  *  db文件不存在的情况下，创建数据库文件后，创建数据库表，
-    子类必须继承并实现创建表功能
+ 子类可以继承并实现创建表功能
  */
 - (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue;
 
-@optional
 /**
  *  开库，子类可继承修改特定的配置，一般不需要overwrite
  */

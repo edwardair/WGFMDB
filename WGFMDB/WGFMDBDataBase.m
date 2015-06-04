@@ -7,6 +7,8 @@
 //
 
 #import "WGFMDBDataBase.h"
+#import "WGDefines.h"
+#import "NSObject+WGSQLModelHelper.h"
 @interface WGFMDBDataBase()
 
 @property(nonatomic, strong) FMDatabaseQueue *writableQueue;
@@ -58,9 +60,10 @@
             return NO;
         }
 
+#if DEBUG
         //!!!:重新检测下 db文件是否存在，理论上不需要检测
         NSAssert([self isDBFileExist], @"databaseQueue初始化成功，但是检测db文件不存在");
-
+#endif
         
         //以下操作都为数据库打开状态，在 数据库操作 失败后，需要关闭库、及相应的清空数据操作
 
@@ -70,7 +73,9 @@
             if (![[self class]conformsToProtocol:@protocol(WGFMDBDataBaseProtocol)]) {
                 [self closeAndRemoveDBFile];
 
+#if DEBUG
                 NSAssert(NO, @"需要子类引用WGFMDBDataBaseDelegate协议并实现必要的方法");
+#endif
                 return NO;
             }else{
                 //数据库创建表
@@ -79,6 +84,9 @@
                     return NO;
                 }
             }
+        }
+        else{
+            [self checkTableColumnIfExist];
         }
 
         _isOpened = YES;
@@ -131,7 +139,7 @@
 
 - (WGFilePathModel *)pathModel{
     if (!_pathModel) {
-        _pathModel = [WGFilePathModel modelWithType:Tmp FileInDirectory:nil];
+        _pathModel = [WGFilePathModel modelWithType:kWGPathTypeTmp FileInDirectory:nil];
         _pathModel.fileName = @"WGDefaultDB.db";
     }
     return _pathModel;
@@ -175,19 +183,62 @@
 
 
 #pragma mark - Initializer
-
-
 #pragma mark - 需要子类实现具体方法  必须overwrite
-- (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue{
-    [self closeAndRemoveDBFile];
-    
-    NSAssert(NO, @"数据库不存在情况下，需要创建表，子类需要实现onCreate: 方法");
-    
-    return NO;
+- (NSString *)getTableName{
+    NSAssert(0, @"需子类返回表名");
+    return @"";
+}
+- (Protocol *)getModelBridgeToDBColumnProtocol{
+    NSAssert(0, @"需要子类实现");
+    return @protocol(WGFMDBBridgeProtocol);
+}
+- (Class)getModelClas{
+    NSAssert(0, @"需要子类实现");
+    return Nil;
 }
 
 
 #pragma mark - 需要子类实现具体方法  一般无须overwrite
+- (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue{
+    
+    __block BOOL flag = NO;
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        NSString *sql = [self SQL_GetTableCreatString];
+        
+        flag = [db executeUpdate:sql];
+        
+    }];
+    
+    if (flag) {
+        [self checkTableColumnIfExist];
+    }
+    
+    return flag;
+    
+}
+
+- (void)checkTableColumnIfExist{
+    u_int outCount;
+    objc_property_t *properties = protocol_copyPropertyList([self getModelBridgeToDBColumnProtocol], &outCount);
+
+    [self.writableQueue inDatabase:^(FMDatabase *db) {
+        for (int i = 0; i < outCount; i++) {
+            const char *protocolName_CStr = property_getName(properties[i]);
+            NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
+            if (![db columnExists:protocolName
+                  inTableWithName:[self getTableName]]) {
+                NSString *sql = [self SQL_GetAddANewColumnWithName:protocolName];
+                
+               BOOL scuess = [db executeUpdate:sql];
+                if (!scuess) {
+                    WGLogFormatError(@"表增加字段：%@失败",protocolName);
+                }
+            }
+        }
+    }];
+
+}
+
 - (FMDatabase *)getDB{
     FMDatabase *db = [FMDatabase databaseWithPath:self.pathModel.fullPath];
     if (!db) {
@@ -195,11 +246,76 @@
     }
     
     if (![db open]) {
-        assert(@"DB开库失败");
+#if DEBUG
+        NSAssert(0, @"DB开库失败");
+#endif
         return nil;
     }
     
     return db;
+}
+
+
+#pragma mark - SQL 语句
+/**
+ *  获取建表SQL
+ */
+- (NSString *)SQL_GetTableCreatString{
+    return [NSString stringWithFormat:@"CREATE TABLE IF NOT EXIST %@ (%@)",[self getTableName],[self SQL_GetColumnsExcept:nil AppendWithType:YES]];
+}
+/**
+ *  获取所有column字段名
+ *
+ *  @param excpets 数组中的除外，用于update、insert时
+ *  @param hasColumnType 建表时需要，附带column的类型
+ */
+- (NSString *)SQL_GetColumnsExcept:(NSArray *)excpets AppendWithType:(BOOL)hasColumnType{
+    u_int outCount;
+    objc_property_t *properties = protocol_copyPropertyList([self getModelBridgeToDBColumnProtocol], &outCount);
+    NSMutableArray *propertyArray = @[].mutableCopy;
+    //获取所有字段名
+    for (int i = 0; i < outCount; i++) {
+        const char *protocolName_CStr = property_getName(properties[i]);
+        const char *aa = property_getAttributes(properties[i]);
+        const char *bb = property_copyAttributeValue(properties[i], aa);
+        
+        NSLog(@"%s",@encode(typeof(properties[i])));
+
+       char *s = @encode(NSString *);
+        NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
+        [propertyArray addObject:protocolName];
+    }
+    //过滤
+    if (excpets.count) {
+        [propertyArray removeObjectsInArray:excpets];
+    }
+    
+    //遍历，组成字符串
+    NSMutableString *sql = @"".mutableCopy;
+    for (NSString *name in propertyArray) {
+        if (hasColumnType) {
+            [sql appendFormat:@"%@ %@,",name,[[self getModelClass] getColumnTypeWithPropertyName:name]];
+        }else{
+            [sql appendFormat:@"%@,",name];
+        }
+    }
+    
+    if (sql.length) {
+        [sql substringToIndex:sql.length-1];
+    }
+    
+    return sql;
+    
+}
+- (NSString *)SQL_GetAddANewColumnWithName:(NSString *)columnName{
+    //TODO: TEXT 需要根据属性类型确定，包括是否主键
+    return [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ TEXT",[self getTableName],columnName];
+}
+
+
+#pragma mark - 将 Protocol的属性名转化为 建表时所需要的字段名
+- (NSString *)columnWithProtocolName:(NSString *)protocolName{
+    return nil;
 }
 
 @end

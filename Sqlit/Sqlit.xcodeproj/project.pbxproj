@@ -7,13 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		180B59711ABAFC8A00EAFD3C /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 180B59701ABAFC8A00EAFD3C /* Test.m */; };
 		9FBC5384142D84C70855E232 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74575CC3E47D5CA27D174021 /* libPods.a */; };
 		F7197B5D1AB91D370038A8AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5C1AB91D370038A8AD /* main.m */; };
 		F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5F1AB91D370038A8AD /* AppDelegate.m */; };
 		F7197B621AB91D370038A8AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7197B611AB91D370038A8AD /* Images.xcassets */; };
 		F7197B651AB91D370038A8AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7197B631AB91D370038A8AD /* LaunchScreen.xib */; };
 		F7197BBE1AB921180038A8AD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7197BBD1AB921180038A8AD /* libsqlite3.dylib */; };
+		F7220FC01B1FD1DD00EB9AD4 /* UserFileDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FAC1B1FD1DD00EB9AD4 /* UserFileDao.m */; };
+		F7220FC11B1FD1DD00EB9AD4 /* UserInfoDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FAE1B1FD1DD00EB9AD4 /* UserInfoDao.m */; };
+		F7220FC21B1FD1DD00EB9AD4 /* UserInfoDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB11B1FD1DD00EB9AD4 /* UserInfoDataBase.m */; };
+		F7220FC31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB41B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m */; };
+		F7220FC41B1FD1DD00EB9AD4 /* SnailUserFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB61B1FD1DD00EB9AD4 /* SnailUserFileManager.m */; };
+		F7220FC51B1FD1DD00EB9AD4 /* SnailUserInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB81B1FD1DD00EB9AD4 /* SnailUserInfoManager.m */; };
+		F7220FC71B1FD1DD00EB9AD4 /* LocalUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FBD1B1FD1DD00EB9AD4 /* LocalUserInfoModel.m */; };
+		F7220FC81B1FD1DD00EB9AD4 /* UserFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FBF1B1FD1DD00EB9AD4 /* UserFileModel.m */; };
+		F7220FDE1B1FD72C00EB9AD4 /* UserFileDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FDD1B1FD72C00EB9AD4 /* UserFileDataBase.m */; };
 		F7A4FA581B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */; };
 		F7A4FA5A1B1D74C900B84A4E /* WGFilePathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */; };
 		F7A4FA5C1B1D74C900B84A4E /* WGFMDBBaseDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA551B1D74C900B84A4E /* WGFMDBBaseDao.m */; };
@@ -22,10 +30,12 @@
 
 /* Begin PBXFileReference section */
 		0103E9027844EA6450737579 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		0C91963F5D626246C34F490A /* libPods-Sqlit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sqlit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		163FD20F81AFA9DAA81D4A40 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		180B596F1ABAFC8A00EAFD3C /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
-		180B59701ABAFC8A00EAFD3C /* Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		1712046D9EB2B95D5258CD17 /* Pods-SqlitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SqlitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SqlitTests/Pods-SqlitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74575CC3E47D5CA27D174021 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEF1CEB39E38167F8CC3A3C0 /* libPods-SqlitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SqlitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEE07C03EA5F2ECD214A3192 /* Pods-SqlitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SqlitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SqlitTests/Pods-SqlitTests.release.xcconfig"; sourceTree = "<group>"; };
 		F7197B571AB91D360038A8AD /* Sqlit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sqlit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7197B5B1AB91D370038A8AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7197B5C1AB91D370038A8AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -33,9 +43,30 @@
 		F7197B5F1AB91D370038A8AD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F7197B611AB91D370038A8AD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F7197B641AB91D370038A8AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F7197B6F1AB91D370038A8AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7197B701AB91D370038A8AD /* SqlitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SqlitTests.m; sourceTree = "<group>"; };
 		F7197BBD1AB921180038A8AD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F7220FAB1B1FD1DD00EB9AD4 /* UserFileDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFileDao.h; sourceTree = "<group>"; };
+		F7220FAC1B1FD1DD00EB9AD4 /* UserFileDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFileDao.m; sourceTree = "<group>"; };
+		F7220FAD1B1FD1DD00EB9AD4 /* UserInfoDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoDao.h; sourceTree = "<group>"; };
+		F7220FAE1B1FD1DD00EB9AD4 /* UserInfoDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoDao.m; sourceTree = "<group>"; };
+		F7220FB01B1FD1DD00EB9AD4 /* UserInfoDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoDataBase.h; sourceTree = "<group>"; };
+		F7220FB11B1FD1DD00EB9AD4 /* UserInfoDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoDataBase.m; sourceTree = "<group>"; };
+		F7220FB31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailPublicStroageHelper.h; sourceTree = "<group>"; };
+		F7220FB41B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailPublicStroageHelper.m; sourceTree = "<group>"; };
+		F7220FB51B1FD1DD00EB9AD4 /* SnailUserFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailUserFileManager.h; sourceTree = "<group>"; };
+		F7220FB61B1FD1DD00EB9AD4 /* SnailUserFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailUserFileManager.m; sourceTree = "<group>"; };
+		F7220FB71B1FD1DD00EB9AD4 /* SnailUserInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailUserInfoManager.h; sourceTree = "<group>"; };
+		F7220FB81B1FD1DD00EB9AD4 /* SnailUserInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailUserInfoManager.m; sourceTree = "<group>"; };
+		F7220FBC1B1FD1DD00EB9AD4 /* LocalUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserInfoModel.h; sourceTree = "<group>"; };
+		F7220FBD1B1FD1DD00EB9AD4 /* LocalUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserInfoModel.m; sourceTree = "<group>"; };
+		F7220FBE1B1FD1DD00EB9AD4 /* UserFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFileModel.h; sourceTree = "<group>"; };
+		F7220FBF1B1FD1DD00EB9AD4 /* UserFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFileModel.m; sourceTree = "<group>"; };
+		F7220FC91B1FD28D00EB9AD4 /* Define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
+		F7220FD11B1FD41300EB9AD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7220FD21B1FD41300EB9AD4 /* SqlitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SqlitTests.m; sourceTree = "<group>"; };
+		F7220FD91B1FD53400EB9AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		F7220FDC1B1FD72C00EB9AD4 /* UserFileDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFileDataBase.h; sourceTree = "<group>"; };
+		F7220FDD1B1FD72C00EB9AD4 /* UserFileDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFileDataBase.m; sourceTree = "<group>"; };
+		F7220FE61B1FF7A100EB9AD4 /* WGFMDBBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBBridgeProtocol.h; sourceTree = "<group>"; };
 		F7A4FA4F1B1D74C900B84A4E /* NSObject+WGSQLModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WGSQLModelHelper.h"; sourceTree = "<group>"; };
 		F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WGSQLModelHelper.m"; sourceTree = "<group>"; };
 		F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFilePathModel.h; sourceTree = "<group>"; };
@@ -63,7 +94,10 @@
 		183E1250F2EE63916CEF1E19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7220FD91B1FD53400EB9AD4 /* libPods.a */,
 				74575CC3E47D5CA27D174021 /* libPods.a */,
+				0C91963F5D626246C34F490A /* libPods-Sqlit.a */,
+				AEF1CEB39E38167F8CC3A3C0 /* libPods-SqlitTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -74,7 +108,7 @@
 				F7197BBD1AB921180038A8AD /* libsqlite3.dylib */,
 				F7A4FA4E1B1D74C900B84A4E /* WGFMDB */,
 				F7197B591AB91D370038A8AD /* Sqlit */,
-				F7197B6D1AB91D370038A8AD /* SqlitTests */,
+				F7220FCF1B1FD41300EB9AD4 /* SqlitTests */,
 				F7197B581AB91D370038A8AD /* Products */,
 				FF9DC9FDF7F3A1F73A3531A5 /* Pods */,
 				183E1250F2EE63916CEF1E19 /* Frameworks */,
@@ -92,10 +126,9 @@
 		F7197B591AB91D370038A8AD /* Sqlit */ = {
 			isa = PBXGroup;
 			children = (
+				F7220F8E1B1FD19700EB9AD4 /* SnailSqite */,
 				F7197B5E1AB91D370038A8AD /* AppDelegate.h */,
 				F7197B5F1AB91D370038A8AD /* AppDelegate.m */,
-				180B596F1ABAFC8A00EAFD3C /* Test.h */,
-				180B59701ABAFC8A00EAFD3C /* Test.m */,
 				F75C729D1AB9556100067399 /* DataModels */,
 				F7197B611AB91D370038A8AD /* Images.xcassets */,
 				F7197B631AB91D370038A8AD /* LaunchScreen.xib */,
@@ -113,19 +146,77 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F7197B6D1AB91D370038A8AD /* SqlitTests */ = {
+		F7220F8E1B1FD19700EB9AD4 /* SnailSqite */ = {
 			isa = PBXGroup;
 			children = (
-				F7197B701AB91D370038A8AD /* SqlitTests.m */,
-				F7197B6E1AB91D370038A8AD /* Supporting Files */,
+				F7220FC91B1FD28D00EB9AD4 /* Define.h */,
+				F7220FAA1B1FD1DD00EB9AD4 /* Dao */,
+				F7220FAF1B1FD1DD00EB9AD4 /* Database */,
+				F7220FB21B1FD1DD00EB9AD4 /* Manager */,
+				F7220FBB1B1FD1DD00EB9AD4 /* Model */,
+			);
+			path = SnailSqite;
+			sourceTree = "<group>";
+		};
+		F7220FAA1B1FD1DD00EB9AD4 /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				F7220FAB1B1FD1DD00EB9AD4 /* UserFileDao.h */,
+				F7220FAC1B1FD1DD00EB9AD4 /* UserFileDao.m */,
+				F7220FAD1B1FD1DD00EB9AD4 /* UserInfoDao.h */,
+				F7220FAE1B1FD1DD00EB9AD4 /* UserInfoDao.m */,
+			);
+			path = Dao;
+			sourceTree = "<group>";
+		};
+		F7220FAF1B1FD1DD00EB9AD4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				F7220FB01B1FD1DD00EB9AD4 /* UserInfoDataBase.h */,
+				F7220FB11B1FD1DD00EB9AD4 /* UserInfoDataBase.m */,
+				F7220FDC1B1FD72C00EB9AD4 /* UserFileDataBase.h */,
+				F7220FDD1B1FD72C00EB9AD4 /* UserFileDataBase.m */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		F7220FB21B1FD1DD00EB9AD4 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F7220FB31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.h */,
+				F7220FB41B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m */,
+				F7220FB51B1FD1DD00EB9AD4 /* SnailUserFileManager.h */,
+				F7220FB61B1FD1DD00EB9AD4 /* SnailUserFileManager.m */,
+				F7220FB71B1FD1DD00EB9AD4 /* SnailUserInfoManager.h */,
+				F7220FB81B1FD1DD00EB9AD4 /* SnailUserInfoManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		F7220FBB1B1FD1DD00EB9AD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F7220FBC1B1FD1DD00EB9AD4 /* LocalUserInfoModel.h */,
+				F7220FBD1B1FD1DD00EB9AD4 /* LocalUserInfoModel.m */,
+				F7220FBE1B1FD1DD00EB9AD4 /* UserFileModel.h */,
+				F7220FBF1B1FD1DD00EB9AD4 /* UserFileModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F7220FCF1B1FD41300EB9AD4 /* SqlitTests */ = {
+			isa = PBXGroup;
+			children = (
+				F7220FD21B1FD41300EB9AD4 /* SqlitTests.m */,
+				F7220FD01B1FD41300EB9AD4 /* Supporting Files */,
 			);
 			path = SqlitTests;
 			sourceTree = "<group>";
 		};
-		F7197B6E1AB91D370038A8AD /* Supporting Files */ = {
+		F7220FD01B1FD41300EB9AD4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F7197B6F1AB91D370038A8AD /* Info.plist */,
+				F7220FD11B1FD41300EB9AD4 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -140,15 +231,16 @@
 		F7A4FA4E1B1D74C900B84A4E /* WGFMDB */ = {
 			isa = PBXGroup;
 			children = (
+				F7A4FA531B1D74C900B84A4E /* WGFMDB.h */,
 				F7A4FA4F1B1D74C900B84A4E /* NSObject+WGSQLModelHelper.h */,
 				F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */,
 				F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */,
 				F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */,
-				F7A4FA531B1D74C900B84A4E /* WGFMDB.h */,
 				F7A4FA541B1D74C900B84A4E /* WGFMDBBaseDao.h */,
 				F7A4FA551B1D74C900B84A4E /* WGFMDBBaseDao.m */,
 				F7A4FA561B1D74C900B84A4E /* WGFMDBDataBase.h */,
 				F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */,
+				F7220FE61B1FF7A100EB9AD4 /* WGFMDBBridgeProtocol.h */,
 			);
 			name = WGFMDB;
 			path = ../WGFMDB;
@@ -159,6 +251,8 @@
 			children = (
 				0103E9027844EA6450737579 /* Pods.debug.xcconfig */,
 				163FD20F81AFA9DAA81D4A40 /* Pods.release.xcconfig */,
+				1712046D9EB2B95D5258CD17 /* Pods-SqlitTests.debug.xcconfig */,
+				BEE07C03EA5F2ECD214A3192 /* Pods-SqlitTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -267,13 +361,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7220FC71B1FD1DD00EB9AD4 /* LocalUserInfoModel.m in Sources */,
+				F7220FDE1B1FD72C00EB9AD4 /* UserFileDataBase.m in Sources */,
 				F7A4FA581B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m in Sources */,
 				F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */,
-				180B59711ABAFC8A00EAFD3C /* Test.m in Sources */,
+				F7220FC31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m in Sources */,
+				F7220FC01B1FD1DD00EB9AD4 /* UserFileDao.m in Sources */,
 				F7197B5D1AB91D370038A8AD /* main.m in Sources */,
+				F7220FC41B1FD1DD00EB9AD4 /* SnailUserFileManager.m in Sources */,
+				F7220FC21B1FD1DD00EB9AD4 /* UserInfoDataBase.m in Sources */,
 				F7A4FA5C1B1D74C900B84A4E /* WGFMDBBaseDao.m in Sources */,
+				F7220FC81B1FD1DD00EB9AD4 /* UserFileModel.m in Sources */,
 				F7A4FA5E1B1D74C900B84A4E /* WGFMDBDataBase.m in Sources */,
 				F7A4FA5A1B1D74C900B84A4E /* WGFilePathModel.m in Sources */,
+				F7220FC11B1FD1DD00EB9AD4 /* UserInfoDao.m in Sources */,
+				F7220FC51B1FD1DD00EB9AD4 /* SnailUserInfoManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

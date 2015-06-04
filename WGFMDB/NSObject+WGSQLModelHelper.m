@@ -8,6 +8,12 @@
 
 #import "NSObject+WGSQLModelHelper.h"
 #import <objc/runtime.h>
+#import "WGDefines.h"
+
+@implementation WGSQLModelHelper
+@end
+
+#pragma mark -
 @implementation NSObject (WGSQLModelHelper)
 
 + (NSString *)getPropertyNameWitmMethod:(SEL )selector{
@@ -40,7 +46,6 @@
             
             //前2个参数为每个方法的隐藏参数，故 index=2
             method_getArgumentType(class_getInstanceMethod(self, selector), 2, argumentType, 256);
-            
             [model setValueWithResultSet:rs forColumnName:columnName WithArgType:argumentType];
         }else{
             continue;
@@ -55,6 +60,22 @@
     [self setValue:[rs objectForColumnName:columnName] forKey:columnName];
 }
 
++ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName Protocol:(Protocol *)protocol{
+    
+    const char *columnPropertyAttributes = property_getAttributes(class_getProperty(self, pName.UTF8String));
+    
+    u_int outCount;
+    objc_property_t *properties  = class_copyPropertyList([WGSQLModelHelper class], &outCount);
+    for (int i = 0; i < outCount; i++) {
+        const char *attributes = property_getAttributes(properties[i]);
+        if (strncmp(columnPropertyAttributes, attributes, strlen(attributes))==0) {
+            return [NSString stringWithUTF8String:property_getName(properties[i])];
+        }
+    }
+
+    WGLogFormatError(@"WGSQLModelHelper中定义的基本类型不支持当前属性申明：class:%@,property_name:%@",NSStringFromClass(self),pName);
+    return @"";
+}
 
 @end
 
