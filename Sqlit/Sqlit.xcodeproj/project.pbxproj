@@ -16,7 +16,6 @@
 		F7220FC01B1FD1DD00EB9AD4 /* UserFileDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FAC1B1FD1DD00EB9AD4 /* UserFileDao.m */; };
 		F7220FC11B1FD1DD00EB9AD4 /* UserInfoDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FAE1B1FD1DD00EB9AD4 /* UserInfoDao.m */; };
 		F7220FC21B1FD1DD00EB9AD4 /* UserInfoDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB11B1FD1DD00EB9AD4 /* UserInfoDataBase.m */; };
-		F7220FC31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB41B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m */; };
 		F7220FC41B1FD1DD00EB9AD4 /* SnailUserFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB61B1FD1DD00EB9AD4 /* SnailUserFileManager.m */; };
 		F7220FC51B1FD1DD00EB9AD4 /* SnailUserInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FB81B1FD1DD00EB9AD4 /* SnailUserInfoManager.m */; };
 		F7220FC71B1FD1DD00EB9AD4 /* LocalUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7220FBD1B1FD1DD00EB9AD4 /* LocalUserInfoModel.m */; };
@@ -50,8 +49,6 @@
 		F7220FAE1B1FD1DD00EB9AD4 /* UserInfoDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoDao.m; sourceTree = "<group>"; };
 		F7220FB01B1FD1DD00EB9AD4 /* UserInfoDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoDataBase.h; sourceTree = "<group>"; };
 		F7220FB11B1FD1DD00EB9AD4 /* UserInfoDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoDataBase.m; sourceTree = "<group>"; };
-		F7220FB31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailPublicStroageHelper.h; sourceTree = "<group>"; };
-		F7220FB41B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailPublicStroageHelper.m; sourceTree = "<group>"; };
 		F7220FB51B1FD1DD00EB9AD4 /* SnailUserFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailUserFileManager.h; sourceTree = "<group>"; };
 		F7220FB61B1FD1DD00EB9AD4 /* SnailUserFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailUserFileManager.m; sourceTree = "<group>"; };
 		F7220FB71B1FD1DD00EB9AD4 /* SnailUserInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailUserInfoManager.h; sourceTree = "<group>"; };
@@ -183,8 +180,6 @@
 		F7220FB21B1FD1DD00EB9AD4 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				F7220FB31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.h */,
-				F7220FB41B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m */,
 				F7220FB51B1FD1DD00EB9AD4 /* SnailUserFileManager.h */,
 				F7220FB61B1FD1DD00EB9AD4 /* SnailUserFileManager.m */,
 				F7220FB71B1FD1DD00EB9AD4 /* SnailUserInfoManager.h */,
@@ -232,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				F7A4FA531B1D74C900B84A4E /* WGFMDB.h */,
+				F7220FE61B1FF7A100EB9AD4 /* WGFMDBBridgeProtocol.h */,
 				F7A4FA4F1B1D74C900B84A4E /* NSObject+WGSQLModelHelper.h */,
 				F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */,
 				F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */,
@@ -240,7 +236,6 @@
 				F7A4FA551B1D74C900B84A4E /* WGFMDBBaseDao.m */,
 				F7A4FA561B1D74C900B84A4E /* WGFMDBDataBase.h */,
 				F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */,
-				F7220FE61B1FF7A100EB9AD4 /* WGFMDBBridgeProtocol.h */,
 			);
 			name = WGFMDB;
 			path = ../WGFMDB;
@@ -365,7 +360,6 @@
 				F7220FDE1B1FD72C00EB9AD4 /* UserFileDataBase.m in Sources */,
 				F7A4FA581B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m in Sources */,
 				F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */,
-				F7220FC31B1FD1DD00EB9AD4 /* SnailPublicStroageHelper.m in Sources */,
 				F7220FC01B1FD1DD00EB9AD4 /* UserFileDao.m in Sources */,
 				F7197B5D1AB91D370038A8AD /* main.m in Sources */,
 				F7220FC41B1FD1DD00EB9AD4 /* SnailUserFileManager.m in Sources */,

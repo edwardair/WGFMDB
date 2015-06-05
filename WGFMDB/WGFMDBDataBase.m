@@ -209,10 +209,6 @@
         
     }];
     
-    if (flag) {
-        [self checkTableColumnIfExist];
-    }
-    
     return flag;
     
 }
@@ -236,7 +232,6 @@
             }
         }
     }];
-
 }
 
 - (FMDatabase *)getDB{
@@ -261,61 +256,20 @@
  *  获取建表SQL
  */
 - (NSString *)SQL_GetTableCreatString{
-    return [NSString stringWithFormat:@"CREATE TABLE IF NOT EXIST %@ (%@)",[self getTableName],[self SQL_GetColumnsExcept:nil AppendWithType:YES]];
-}
-/**
- *  获取所有column字段名
- *
- *  @param excpets 数组中的除外，用于update、insert时
- *  @param hasColumnType 建表时需要，附带column的类型
- */
-- (NSString *)SQL_GetColumnsExcept:(NSArray *)excpets AppendWithType:(BOOL)hasColumnType{
-    u_int outCount;
-    objc_property_t *properties = protocol_copyPropertyList([self getModelBridgeToDBColumnProtocol], &outCount);
-    NSMutableArray *propertyArray = @[].mutableCopy;
-    //获取所有字段名
-    for (int i = 0; i < outCount; i++) {
-        const char *protocolName_CStr = property_getName(properties[i]);
-        const char *aa = property_getAttributes(properties[i]);
-        const char *bb = property_copyAttributeValue(properties[i], aa);
-        
-        NSLog(@"%s",@encode(typeof(properties[i])));
-
-       char *s = @encode(NSString *);
-        NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
-        [propertyArray addObject:protocolName];
-    }
-    //过滤
-    if (excpets.count) {
-        [propertyArray removeObjectsInArray:excpets];
-    }
-    
-    //遍历，组成字符串
-    NSMutableString *sql = @"".mutableCopy;
-    for (NSString *name in propertyArray) {
-        if (hasColumnType) {
-            [sql appendFormat:@"%@ %@,",name,[[self getModelClass] getColumnTypeWithPropertyName:name]];
-        }else{
-            [sql appendFormat:@"%@,",name];
-        }
-    }
-    
-    if (sql.length) {
-        [sql substringToIndex:sql.length-1];
-    }
-    
-    return sql;
-    
+    //??? : 是否可以创建空表？？
+    return
+    [NSString stringWithFormat:
+     @"CREATE TABLE IF NOT EXISTS %@ (%@)",
+     [self getTableName],
+     [NSObject getColumnsWithBridgeProtocol:[self getModelBridgeToDBColumnProtocol]
+                                 ModelClass:[self getModelClass]
+                                     Except:nil
+                             AppendWithType:YES]];
 }
 - (NSString *)SQL_GetAddANewColumnWithName:(NSString *)columnName{
     //TODO: TEXT 需要根据属性类型确定，包括是否主键
     return [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ TEXT",[self getTableName],columnName];
 }
 
-
-#pragma mark - 将 Protocol的属性名转化为 建表时所需要的字段名
-- (NSString *)columnWithProtocolName:(NSString *)protocolName{
-    return nil;
-}
 
 @end

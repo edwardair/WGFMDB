@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 丝瓜&冬瓜. All rights reserved.
 //
 
-#import "SnailPublicStroageHelper.h"
 #import "LocalUserInfoModel.h"
 #import "UserInfoDao.h"
 /**
  *  用户数据管理
  */
-@interface SnailUserInfoManager : SnailPublicStroageHelper
+@interface SnailUserInfoManager : NSObject
++ (instancetype)shared;
 @property (nonatomic,readonly) UserInfoDao *dao;
 
 @property (nonatomic,strong) LocalUserInfoModel *localUserInfoModel;

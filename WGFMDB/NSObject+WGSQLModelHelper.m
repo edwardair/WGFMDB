@@ -60,22 +60,127 @@
     [self setValue:[rs objectForColumnName:columnName] forKey:columnName];
 }
 
-+ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName Protocol:(Protocol *)protocol{
+
+#pragma mark - 数据库column相关
++ (objc_property_t )propertyInProtocol:(Protocol *)protocol WithName:(NSString *)pName{
+    u_int outCount;
+    objc_property_t *properties  = protocol_copyPropertyList(protocol, &outCount);
+    for (int i = 0; i < outCount; i++) {
+        const char *tmp = property_getName(properties[i]);
+        NSString *p_ = [NSString stringWithFormat:@"%s",tmp];
+        
+        if ([pName isEqualToString:p_]) {
+            
+            free(properties);
+            return properties[i];
+        }
+    }
     
-    const char *columnPropertyAttributes = property_getAttributes(class_getProperty(self, pName.UTF8String));
+    free(properties);
+    return NULL;
+}
+
+
++ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName BridgeProtocol:(Protocol *)protocol{
+
+    const char *columnPropertyAttributes = property_getAttributes([self propertyInProtocol:protocol WithName:pName]);
+   
+    //以 ','  号分割的第一个字符串
+    char *column_pre = malloc(strlen(columnPropertyAttributes));
+    memset(column_pre, 0, strlen(columnPropertyAttributes));
+    memccpy(column_pre, columnPropertyAttributes, ',', strlen(columnPropertyAttributes));
     
     u_int outCount;
     objc_property_t *properties  = class_copyPropertyList([WGSQLModelHelper class], &outCount);
+    
+    NSString *type = @"";
+    
     for (int i = 0; i < outCount; i++) {
-        const char *attributes = property_getAttributes(properties[i]);
-        if (strncmp(columnPropertyAttributes, attributes, strlen(attributes))==0) {
-            return [NSString stringWithUTF8String:property_getName(properties[i])];
+        const char *tmp = property_getAttributes(properties[i]);
+        //以 ','  号分割的第一个字符串
+        char *tmp_pre = malloc(strlen(tmp));
+        memset(tmp_pre, 0, strlen(tmp));
+        memccpy(tmp_pre, tmp, ',', strlen(tmp));
+
+        if (strcmp(column_pre, tmp_pre)==0) {
+            free(tmp_pre);
+            type = [NSString stringWithUTF8String:property_getName(properties[i])];
+            //如果type有 "_WG_**"后缀，需要去掉
+            type = [type componentsSeparatedByString:@"_WG_"].firstObject;
+            break;
+        }else{
+            free(tmp_pre);
         }
     }
+    
+    free(column_pre);
 
-    WGLogFormatError(@"WGSQLModelHelper中定义的基本类型不支持当前属性申明：class:%@,property_name:%@",NSStringFromClass(self),pName);
-    return @"";
+    if (type.length==0) {
+        WGLogFormatError(@"WGSQLModelHelper中定义的基本类型不支持当前属性申明：class:%@,property_name:%@",NSStringFromClass(self),pName);
+    }
+    
+    free(properties);
+    
+    return type;
 }
+
++ (NSString *)getColumnsWithBridgeProtocol:(Protocol *)bridgeProtocol
+                                ModelClass:(Class )modelClass
+                                    Except:(NSArray *)excpets
+                            AppendWithType:(BOOL)hasColumnType{
+    u_int outCount;
+    objc_property_t *properties = protocol_copyPropertyList(bridgeProtocol, &outCount);
+    NSMutableArray *propertyArray = @[].mutableCopy;
+    //获取所有字段名
+    for (int i = 0; i < outCount; i++) {
+        const char *protocolName_CStr = property_getName(properties[i]);
+        NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
+        [propertyArray addObject:protocolName];
+    }
+    //过滤
+    if (excpets.count) {
+        [propertyArray removeObjectsInArray:excpets];
+    }
+    
+    //遍历，组成字符串
+    NSMutableString *sql = @"".mutableCopy;
+    for (NSString *name in propertyArray) {
+        if (hasColumnType) {
+            [sql appendFormat:@"%@ %@,",name,[modelClass getColumnTypeWithPropertyName:name BridgeProtocol:bridgeProtocol]];
+        }else{
+            [sql appendFormat:@"%@,",name];
+        }
+    }
+    
+    if (sql.length) {
+        [sql deleteCharactersInRange:NSMakeRange(sql.length-1,1)];
+    }
+    
+    return sql;
+    
+}
+
+
+#if DEBUG
++ (void)DEBUG_ShowAllColumnTypesInWGSQLModelHelper{
+    u_int outCount;
+    objc_property_t *properties  = class_copyPropertyList([WGSQLModelHelper class], &outCount);
+    
+    for (int i = 0; i < outCount; i++) {
+        const char *attributes_name = property_getAttributes(properties[i]);
+        const char *property_name = property_getName(properties[i]);
+        
+        WGLogFormatValue(@"\n属性名：%s\nAttributes:%s",property_name,attributes_name);
+    }
+
+    free(properties);
+}
+
++ (void)load{
+    [self DEBUG_ShowAllColumnTypesInWGSQLModelHelper];
+}
+#endif
+
 
 @end
 

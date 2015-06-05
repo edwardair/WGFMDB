@@ -12,7 +12,7 @@
  *  如果属性名以  以下定义的字段为开头，表明表中column对应的类型需要加上这些修饰
     为防止可能存在的命名冲突，在前后增加WG_字段
  */
-#define PRIMARY_KEY @"WG_PRIMARY_KEY_WG_"
+#define PRIMARY_KEY @"_WG_PRIMARY KEY_WG_"
 //...以后增加其他定义
 
 

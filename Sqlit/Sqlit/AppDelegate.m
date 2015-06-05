@@ -23,9 +23,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    LocalUserInfoModel *m = [[LocalUserInfoModel alloc]init];
-    
-    
     [self test];
     
     return YES;

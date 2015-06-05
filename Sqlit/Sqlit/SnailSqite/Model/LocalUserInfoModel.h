@@ -11,16 +11,19 @@
 
 @protocol LocalUserInfoModelBridgeProtocol <NSObject>
 @property (nonatomic,copy) NSString *WGAuto_MOBILEPHONE;//  手机号
-@property (nonatomic,strong) NSString *WGAuto_PASSWORD;//  密码
+@property (nonatomic,copy) NSString *WGAuto_PASSWORD;//  密码
 @property (nonatomic,copy) NSString *WGAuto_FULLNAME;//  姓名
 @property (nonatomic,strong) NSNumber *WGAuto_IDKEY;// ID
 @property (nonatomic,copy) NSString *WGAuto_HEADPORTRAIT;//  头像
 @property (nonatomic,assign) int a;
+
+@property (nonatomic,assign) int B;
+@property (nonatomic,assign) int c;
+
+- (NSString *)test;
 @end
 
-@interface LocalUserInfoModel : NSObject<LocalUserInfoModelBridgeProtocol>
-@property (nonatomic,assign) int a;
-
+@interface LocalUserInfoModel : NSObject
 //通用
 @property (nonatomic,copy) NSString *WGAuto_MOBILEPHONE;//  手机号
 @property (nonatomic,copy) NSString *WGAuto_PASSWORD;//  密码

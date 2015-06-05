@@ -13,10 +13,18 @@
  *  数据类型
  */
 @interface WGSQLModelHelper : NSObject
-@property NSString *TEXT;
+//TODO: 后期扩展支持字段...
+/**
+ *  如果属性名以  "_WG_**"结尾，在转化column类型时需要去掉
+ */
+@property NSString *TEXT_WG_String;
 @property int INT;
+@property NSTimeInterval FLOAT_WG_TimeInterval;
+@property NSInteger INT_WG_Integer;
 @property float FLOAT;
 @property double DOUBLE;
+@property NSNumber *TEXT_WG_Number;
+@property BOOL BIT;
 @end
 
 /**
@@ -28,6 +36,8 @@
  */
 #define WGPNAME(sel) [NSObject getPropertyNameWitmMethod:@selector(sel)]
 
+
+#pragma mark -
 /**
  *  对于Model类型的对象，转化其属性名为NSString，数据库字段名
  */
@@ -37,8 +47,37 @@
 
 + (instancetype)modelWithResultSet:(FMResultSet*)rs;
 
-+ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName;
+/**
+ *  获取protocol的属性名对应的数据库类型名
+ *
+ *  @param pName    protocol中定义的get方法、或者属性名
+ *  @param protocol model存入数据库的桥接协议
+ *
+ *  @return 存数据库中的数据库cloumn基本类型
+ */
++ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName BridgeProtocol:(Protocol *)protocol;
 
+/**
+ *  获取所有column字段名
+ *
+ *  @param bridgeProtocol model存入数据库的桥接协议
+ *  @param modelClass     model的Class
+ *  @param excpets        数组中的除外，用于update、insert时
+ *  @param hasColumnType  建表时需要，附带column的类型，如  TEXT、BIT等数据库类型
+ *
+ *  @return <#return value description#>
+ */
++ (NSString *)getColumnsWithBridgeProtocol:(Protocol *)bridgeProtocol
+                                ModelClass:(Class )modelClass
+                                    Except:(NSArray *)excpets
+                            AppendWithType:(BOOL)hasColumnType;
+
+#if DEBUG
+/**
+ *  DEBUG测试使用，打印出WGSQLModelHelper中定义的所有属性名对应的property_getAttributes
+ */
++ (void)DEBUG_ShowAllColumnTypesInWGSQLModelHelper;
+#endif
 
 @end
 

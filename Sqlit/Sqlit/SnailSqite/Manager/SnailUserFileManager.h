@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 丝瓜&冬瓜. All rights reserved.
 //
 
-#import "SnailPublicStroageHelper.h"
 #import "UserFileDao.h"
 /**
  *  用户数据管理

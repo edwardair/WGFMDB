@@ -24,34 +24,7 @@
     return defaultDataBase;
 }
 
-#pragma mark - 建表
-//- (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue {
-//    __block BOOL flag = NO;
-//    [dbQueue inDatabase:^(FMDatabase *db) {
-//        NSString *sql = [NSString
-//                         stringWithFormat:
-//                         @"CREATE TABLE IF NOT EXISTS %@ (%@ TEXT PRIMARY KEY,%@ "
-//                         @"INT, %@ " @"TEXT,%@ "
-//                         @"TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ "
-//                         @"TEXT,%@ TEXT,%@ BYTE,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ DOUBLE,%@ TEXT,%@ BIT,%@ TEXT,%@ TEXT,%@ TEXT)",
-//                         UserInfoTableName, WGPNAME(WGAuto_MOBILEPHONE), WGPNAME(WGAuto_IDKEY),
-//                         WGPNAME(WGAuto_PASSWORD), WGPNAME(WGAuto_HEADPORTRAIT),
-//                         WGPNAME(WGAuto_SCHOOL), WGPNAME(WGAuto_FULLNAME),
-//                         WGPNAME(WGAuto_SEX), WGPNAME(WGAuto_AGE), WGPNAME(WGAuto_TYPES),
-//                         WGPNAME(WGAuto_BALANCE), WGPNAME(WGAuto_MYINVITECODE),
-//                         WGPNAME(WGAuto_STATES),
-//                         WGPNAME(WGAuto_GRADE), WGPNAME(WGAuto_TEACHERSTYPES),
-//                         WGPNAME(WGAuto_TEACHINGSUBJECTS), WGPNAME(WGAuto_INTRODUCTION),
-//                         WGPNAME(WGAuto_LastLoginTimestamp),
-//                         WGPNAME(WGAuto_LastLoginVersion),WGPNAME(WGAuto_IsLogin),WGPNAME(WGAuto_CITYS),WGPNAME(WGAuto_AUTHENTICATION),WGPNAME(WGAuto_IOSSTATES)];
-//        
-//        flag = [db executeUpdate:sql];
-//        
-//    }];
-//    
-//    return flag;
-//}
-
+#pragma mark - 必须重写的方法
 - (NSString *)getTableName{
     return UserInfoTableName;
 }
@@ -72,12 +45,11 @@
 }
 - (NSString *)sql_InsertLocalUserInfoIntoTable {
     return [NSString
-            stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@, %@, %@, %@, %@) VALUES (?, ?, ?, ?, ?)",
-            UserInfoTableName, WGPNAME(WGAuto_MOBILEPHONE),
-            WGPNAME(WGAuto_PASSWORD),
-            WGPNAME(WGAuto_IDKEY),
-            WGPNAME(WGAuto_HEADPORTRAIT),
-            WGPNAME(WGAuto_FULLNAME)
+            stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@) VALUES (?, ?, ?, ?, ?)",
+            UserInfoTableName, [NSObject getColumnsWithBridgeProtocol:[self getModelBridgeToDBColumnProtocol]
+                                                           ModelClass:[self getModelClass]
+                                                               Except:nil
+                                                       AppendWithType:NO]
             ];
 }
 - (NSString *)sql_UpdateLastLoginUserInfoIntoTable {
