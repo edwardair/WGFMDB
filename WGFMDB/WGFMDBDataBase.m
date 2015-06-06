@@ -7,8 +7,8 @@
 //
 
 #import "WGFMDBDataBase.h"
-#import "WGDefines.h"
-#import "NSObject+WGSQLModelHelper.h"
+#import <WGCategory/WGDefines.h>
+
 @interface WGFMDBDataBase()
 
 @property(nonatomic, strong) FMDatabaseQueue *writableQueue;
@@ -26,7 +26,6 @@
 @synthesize pathModel = _pathModel;
 
 #pragma mark - outer methods
-
 + (instancetype)shared{
     static id defaultDataBase;
     static dispatch_once_t onceToken;
@@ -69,24 +68,14 @@
 
         //数据库文件不存在情况下，需要创建需要的表
         if (!isDBFileExist) {
-            //如果“子类”未引用WGFMDBDataBaseDelegate协议（本类未引用此协议，故可以区分父子类），则会报错，必须由子类实现必要方法
-            if (![[self class]conformsToProtocol:@protocol(WGFMDBDataBaseProtocol)]) {
+            if (![self onCreateTable:self.writableQueue]) {
                 [self closeAndRemoveDBFile];
-
-#if DEBUG
-                NSAssert(NO, @"需要子类引用WGFMDBDataBaseDelegate协议并实现必要的方法");
-#endif
                 return NO;
-            }else{
-                //数据库创建表
-                if (![self onCreateTable:self.writableQueue]) {
-                    [self closeAndRemoveDBFile];
-                    return NO;
-                }
             }
         }
         else{
-            [self checkTableColumnIfExist];
+            //数据库存在状态，检测表字段是否存在，不存在，则增加column
+            [self appendTableColumnIfNotExist];
         }
 
         _isOpened = YES;
@@ -192,10 +181,6 @@
     NSAssert(0, @"需要子类实现");
     return @protocol(WGFMDBBridgeProtocol);
 }
-- (Class)getModelClas{
-    NSAssert(0, @"需要子类实现");
-    return Nil;
-}
 
 
 #pragma mark - 需要子类实现具体方法  一般无须overwrite
@@ -213,7 +198,7 @@
     
 }
 
-- (void)checkTableColumnIfExist{
+- (void)appendTableColumnIfNotExist{
     u_int outCount;
     objc_property_t *properties = protocol_copyPropertyList([self getModelBridgeToDBColumnProtocol], &outCount);
 
@@ -232,6 +217,7 @@
             }
         }
     }];
+    free(properties);
 }
 
 - (FMDatabase *)getDB{
@@ -253,22 +239,45 @@
 
 #pragma mark - SQL 语句
 /**
+ *  获取建表时所有的column名，包含数据类型字符串
+    注：column顺序是随机的
+ */
+- (NSString *)columnNames:(NSArray *)colmunModels appendColumnType:(BOOL)hasType{
+    NSMutableString *str = @"".mutableCopy;
+    for (WGFMDBColumnModel *model_ in colmunModels) {
+        if (hasType) {
+            [str appendFormat:@"%@ %@,",model_.columnName,model_.columnType];
+        }else{
+            [str appendFormat:@"%@,",model_.columnName];
+        }
+    }
+    if ([str hasSuffix:@","]) {
+        [str deleteCharactersInRange:NSMakeRange(str.length-1, 1)];
+    }
+    return str;
+}
+/**
  *  获取建表SQL
  */
-- (NSString *)SQL_GetTableCreatString{
+- (NSString *)SQL_GetTableCreatString {
     //??? : 是否可以创建空表？？
-    return
-    [NSString stringWithFormat:
-     @"CREATE TABLE IF NOT EXISTS %@ (%@)",
-     [self getTableName],
-     [NSObject getColumnsWithBridgeProtocol:[self getModelBridgeToDBColumnProtocol]
-                                 ModelClass:[self getModelClass]
-                                     Except:nil
-                             AppendWithType:YES]];
+    return [NSString
+            stringWithFormat:
+            @"CREATE TABLE IF NOT EXISTS %@ (%@)", [self getTableName],
+            [self columnNames:[WGFMDBColumnModel
+                               getColumnsWithBridgeProtocol:
+                               [self getModelBridgeToDBColumnProtocol]
+                               Except:nil]
+             appendColumnType:YES]];
 }
+
+
 - (NSString *)SQL_GetAddANewColumnWithName:(NSString *)columnName{
-    //TODO: TEXT 需要根据属性类型确定，包括是否主键
-    return [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ TEXT",[self getTableName],columnName];
+    WGFMDBColumnModel *model_ = [WGFMDBColumnModel modelWithName:columnName BridgeProtocol:[self getModelBridgeToDBColumnProtocol]];
+    return [NSString
+            stringWithFormat:
+            @"ALTER TABLE %@ ADD %@ %@", [self getTableName], columnName,
+            model_.columnType];
 }
 
 

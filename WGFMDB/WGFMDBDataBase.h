@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+
+#import <FMDB/FMDB.h>
 
 #import "WGFilePathModel.h"
-#import <FMDB/FMDB.h>
+#import "WGFMDBColumnModel.h"
 #import "WGFMDBBridgeProtocol.h"
-#import <objc/runtime.h>
+#import "NSObject+WGSQLModelHelper.h"
 
 
 /**
@@ -29,18 +32,16 @@
  当建表、插入整个model、更新整个model、获取整个model时，使用此Protocol定义的方法名来存取
  注意：方法名同时对应于项目中的各个model中的属性名，
  此Protocol仅作为哪些字段需要跟数据库来交互的一个桥接，不作为定义新属性使用
+ 
+ ** 协议中定义的字段，必须是以@property定义的属性
+    eg: @property (nonatomic,copy) NSString *WGAuto_MOBILEPHONE;
  */
 - (Protocol *)getModelBridgeToDBColumnProtocol;
-/**
- *  获取与数据库交互的数据模型，一般在model中引用 getModelBridgeToDBColumnProtocol的协议
- */
-- (Class)getModelClass;
 
 #pragma mark - 可视情况覆写
 @optional
 /**
- *  db文件不存在的情况下，创建数据库文件后，创建数据库表，
- 子类可以继承并实现创建表功能
+ *  db文件不存在的情况下，创建数据库文件后，创建数据库表
  */
 - (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue;
 
@@ -74,7 +75,17 @@
 /**
  *  检测表的column是否都存在，不存在的，需要添加
  */
-- (void)checkTableColumnIfExist;
+- (void)appendTableColumnIfNotExist;
+
+/**
+ *  根据给定的数组，生成建表、插入、更新表的column组合字符串
+ *
+ *  @param colmunModels @[WGFMDBColumnModel]
+ *  @param hasType      column名后是否附带数据库类型
+ *
+ *  @return @"WGAuto_USERMOBILE TEXT,WGAuto_LOGIN BIT,..."
+ */
+- (NSString *)columnNames:(NSArray *)colmunModels appendColumnType:(BOOL)hasType;
 
 - (BOOL)open;
 - (void)closeAll;

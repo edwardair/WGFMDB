@@ -16,7 +16,7 @@
  */
 - (NSString *)sql_SelectUserInfoFromTable;
 - (NSString *)sql_SelectLastLoginUserInfoFromTable;
-- (NSString *)sql_InsertLocalUserInfoIntoTable;
-- (NSString *)sql_UpdateLastLoginUserInfoIntoTable;
-
+- (NSString *)sql_InsertLocalUserInfoIntoTableWithColumns:(NSArray *)columnModels;
+- (NSString *)sql_UpdateLastLoginUserInfoIntoTableWithColumns:(NSArray *)columnModels
+                                                        Where:(NSString *)where;
 @end

@@ -21,14 +21,14 @@
  *  必须overwrite，设置相应的database，否则默认使用WGFMDBDataBase，代码中会引起程序奔溃
  */
 - (void)setupDataBase;
-
-@optional
 /**
- *  一般不需要overwrite，如何修改特定的init初始化方法，则overwrite
+ *  由于单例static缘故，需要overwrite
  *
  *  @return 实例
  */
 + (instancetype)dao;
+
+@optional
 
 /**
  *  可以overwrite，database开库前做一些参数检测、配置

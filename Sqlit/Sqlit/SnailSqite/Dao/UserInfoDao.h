@@ -28,14 +28,6 @@
 - (LocalUserInfoModel *)lastLoginUserInfo;
 
 #pragma mark - update or insert
-/**
- *  异步 更新用户数据
- *
- *  @param userInfoModel UserInfoModel
- *
- *  @return 成功失败
- */
-- (BOOL)asyncUpdateLocalUserInfo:(LocalUserInfoModel *)localUserInfoModel;
 
 /**
  *  异步 插入、替换 用户数据

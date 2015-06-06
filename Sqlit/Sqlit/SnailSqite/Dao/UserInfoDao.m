@@ -9,10 +9,11 @@
 #import "UserInfoDao.h"
 #import "UserInfoDataBase.h"
 #import "Define.h"
-#import <WGCategory/WGDefines.h>
+#import <WGDefines.h>
 #import "NSObject+WGSQLModelHelper.h"
 
 @implementation UserInfoDao
+#pragma mark - 继承父类重写的方法
 + (instancetype)dao{
     static id dao;
     static dispatch_once_t onceToken;
@@ -23,7 +24,6 @@
     return dao;
 }
 
-#pragma mark - 设置默认的database
 - (void)setupDataBase{
     [super setupDataBase:[UserInfoDataBase shared]];
 }
@@ -86,80 +86,41 @@
 }
 
 #pragma mark - db update or insert
-- (BOOL)asyncUpdateLocalUserInfo:(LocalUserInfoModel *)localUserInfoModel {
-    return [self asyncInsertLocalUserInfo:localUserInfoModel];
-    //TODO: UPDATE 有语法错误
-//    WEAKSELF
-//    
-//    __block BOOL flag = NO;
-//    
-//    NSString *sql = [(UserInfoDataBase *)
-//                     weakSelf.dataBase sql_UpdateLastLoginUserInfoIntoTable];
-//    
-//    [self.writableQueue inDatabase:^(FMDatabase *db) {
-//        flag = [db executeUpdate:sql,
-//                localUserInfoModel.WGAuto_PASSWORD,
-//                localUserInfoModel.WGAuto_IDKEY,
-//                localUserInfoModel.WGAuto_HEADPORTRAIT,
-//                localUserInfoModel.WGAuto_SCHOOL,
-//                localUserInfoModel.WGAuto_FULLNAME,
-//                localUserInfoModel.WGAuto_SEX,
-//                localUserInfoModel.WGAuto_AGE,
-//                localUserInfoModel.WGAuto_TYPES,
-//                localUserInfoModel.WGAuto_BALANCE,
-//                localUserInfoModel.WGAuto_INVITECODE,
-//                localUserInfoModel.WGAuto_GRADE,
-//                localUserInfoModel.WGAuto_TEACHERSTYPES,
-//                localUserInfoModel.WGAuto_TEACHINGSUBJECTS,
-//                localUserInfoModel.WGAuto_INTRODUCTION,
-//                localUserInfoModel.WGAuto_LastLoginTimestamp,
-//                [NSNumber numberWithDouble:localUserInfoModel.WGAuto_LastLoginTimestamp],
-//                localUserInfoModel.WGAuto_MOBILEPHONE];
-//        
-//        if (!flag) {
-//            WGLogError(@"LocalUserInfoModel 更新失败!");
-//        }
-//        
-//    }];
-//    
-//    return flag;
-}
-
-- (BOOL)asyncInsertLocalUserInfo:(LocalUserInfoModel *)localUserInfoModel{
+- (NSArray *)arguments:(NSArray *)columnModels Resource:(LocalUserInfoModel *)model{
+    NSMutableArray *tmp = @[].mutableCopy;
     
+    for (WGFMDBColumnModel *m in columnModels) {
+        [tmp addObject:[NSString handleNetString:WGMODEL_VALUE(model, m.columnName)]];
+    }
+    
+    return tmp;
+    
+}
+- (BOOL)asyncInsertLocalUserInfo:(LocalUserInfoModel *)localUserInfoModel{
     WEAKSELF
     
     __block BOOL flag = NO;
     
-    NSString *sql = [(UserInfoDataBase *)
-                     weakSelf.dataBase sql_InsertLocalUserInfoIntoTable];
+    NSArray *columnModels =
+    [WGFMDBColumnModel getColumnsWithBridgeProtocol:
+     [self.dataBase getModelBridgeToDBColumnProtocol]
+                                             Except:nil];
     
+    if (columnModels.count==0) {
+        WGLogError(@"插入LocalUserInfoModel时，获取不到BridgeProtocol中的属性名字段");
+        return NO;
+    }
+    
+    NSString *sql = [(UserInfoDataBase *)weakSelf.dataBase
+                     sql_InsertLocalUserInfoIntoTableWithColumns:columnModels];
+    sql = @"INSERT OR REPLACE INTO USERINFO_TABLE VALUES (?,?,?,?)";
     [self.writableQueue inDatabase:^(FMDatabase *db) {
-        flag = [db executeUpdate:sql,
-                localUserInfoModel.WGAuto_MOBILEPHONE,
-                localUserInfoModel.WGAuto_PASSWORD,
-                localUserInfoModel.WGAuto_IDKEY,
-                localUserInfoModel.WGAuto_HEADPORTRAIT,
-//                localUserInfoModel.WGAuto_SCHOOL,
-                localUserInfoModel.WGAuto_FULLNAME
-//                localUserInfoModel.WGAuto_SEX,
-//                localUserInfoModel.WGAuto_AGE,
-//                localUserInfoModel.WGAuto_TYPES,
-//                localUserInfoModel.WGAuto_BALANCE,
-//                localUserInfoModel.WGAuto_MYINVITECODE,
-//                localUserInfoModel.WGAuto_STATES,
-//                localUserInfoModel.WGAuto_GRADE,
-//                localUserInfoModel.WGAuto_TEACHERSTYPES,
-//                localUserInfoModel.WGAuto_TEACHINGSUBJECTS,
-//                localUserInfoModel.WGAuto_INTRODUCTION,
-//                [NSNumber numberWithDouble:localUserInfoModel.WGAuto_LastLoginTimestamp],
-//                localUserInfoModel.WGAuto_LastLoginVersion,
-//                @(localUserInfoModel.WGAuto_IsLogin),
-//                localUserInfoModel.WGAuto_CITYS,
-//                localUserInfoModel.WGAuto_AUTHENTICATION,
-//                localUserInfoModel.WGAuto_IOSSTATES
+        flag = [db executeUpdate:sql withArgumentsInArray:[self arguments:columnModels
+                                                                 Resource:localUserInfoModel]
                 ];
-        
+        flag = [db executeUpdate:sql withParameterDictionary:localUserInfoModel.jsonFromModel
+                ];
+
         if (!flag) {
             WGLogError(@"LocalUserInfoModel 插入、替换失败!");
         }
@@ -169,9 +130,7 @@
     return flag;
 }
 
-#pragma mark - db 转 model
 
-#pragma mark - model 转 db
 
 
 @end

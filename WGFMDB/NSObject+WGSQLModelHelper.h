@@ -8,24 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <FMDB/FMResultSet.h>
-
-/**
- *  数据类型
- */
-@interface WGSQLModelHelper : NSObject
-//TODO: 后期扩展支持字段...
-/**
- *  如果属性名以  "_WG_**"结尾，在转化column类型时需要去掉
- */
-@property NSString *TEXT_WG_String;
-@property int INT;
-@property NSTimeInterval FLOAT_WG_TimeInterval;
-@property NSInteger INT_WG_Integer;
-@property float FLOAT;
-@property double DOUBLE;
-@property NSNumber *TEXT_WG_Number;
-@property BOOL BIT;
-@end
+#import <WGCategory/WGDefines.h>
 
 /**
  *  间接获取Model的属性名字，通过Xcode的代码补全功能，对属性名称进行提示
@@ -36,6 +19,90 @@
  */
 #define WGPNAME(sel) [NSObject getPropertyNameWitmMethod:@selector(sel)]
 
+#ifndef WGOBJC//(value)
+#define WGOBJC(value) _WGOBCJ(@encode(__typeof__((value))), (value))
+static inline id _WGOBCJ(const char *type, ...) {
+    va_list v;
+    va_start(v, type);
+    id obj = nil;
+    
+    if (strcmp(type, @encode(id)) == 0) {
+        obj = va_arg(v, id);
+    } else if (strcmp(type, @encode(CGPoint)) == 0) {
+        CGPoint actual = (CGPoint)va_arg(v, CGPoint);
+        obj = [NSValue value:&actual withObjCType:type];
+    } else if (strcmp(type, @encode(CGSize)) == 0) {
+        CGSize actual = (CGSize)va_arg(v, CGSize);
+        obj = [NSValue value:&actual withObjCType:type];
+    } else if (strcmp(type, @encode(CGRect)) == 0) {
+        CGRect actual = (CGRect)va_arg(v, CGRect);
+        obj = [NSValue value:&actual withObjCType:type];
+    } else if (strcmp(type, @encode(UIEdgeInsets)) == 0) {
+        UIEdgeInsets actual = (UIEdgeInsets)va_arg(v, UIEdgeInsets);
+        obj = [NSValue value:&actual withObjCType:type];
+    } else if (strcmp(type, @encode(double)) == 0) {
+        double actual = (double)va_arg(v, double);
+        obj = [NSNumber numberWithDouble:actual];
+    } else if (strcmp(type, @encode(float)) == 0) {
+        float actual = (float)va_arg(v, double);
+        obj = [NSNumber numberWithFloat:actual];
+    } else if (strcmp(type, @encode(int)) == 0) {
+        int actual = (int)va_arg(v, int);
+        obj = [NSNumber numberWithInt:actual];
+    } else if (strcmp(type, @encode(long)) == 0) {
+        long actual = (long)va_arg(v, long);
+        obj = [NSNumber numberWithLong:actual];
+    } else if (strcmp(type, @encode(long long)) == 0) {
+        long long actual = (long long)va_arg(v, long long);
+        obj = [NSNumber numberWithLongLong:actual];
+    } else if (strcmp(type, @encode(short)) == 0) {
+        short actual = (short)va_arg(v, int);
+        obj = [NSNumber numberWithShort:actual];
+    } else if (strcmp(type, @encode(char)) == 0) {
+        char actual = (char)va_arg(v, int);
+        obj = [NSNumber numberWithChar:actual];
+    } else if (strcmp(type, @encode(bool)) == 0) {
+        bool actual = (bool)va_arg(v, int);
+        obj = [NSNumber numberWithBool:actual];
+    } else if (strcmp(type, @encode(unsigned char)) == 0) {
+        unsigned char actual = (unsigned char)va_arg(v, unsigned int);
+        obj = [NSNumber numberWithUnsignedChar:actual];
+    } else if (strcmp(type, @encode(unsigned int)) == 0) {
+        unsigned int actual = (unsigned int)va_arg(v, unsigned int);
+        obj = [NSNumber numberWithUnsignedInt:actual];
+    } else if (strcmp(type, @encode(unsigned long)) == 0) {
+        unsigned long actual = (unsigned long)va_arg(v, unsigned long);
+        obj = [NSNumber numberWithUnsignedLong:actual];
+    } else if (strcmp(type, @encode(unsigned long long)) == 0) {
+        unsigned long long actual =
+        (unsigned long long)va_arg(v, unsigned long long);
+        obj = [NSNumber numberWithUnsignedLongLong:actual];
+    } else if (strcmp(type, @encode(unsigned short)) == 0) {
+        unsigned short actual = (unsigned short)va_arg(v, unsigned int);
+        obj = [NSNumber numberWithUnsignedShort:actual];
+    }
+    return obj;
+}
+#endif
+
+/**
+ *  通过model的属性名，获取model对应的属性值
+ *
+ *  @param model    任意model，或者对象
+ *  @param selector model的成员方法名，可以通过get方式获取到返回值
+ *
+ *  @return 返回OC对像，如果model.selector返回的是C类型，则会转化为NSObject
+ */
+#define WGMODEL_VALUE(__model,__selector) \
+({id __a;\
+do {\
+    _Pragma("clang diagnostic push")\
+    _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")\
+    __a =  WGOBJC([__model performSelector:NSSelectorFromString(__selector)]);\
+    _Pragma("clang diagnostic pop")\
+} while (0);\
+__a;\
+})
 
 #pragma mark -
 /**
@@ -46,38 +113,6 @@
 + (NSString *)getPropertyNameWitmMethod:(SEL )selector;
 
 + (instancetype)modelWithResultSet:(FMResultSet*)rs;
-
-/**
- *  获取protocol的属性名对应的数据库类型名
- *
- *  @param pName    protocol中定义的get方法、或者属性名
- *  @param protocol model存入数据库的桥接协议
- *
- *  @return 存数据库中的数据库cloumn基本类型
- */
-+ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName BridgeProtocol:(Protocol *)protocol;
-
-/**
- *  获取所有column字段名
- *
- *  @param bridgeProtocol model存入数据库的桥接协议
- *  @param modelClass     model的Class
- *  @param excpets        数组中的除外，用于update、insert时
- *  @param hasColumnType  建表时需要，附带column的类型，如  TEXT、BIT等数据库类型
- *
- *  @return <#return value description#>
- */
-+ (NSString *)getColumnsWithBridgeProtocol:(Protocol *)bridgeProtocol
-                                ModelClass:(Class )modelClass
-                                    Except:(NSArray *)excpets
-                            AppendWithType:(BOOL)hasColumnType;
-
-#if DEBUG
-/**
- *  DEBUG测试使用，打印出WGSQLModelHelper中定义的所有属性名对应的property_getAttributes
- */
-+ (void)DEBUG_ShowAllColumnTypesInWGSQLModelHelper;
-#endif
 
 @end
 
