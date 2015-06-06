@@ -33,19 +33,19 @@
 
 #pragma mark - SQL 语句
 /**
- *  根据数组个数，返回对应的 "?,?"字符串
+ *  根据数组，返回对应的 ":WGAuto_USER_ID,:WGAuto_MOBILE"字符串
  */
-- (NSString *)questionMarkWithArray:(NSArray *)array{
-    NSMutableString *questionMark = [NSMutableString string];
+- (NSString *)placeHolderWithArray:(NSArray *)array{
+    NSMutableString *placeHolder = [NSMutableString string];
     for (int i = 0; i < array.count; i++) {
-        [questionMark appendString:@"?,"];
+        [placeHolder appendFormat:@"%@,",[array[i] placeHolder]];
     }
     
-    if ([questionMark hasSuffix:@","]) {
-        [questionMark deleteCharactersInRange:NSMakeRange(questionMark.length-1, 1)];
+    if ([placeHolder hasSuffix:@","]) {
+        [placeHolder deleteCharactersInRange:NSMakeRange(placeHolder.length-1, 1)];
     }
     
-    return questionMark;
+    return placeHolder;
 }
 
 - (NSString *)sql_SelectUserInfoFromTable{
@@ -56,20 +56,18 @@
 }
 - (NSString *)sql_InsertLocalUserInfoIntoTableWithColumns:(NSArray *)columnModels{
     return [NSString
-            stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@) VALUES (%@)",
+            stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES (%@)",
             UserInfoTableName,
-            [self columnNames:columnModels appendColumnType:NO],
-            [self questionMarkWithArray:columnModels]
+            [self placeHolderWithArray:columnModels]
             ];
 }
 - (NSString *)sql_UpdateLastLoginUserInfoIntoTableWithColumns:(NSArray *)columnModels
                                                         Where:(NSString *)where{
     return [NSString
             stringWithFormat:
-            @"UPDATE %@ SET (%@) VALUES (%@) WHERE %@ = ?",
+            @"UPDATE %@ SET VALUES (%@) WHERE %@ = ?",
             UserInfoTableName,
-            [self columnNames:columnModels appendColumnType:NO],
-            [self questionMarkWithArray:columnModels],
+            [self placeHolderWithArray:columnModels],
             where];
 }
 

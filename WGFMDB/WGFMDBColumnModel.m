@@ -162,7 +162,10 @@
 
 #pragma mark -
 @implementation WGFMDBColumnModel
-@synthesize columnType = _columnType,bridgeProtocol=_bridgeProtocol;
+@synthesize
+columnType = _columnType,
+bridgeProtocol = _bridgeProtocol,
+placeHolder = _placeHolder;
 
 + (instancetype)modelWithName:(NSString *)columnName BridgeProtocol:(Protocol *)bridgeProtocol{
     return [[[self class]alloc]initWithName:columnName
@@ -187,6 +190,12 @@
         _columnType = [WGSQLModelHelper getColumnTypeWithPropertyName:_columnName BridgeProtocol:_bridgeProtocol];
     }
     return _columnType;
+}
+- (NSString *)placeHolder{
+    if (!_placeHolder) {
+        _placeHolder = [NSString stringWithFormat:@":%@",_columnName];
+    }
+    return _placeHolder;
 }
 
 #pragma mark -

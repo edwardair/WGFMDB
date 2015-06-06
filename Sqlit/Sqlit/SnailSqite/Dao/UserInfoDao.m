@@ -113,11 +113,7 @@
     
     NSString *sql = [(UserInfoDataBase *)weakSelf.dataBase
                      sql_InsertLocalUserInfoIntoTableWithColumns:columnModels];
-    sql = @"INSERT OR REPLACE INTO USERINFO_TABLE VALUES (?,?,?,?)";
     [self.writableQueue inDatabase:^(FMDatabase *db) {
-        flag = [db executeUpdate:sql withArgumentsInArray:[self arguments:columnModels
-                                                                 Resource:localUserInfoModel]
-                ];
         flag = [db executeUpdate:sql withParameterDictionary:localUserInfoModel.jsonFromModel
                 ];
 

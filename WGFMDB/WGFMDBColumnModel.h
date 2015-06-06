@@ -18,7 +18,7 @@
 @property (nonatomic,strong,readonly) Protocol *bridgeProtocol;
 
 @property (nonatomic,copy,readonly) NSString *columnType;
-
+@property (nonatomic,copy,readonly) NSString *placeHolder;
 /**
  *  获取bridgeProtocol中所有定义的属性数组，
  *

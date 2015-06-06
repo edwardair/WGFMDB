@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WGCategory:
-    :commit: 778806c19e1e89308b66c34f2021deed64ff63cb
+    :commit: fa6d1d34ff2690f6a4c9a5458bcc1bfff9069363
     :git: https://github.com/edwardair/WGCategory.git
 
 SPEC CHECKSUMS:
