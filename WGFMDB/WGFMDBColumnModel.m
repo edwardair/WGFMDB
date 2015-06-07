@@ -197,6 +197,12 @@ placeHolder = _placeHolder;
     }
     return _placeHolder;
 }
+- (NSString *)especialColumnType{
+    if (!_especialColumnType) {
+        _especialColumnType = @"";
+    }
+    return _especialColumnType;
+}
 
 #pragma mark -
 + (NSArray *)getColumnsWithBridgeProtocol:(Protocol *)bridgeProtocol
