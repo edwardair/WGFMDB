@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <FMDB/FMResultSet.h>
-#import <WGCategory/WGDefines.h>
+#import "FMResultSet.h"
+#import "WGDefines.h"
 
 /**
  *  间接获取Model的属性名字，通过Xcode的代码补全功能，对属性名称进行提示

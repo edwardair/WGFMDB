@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
-#import <FMDB/FMDB.h>
+#import "FMDB.h"
 
 #import "WGFilePathModel.h"
 #import "WGFMDBColumnModel.h"
@@ -86,6 +86,10 @@
  *  @return @"WGAuto_USERMOBILE TEXT,WGAuto_LOGIN BIT,..."
  */
 - (NSString *)columnNames:(NSArray *)colmunModels appendColumnType:(BOOL)hasType;
+/**
+ *  根据数组，返回对应的 ":WGAuto_USER_ID,:WGAuto_MOBILE"字符串
+ */
+- (NSString *)placeHolderWithArray:(NSArray *)array;
 
 - (BOOL)open;
 - (void)closeAll;

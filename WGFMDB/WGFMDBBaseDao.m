@@ -7,7 +7,7 @@
 //
 
 #import "WGFMDBBaseDao.h"
-#import <WGCategory/WGDefines.h>
+#import "WGDefines.h"
 
 @interface WGFMDBBaseDao()
 @property (nonatomic,strong) WGFMDBDataBase *dataBase;

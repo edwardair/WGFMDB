@@ -8,7 +8,7 @@
 
 #import "WGFMDBColumnModel.h"
 #import <objc/runtime.h>
-#import <WGCategory/WGDefines.h>
+#import "WGDefines.h"
 #import "NSObject+WGSQLModelHelper.h"
 
 #pragma mark - WGSQL支持的属性转column类型定义

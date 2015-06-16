@@ -7,7 +7,7 @@
 //
 
 #import "WGFMDBDataBase.h"
-#import <WGCategory/WGDefines.h>
+#import "WGDefines.h"
 
 @interface WGFMDBDataBase()
 
@@ -238,6 +238,18 @@
 
 
 #pragma mark - SQL 语句
+- (NSString *)placeHolderWithArray:(NSArray *)array{
+    NSMutableString *placeHolder = [NSMutableString string];
+    for (int i = 0; i < array.count; i++) {
+        [placeHolder appendFormat:@"%@,",[array[i] placeHolder]];
+    }
+    
+    if ([placeHolder hasSuffix:@","]) {
+        [placeHolder deleteCharactersInRange:NSMakeRange(placeHolder.length-1, 1)];
+    }
+    
+    return placeHolder;
+}
 /**
  *  获取建表时所有的column名，包含数据类型字符串
     注：column顺序是随机的
