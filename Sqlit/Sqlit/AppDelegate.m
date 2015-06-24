@@ -36,10 +36,10 @@
         LocalUserInfoModel *model = [[LocalUserInfoModel alloc]init];
         model.WGAuto_MOBILEPHONE = @"138120000";
         model.WGAuto_PASSWORD = @"123456";
-        model.WGAuto_FULLNAME = @"全名";
+//        model.WGAuto_FULLNAME = @"全名";
         model.WGAuto_IDKEY = @180;
-        model.WGAuto_HEADPORTRAIT = @"无头像";
-//        model.aaa = 101;
+//        model.WGAuto_HEADPORTRAIT = @"无头像";
+        model.aaa = 101;
         
         [[[SnailUserInfoManager shared] dao] asyncInsertLocalUserInfo:model];
         

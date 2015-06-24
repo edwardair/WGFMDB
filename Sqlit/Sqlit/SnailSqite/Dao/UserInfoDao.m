@@ -114,7 +114,7 @@
     NSString *sql = [(UserInfoDataBase *)weakSelf.dataBase
                      sql_InsertLocalUserInfoIntoTableWithColumns:columnModels];
     [self.writableQueue inDatabase:^(FMDatabase *db) {
-        flag = [db executeUpdate:sql withParameterDictionary:localUserInfoModel.jsonFromModel
+        flag = [db executeUpdate:sql withParameterDictionary:localUserInfoModel.modelValue
                 ];
 
         if (!flag) {

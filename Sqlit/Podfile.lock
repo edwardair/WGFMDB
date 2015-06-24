@@ -16,11 +16,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WGCategory:
-    :commit: fa6d1d34ff2690f6a4c9a5458bcc1bfff9069363
+    :commit: b8ea8bdbbcc7821c9c5df75ca302fcd1705f6e4e
     :git: https://github.com/edwardair/WGCategory.git
 
 SPEC CHECKSUMS:
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
-  WGCategory: 9ee48a5a5f4791bb8db8d7a8c047cb50882a83bd
+  WGCategory: 004b8ddffb3bed3f5b3bc5f4614c49beed8b5dc0
 
 COCOAPODS: 0.37.1
