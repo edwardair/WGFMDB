@@ -8,11 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "WGFilePathModel.h"
+#import "WGEasyEspecialColumnTypeProtocol.h"
+#import "WGFMDBDataBase.h"
+#import "WGFMDBDataBase+SQLAppend.h"
+
+
+
 @interface NSObject(WGEasyManager)
 /**
 *  开库、建表、增加表中没有的字段都会在此时完成，多个表时需要多次调用此方法
 *
-*  @param pathModel 数据库文件路径model，
+*  @param pathModel 数据库文件路径model，默认为Tmp
                     注：以下相同不相同是相对于内部封装而言的，使用时无需特殊处理
                     1、当路径相同，class相同或者不相同，重复开库无效，但会相应检测table及column是否存在
                     2、当路径不同，class不相同，将正常开库，需要手动调用resignTable
@@ -53,6 +59,14 @@
  */
 - (BOOL)updateIntoTableUsingKeys:(NSArray *)keys;
 /**
+ *  条件查询
+ *
+ *  @param keys model的属性名称数组，select条件查询需要
+ *
+ *  @return 成功、失败
+ */
++ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(kQueryOrderBy )orderBy;
+/**
  *  将keys条件查询得到的数据从表中移除
  *
  *  @param keys model的属性名称数组，select条件查询需要
@@ -61,18 +75,7 @@
  */
 - (BOOL)deleteFromTableUsingKeys:(NSArray *)keys;
 
+#pragma mark - 未支持的sql操作暂时使用原生sql语句
+- (BOOL)executeWithModel:(id )model executeBlock:(BOOL (^)(FMDatabase *db_))block;
 @end
 
-
-/**
- *  需某个model需要在建表时，特殊定制某些字段，则引用此协议并实现相应方法
- */
-@protocol WGEasyEspecialColumnType <NSObject>
-/**
- *  定制column的特殊类型，如 PRMARY KEY,FOREIGN KEY,etc...
- *
- *  @return @{@"属性名":@"PRMARY KEY"}
- */
-- (NSDictionary *)especialColumnType;
-
-@end

@@ -16,7 +16,7 @@
 
 #pragma mark - WGFMDBBaseDaoProtocol required
 - (void)setupDataBase{
-    [self setupDataBase:[WGFMDBDataBase shared]];
+
 }
 
 #pragma mark - WGFMDBBaseDaoProtocol optional
@@ -81,7 +81,7 @@
 
 - (WGFMDBDataBase *)dataBase{
     if (!_dataBase) {
-        _dataBase = [WGFMDBDataBase shared];
+//        _dataBase = [WGFMDBDataBase shared];
     }
     return _dataBase;
 }

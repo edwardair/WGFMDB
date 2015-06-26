@@ -8,15 +8,19 @@
 
 #import "WGFMDBDataBase.h"
 #import "WGDefines.h"
+#import "WGEasyEspecialColumnTypeProtocol.h"
+#import "WGFMDBDataBase+SQLAppend.h"
 
 @interface WGFMDBDataBase()
 
-@property(nonatomic, strong) FMDatabaseQueue *writableQueue;
-@property(nonatomic, strong) FMDatabaseQueue *readOnlyQueue;
+@property(nonatomic, strong) FMDatabaseQueue *writeableQueue;
+@property(nonatomic, strong) FMDatabaseQueue *readonlyQueue;
 
-@property (nonatomic,assign) BOOL isOpened;//是否已打开
+//是否已打开
+@property(nonatomic, assign) BOOL isOpened;
 
-@property (nonatomic,strong) WGFilePathModel *lastFilePath;//记录上一次dataBase的路径，方便下一次开库前检测路径是否更改
+//记录上一次dataBase的路径，方便下一次开库前检测路径是否更改
+@property(nonatomic, strong) WGFilePathModel*lastFilePath;
 
 @end
 
@@ -26,15 +30,6 @@
 @synthesize pathModel = _pathModel;
 
 #pragma mark - outer methods
-+ (instancetype)shared{
-    static id defaultDataBase;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        defaultDataBase = [[[self class] alloc]init];
-    });
-    return defaultDataBase;
-}
-
 - (BOOL)open{
     @synchronized(self){
         
@@ -51,9 +46,6 @@
             
         }
         
-        //先检测db文件是否存在，不存在，后面需要初始化db的数据库
-        BOOL isDBFileExist = [self isDBFileExist];
-
         //初始化成功，则db文件默认已存在
         if (![self setupDatabaseQueue]) {
             return NO;
@@ -64,37 +56,22 @@
         NSAssert([self isDBFileExist], @"databaseQueue初始化成功，但是检测db文件不存在");
 #endif
         
-        //以下操作都为数据库打开状态，在 数据库操作 失败后，需要关闭库、及相应的清空数据操作
-
-        //数据库文件不存在情况下，需要创建需要的表
-        if (!isDBFileExist) {
-            if (![self onCreateTable:self.writableQueue]) {
-                [self closeAndRemoveDBFile];
-                return NO;
-            }
-        }
-        else{
-            //数据库存在状态，检测表字段是否存在，不存在，则增加column
-            [self appendTableColumnIfNotExist];
-        }
-
         _isOpened = YES;
         
+        return _isOpened;
+
     }
-    
-    
-    return YES;
 }
 
 - (void)closeAll{
     @synchronized(self) {
-        if (self.writableQueue) {
-            [self.writableQueue close];
-            self.writableQueue = nil;
+        if (self.writeableQueue) {
+            [self.writeableQueue close];
+            self.writeableQueue = nil;
         }
-        if (self.readOnlyQueue) {
-            [self.readOnlyQueue close];
-            self.readOnlyQueue = nil;
+        if (self.readonlyQueue) {
+            [self.readonlyQueue close];
+            self.readonlyQueue = nil;
         }
 
         _isOpened = NO;
@@ -116,15 +93,14 @@
 #pragma mark - getter
 - (FMDatabaseQueue *)readonlyQueue{
     @synchronized(self){
-        return _readOnlyQueue;
+        return _readonlyQueue;
     }
 }
 - (FMDatabaseQueue *)writeableQueue{
     @synchronized(self){
-        return _writableQueue;
+        return _writeableQueue;
     }
 }
-
 
 - (WGFilePathModel *)pathModel{
     if (!_pathModel) {
@@ -135,9 +111,13 @@
 }
 - (void)setPathModel:(WGFilePathModel *)pathModel{
     //临时赋值给_lastFilePath，以便记录上一次更改状态
-    _lastFilePath = _pathModel;
-    
-    _pathModel = pathModel;
+    if (!_pathModel) {
+        _pathModel = pathModel;
+        _lastFilePath = _pathModel;
+    }else{
+        _lastFilePath = _pathModel;
+        _pathModel = pathModel;
+    }
 }
 
 
@@ -148,21 +128,21 @@
 
 - (BOOL )setupDatabaseQueue{
     @synchronized(self){
-        if (!_readOnlyQueue) {
+        if (!_readonlyQueue) {
             FMDatabase *db = [self getDB];
             if (!db) {
                 return NO;
             }
 
-            _readOnlyQueue = [FMDatabaseQueue databaseQueueWithPath:db.databasePath];
+            _readonlyQueue = [FMDatabaseQueue databaseQueueWithPath:db.databasePath];
         }
         
-        if (!_writableQueue) {
+        if (!_writeableQueue) {
             FMDatabase *db = [self getDB];
             if (!db) {
                 return NO;
             }
-            _writableQueue = [FMDatabaseQueue databaseQueueWithPath:db.databasePath];
+            _writeableQueue = [FMDatabaseQueue databaseQueueWithPath:db.databasePath];
 
         }
         
@@ -171,55 +151,51 @@
 }
 
 
-#pragma mark - Initializer
-#pragma mark - 需要子类实现具体方法  必须overwrite
-- (NSString *)getTableName{
-    NSAssert(0, @"需子类返回表名");
-    return @"";
-}
-- (Protocol *)getModelBridgeToDBColumnProtocol{
-    NSAssert(0, @"需要子类实现");
-    return @protocol(WGFMDBBridgeProtocol);
-}
-
-
 #pragma mark - 需要子类实现具体方法  一般无须overwrite
-- (BOOL)onCreateTable:(FMDatabaseQueue *)dbQueue{
+- (BOOL)createTable:(Class)tableClass InDataBase:(FMDatabase *)db{
+    //重复调用open，不会引起重复开库
+    if (![self open]) {
+        WGLogError(@"建表前，尝试开库失败！！");
+        return NO;
+    }
     
     __block BOOL flag = NO;
-    [dbQueue inDatabase:^(FMDatabase *db) {
-        NSString *sql = [self SQL_GetTableCreatString];
+    if ([db tableExists:NSStringFromClass(tableClass)]) {
+        flag = [self appendTableColumnIfNotExistWithOwnClass:tableClass InDataBase:db];
+    }else{
+        NSString *sql = [self sql_getTableCreatStringWithOwnClass:tableClass];
         
         flag = [db executeUpdate:sql];
-        
-    }];
+    }
     
     return flag;
     
 }
 
-- (void)appendTableColumnIfNotExist{
+- (BOOL)appendTableColumnIfNotExistWithOwnClass:(Class )ownClass InDataBase:(FMDatabase *)db{
     u_int outCount;
-    objc_property_t *properties = protocol_copyPropertyList([self getModelBridgeToDBColumnProtocol], &outCount);
-
-    [self.writableQueue inDatabase:^(FMDatabase *db) {
-        for (int i = 0; i < outCount; i++) {
-            const char *protocolName_CStr = property_getName(properties[i]);
-            NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
-            if (![db columnExists:protocolName
-                  inTableWithName:[self getTableName]]) {
-                NSString *sql = [self SQL_GetAddANewColumnWithName:protocolName];
-                
-               BOOL scuess = [db executeUpdate:sql];
-                if (!scuess) {
-                    WGLogFormatError(@"表增加字段：%@失败",protocolName);
-                }
+    objc_property_t *properties = class_copyPropertyList(ownClass, &outCount);
+    BOOL success = YES;
+    for (int i = 0; i < outCount; i++) {
+        const char *propertyName_CStr = property_getName(properties[i]);
+        NSString *propertyName = [NSString stringWithUTF8String:propertyName_CStr];
+        if (![db columnExists:propertyName
+              inTableWithName:NSStringFromClass(ownClass)]) {
+            NSString *sql = [self sql_getAddANewColumnWithName:propertyName OwnClass:ownClass];
+            
+            success = [db executeUpdate:sql];
+            
+            if (!success) {
+                WGLogFormatError(@"表增加字段：%@失败",propertyName);
+                return NO;
             }
         }
-    }];
+    }
     free(properties);
+    return success;
 }
 
+#pragma mark -
 - (FMDatabase *)getDB{
     FMDatabase *db = [FMDatabase databaseWithPath:self.pathModel.fullPath];
     if (!db) {
@@ -237,60 +213,6 @@
 }
 
 
-#pragma mark - SQL 语句
-- (NSString *)placeHolderWithArray:(NSArray *)array{
-    NSMutableString *placeHolder = [NSMutableString string];
-    for (int i = 0; i < array.count; i++) {
-        [placeHolder appendFormat:@"%@,",[array[i] placeHolder]];
-    }
-    
-    if ([placeHolder hasSuffix:@","]) {
-        [placeHolder deleteCharactersInRange:NSMakeRange(placeHolder.length-1, 1)];
-    }
-    
-    return placeHolder;
-}
-/**
- *  获取建表时所有的column名，包含数据类型字符串
-    注：column顺序是随机的
- */
-- (NSString *)columnNames:(NSArray *)colmunModels appendColumnType:(BOOL)hasType{
-    NSMutableString *str = @"".mutableCopy;
-    for (WGFMDBColumnModel *model_ in colmunModels) {
-        if (hasType) {
-            [str appendFormat:@"%@ %@,",model_.columnName,model_.columnType];
-        }else{
-            [str appendFormat:@"%@,",model_.columnName];
-        }
-    }
-    if ([str hasSuffix:@","]) {
-        [str deleteCharactersInRange:NSMakeRange(str.length-1, 1)];
-    }
-    return str;
-}
-/**
- *  获取建表SQL
- */
-- (NSString *)SQL_GetTableCreatString {
-    //??? : 是否可以创建空表？？
-    return [NSString
-            stringWithFormat:
-            @"CREATE TABLE IF NOT EXISTS %@ (%@)", [self getTableName],
-            [self columnNames:[WGFMDBColumnModel
-                               getColumnsWithBridgeProtocol:
-                               [self getModelBridgeToDBColumnProtocol]
-                               Except:nil]
-             appendColumnType:YES]];
-}
-
-
-- (NSString *)SQL_GetAddANewColumnWithName:(NSString *)columnName{
-    WGFMDBColumnModel *model_ = [WGFMDBColumnModel modelWithName:columnName BridgeProtocol:[self getModelBridgeToDBColumnProtocol]];
-    return [NSString
-            stringWithFormat:
-            @"ALTER TABLE %@ ADD %@ %@", [self getTableName], columnName,
-            model_.columnType];
-}
 
 
 @end

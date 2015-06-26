@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 #import "WGDefines.h"
 #import "NSObject+WGSQLModelHelper.h"
+#import "WGEasyEspecialColumnTypeProtocol.h"
 
 #pragma mark - WGSQL支持的属性转column类型定义
 @interface WGSQLModelHelper : NSObject
@@ -17,40 +18,18 @@
 /**
  *  如果属性名以  "_WG_**"结尾，在转化column类型时需要去掉
  */
-@property NSString *TEXT_WG_String;
-@property NSNumber *TEXT_WG_Number;
+@property NSString *TEXT$String;
+@property NSNumber *TEXT$Number;
 
 @property int INT;
-@property NSInteger INT_WG_Integer;
+@property NSInteger INT$Integer;
 
 @property float FLOAT;
-@property NSTimeInterval FLOAT_WG_TimeInterval;
+@property NSTimeInterval FLOAT$TimeInterval;
 
 @property double DOUBLE;
 
 @property BOOL BIT;
-
-/**
- *  获取protocol的属性名对应的数据库类型名
- *
- *  @param pName    protocol中定义的get方法、或者属性名
- *  @param protocol model存入数据库的桥接协议
- *
- *  @return 存数据库中的数据库cloumn基本类型
- */
-+ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName BridgeProtocol:(Protocol *)protocol;
-
-/**
- *  获取所有column字段名
- *
- *  @param bridgeProtocol model存入数据库的桥接协议
- *  @param excpets        数组中的除外，用于update、insert时
- *  @param hasColumnType  建表时需要，附带column的类型，如  TEXT、BIT等数据库类型
- *
- */
-+ (NSString *)getColumnsWithBridgeProtocol:(Protocol *)bridgeProtocol
-                                    Except:(NSArray *)excpets
-                            AppendWithType:(BOOL)hasColumnType;
 
 @end
 
@@ -71,14 +50,15 @@
 }
 
 + (void)load{
+    WGLogMsg(@"当前编译环境为DEBUG，将会打印WGSQLModel所支持的属性类型");
     [self DEBUG_ShowAllColumnTypesInWGSQLModelHelper];
 }
 #endif
 
 #pragma mark - 数据库column相关
-+ (objc_property_t )propertyInProtocol:(Protocol *)protocol WithName:(NSString *)pName{
++ (objc_property_t )propertyInClass:(Class )class WithName:(NSString *)pName{
     u_int outCount;
-    objc_property_t *properties  = protocol_copyPropertyList(protocol, &outCount);
+    objc_property_t *properties  = class_copyPropertyList(class, &outCount);
     objc_property_t p;
     for (int i = 0; i < outCount; i++) {
         const char *tmp = property_getName(properties[i]);
@@ -96,7 +76,7 @@
 /**
  *  截取const char*，以第一个','为前缀的字符串
  *
- *  @param property_attributes <#property_attributes description#>
+ *  @param property_attributes
  *
  *  @return 需要调用者调用 free(char *)
  */
@@ -109,18 +89,18 @@
     return prefix;
 }
 
-+ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName BridgeProtocol:(Protocol *)protocol{
++ (NSString *)getColumnTypeWithPropertyName:(NSString *)pName OwnClass:(Class )ownClass{
     
 #if DEBUG
     if ([[NSString handleNetString:pName] isEqualToString:WGNull]) {
         WGLogError(@"pName不可为空");
     }
-    if (!protocol) {
-        WGLogError(@"bridge protocol不可为nil");
+    if (ownClass==Nil) {
+        WGLogError(@"ownClass不可为Nil");
     }
 #endif
     
-    const char *columnPropertyAttributes = property_getAttributes([self propertyInProtocol:protocol WithName:pName]);
+    const char *columnPropertyAttributes = property_getAttributes([self propertyInClass:ownClass WithName:pName]);
     
     //以 ','  号分割的第一个字符串
     char *column_pre = [self propertyAttributesPrefixWithAttributes:columnPropertyAttributes];
@@ -139,7 +119,7 @@
             free(tmp_pre);
             type = [NSString stringWithUTF8String:property_getName(properties[i])];
             //如果type有 "_WG_**"后缀，需要去掉
-            type = [type componentsSeparatedByString:@"_WG_"].firstObject;
+            type = [type componentsSeparatedByString:@"$"].firstObject;
             
             break;
             
@@ -157,25 +137,41 @@
     
     return type;
 }
-
++ (NSString *)getEspecialColumnTypeWithPropertyName:(NSString *)pName OwnClass:(Class )ownClass{
+#if DEBUG
+    if ([[NSString handleNetString:pName] isEqualToString:WGNull]) {
+        WGLogError(@"pName不可为空");
+    }
+    if (ownClass==Nil) {
+        WGLogError(@"ownClass不可为Nil");
+    }
+#endif
+    
+    if ([ownClass conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)] && [ownClass instancesRespondToSelector:@selector(especialColumnType)]) {
+        NSDictionary *especialColumnType = [ownClass especialColumnType];
+        return [NSString handleNetString:especialColumnType[pName]];
+    }else{
+        return @"";
+    }
+    
+}
 @end
 
 #pragma mark -
 @implementation WGFMDBColumnModel
 @synthesize
+especialColumnType = _especialColumnType,
 columnType = _columnType,
-bridgeProtocol = _bridgeProtocol,
 placeHolder = _placeHolder;
 
-+ (instancetype)modelWithName:(NSString *)columnName BridgeProtocol:(Protocol *)bridgeProtocol{
-    return [[[self class]alloc]initWithName:columnName
-                             BridgeProtocol:bridgeProtocol];
++ (instancetype)modelWithName:(NSString *)columnName OwnClass:(Class)class{
+    return [[[self class]alloc]initWithName:columnName OwnClass:class];
 }
 
-- (id)initWithName:(NSString *)columnName BridgeProtocol:(Protocol *)bridgeProtocol{
+- (id)initWithName:(NSString *)columnName OwnClass:(Class)class{
     if (self=[super init]) {
         _columnName = columnName;
-        _bridgeProtocol = bridgeProtocol;
+        _ownClass = class;
     }
     return self;
 }
@@ -187,7 +183,7 @@ placeHolder = _placeHolder;
             WGLogError(@"WGFMDBColumnModel._columnName不可为空");
             return @"";
         }
-        _columnType = [WGSQLModelHelper getColumnTypeWithPropertyName:_columnName BridgeProtocol:_bridgeProtocol];
+        _columnType = [WGSQLModelHelper getColumnTypeWithPropertyName:_columnName OwnClass:_ownClass];
     }
     return _columnType;
 }
@@ -199,22 +195,22 @@ placeHolder = _placeHolder;
 }
 - (NSString *)especialColumnType{
     if (!_especialColumnType) {
-        _especialColumnType = @"";
+        _especialColumnType = [WGSQLModelHelper getEspecialColumnTypeWithPropertyName:_columnName
+                                                                             OwnClass:_ownClass];
     }
     return _especialColumnType;
 }
 
 #pragma mark -
-+ (NSArray *)getColumnsWithBridgeProtocol:(Protocol *)bridgeProtocol
-                                    Except:(NSArray *)excpets{
++ (NSArray *)getColumnsWithClass:(Class)class Excepts:(NSArray *)excepts{
 #if DEBUG
-    if (!bridgeProtocol) {
-        WGLogError(@"bridge protocol不可为nil");
+    if (class==Nil) {
+        WGLogError(@"class不可为nil");
     }
 #endif
     
     u_int outCount;
-    objc_property_t *properties = protocol_copyPropertyList(bridgeProtocol, &outCount);
+    objc_property_t *properties = class_copyPropertyList(class, &outCount);
     NSMutableArray *propertyArray = @[].mutableCopy;
     //获取所有字段名
     for (int i = 0; i < outCount; i++) {
@@ -222,15 +218,24 @@ placeHolder = _placeHolder;
         NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
         [propertyArray addObject:protocolName];
     }
-    //过滤
-    if (excpets.count) {
-        [propertyArray removeObjectsInArray:excpets];
+    
+    //过滤不需要存入数据库的字段
+    if (excepts) {
+        [propertyArray removeObjectsInArray:excepts];
+    }
+
+    excepts = nil;
+    if ([class conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)]) {
+        if ([class instancesRespondToSelector:@selector(excpets)]) {
+            excepts = [class excpets];
+            [propertyArray removeObjectsInArray:excepts];
+        }
     }
     
     //遍历，组成字符串
     NSMutableArray *models = @[].mutableCopy;
     for (NSString *name in propertyArray) {
-        [models addObject:[WGFMDBColumnModel modelWithName:name BridgeProtocol:bridgeProtocol]];
+        [models addObject:[WGFMDBColumnModel modelWithName:name OwnClass:class]];
     }
     
     return models;
