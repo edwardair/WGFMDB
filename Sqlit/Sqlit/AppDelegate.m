@@ -69,7 +69,7 @@
     [m insertIntoTable];
     
     m.WGAuto_PASSWORD = @"654321";
-    [m updateIntoTableUsingKeys:@[WGPNAME(WGAuto_PASSWORD)]];
+    [m updateIntoTableWhere:@{WGPNAME(WGAuto_MOBILEPHONE):@"13888887777"}];
     
 }
 //- (void)test{

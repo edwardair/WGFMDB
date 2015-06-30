@@ -84,6 +84,8 @@
                                             Where:(NSDictionary *)where
                                          OwnClass:(Class )ownClass{
     
+    return @"UPDATE LocalUserInfoModel SET (aaa,WGAuto_FULLNAME,WGAuto_IDKEY,WGAuto_PASSWORD) VALUES (:aaa,:WGAuto_FULLNAME,:WGAuto_IDKEY,:WGAuto_PASSWORD) WHERE WGAuto_MOBILEPHONE = ?";
+    
     NSString *sql = [NSString
                      stringWithFormat:
                      @"UPDATE %@ SET (%@) VALUES (%@)",
@@ -91,11 +93,12 @@
                      [self columnNamesWithArray:columnModels],
                      [self placeHolderWithArray:columnModels]];
     
-    for (int i = 0; i < where.count; i++) {
+    NSArray *keys = where.allKeys;
+    for (int i = 0; i < keys.count; i++) {
         if (i==0) {
             sql = [sql stringByAppendingString:@" WHERE "];
         }
-        sql = [sql stringByAppendingFormat:@"%@ = ?",where[i]];
+        sql = [sql stringByAppendingFormat:@"%@ = ?",keys[i]];
         if (i<where.count-1) {
             sql = [sql stringByAppendingString:@","];
         }
