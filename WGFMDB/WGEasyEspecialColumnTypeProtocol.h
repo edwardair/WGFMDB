@@ -17,6 +17,7 @@
  */
 + (NSDictionary *)especialColumnType;
 /**
+ *  全局过滤不需要存入数据库中的属性字段
  *  @return model中不需要存入数据库的属性名数组
  */
 + (NSArray *)excpets;

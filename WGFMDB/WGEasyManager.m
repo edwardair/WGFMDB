@@ -11,9 +11,9 @@
 #import "NSObject+WGModelValue.h"
 @interface WGEasyManager : NSObject
 
-#define DATABASE(dbBase,filepath) @{@"database":dbBase,@"filepath":filepath}
-#define dbBase(database) database[@"database"]
-#define filePath(database) database[@"filepath"]
+#define DATABASEINFO(dbBase,filepath) @{@"database":dbBase,@"filepath":filepath}
+#define DATABASE(database) database[@"database"]
+#define FILEPATH(database) database[@"filepath"]
 
 /**
  *  @{className:DATABASE}
@@ -54,8 +54,8 @@
         WGFilePathModel *existPathModel;
         WGFMDBDataBase *existDbBase;
         if (dataBase) {
-            existPathModel = filePath(dataBase);
-            existDbBase = dbBase(dataBase);
+            existPathModel = FILEPATH(dataBase);
+            existDbBase = DATABASE(dataBase);
             isClassRegisted = YES;
         }
         
@@ -102,7 +102,7 @@
     
     if (success) {
         //存入临时数组
-        [_DBs setObject:DATABASE(dataBase, pathModel) forKey:NSStringFromClass(ownClass)];
+        [_DBs setObject:DATABASEINFO(dataBase, pathModel) forKey:NSStringFromClass(ownClass)];
     }
     
     return success;
@@ -118,11 +118,11 @@
     if (exist) {
         [_DBs removeObjectForKey:NSStringFromClass(class)];
         
-        WGFMDBDataBase *existDbBase = dbBase(exist);
+        WGFMDBDataBase *existDbBase = DATABASE(exist);
         BOOL close = YES;
         //检测_DBs中，是否还存在相同的existDbBase
         for (NSDictionary *e in _DBs.allValues) {
-            WGFMDBDataBase *dbBase = dbBase(e);
+            WGFMDBDataBase *dbBase = DATABASE(e);
             if ([dbBase isEqual:existDbBase]) {
                 close = NO;
                 break;
@@ -149,7 +149,7 @@
     
     Class ownClass = [model class];
     
-    WGFMDBDataBase *dataBase = dbBase(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
     if (!dataBase) {
         WGLogError(@"dataBase 不存在，无法使用数据库");
         return NO;
@@ -161,12 +161,18 @@
         WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",NSStringFromClass(ownClass));
         return NO;
     }
+    //二次过滤model属性对应的值为空时，对应的key将不存在字典中，此时需要将columnModels中对应的过滤掉
+    NSDictionary *modelValue = [model modelValue];
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(WGFMDBColumnModel *evaluatedObject, NSDictionary *bindings) {
+        return [modelValue.allKeys containsObject:evaluatedObject.columnName];
+    }];
+    columnModels = [columnModels filteredArrayUsingPredicate:predicate];
     
     __block BOOL flag = NO;
     NSString *sql = [dataBase sql_insertModelIntoTableWithColumns:columnModels
                                                          OwnClass:ownClass];
     [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
-        flag = [db executeUpdate:sql withParameterDictionary:[model modelValue]
+        flag = [db executeUpdate:sql withParameterDictionary:modelValue
                 ];
         
         if (!flag) {
@@ -176,34 +182,31 @@
     }];
     
     return flag;
-    
-    return NO;
 }
-- (BOOL)updateIntoTableWithModel:(id )model UsingKeys:(NSArray *)keys{
+- (BOOL)updateIntoTableWithModel:(id )model Where:(NSDictionary *)keyValues{
     if (!model) {
+        WGLogError(@"存储的model不存在");
         return NO;
     }
     
     Class ownClass = [model class];
     
-    WGFMDBDataBase *dataBase = dbBase(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
     if (!dataBase) {
+        WGLogError(@"dataBase不存在，无法使用数据库");
         return NO;
     }
     
-    NSMutableArray *columnModels = @[].mutableCopy;
-    for (NSString *key in keys) {
-        [columnModels addObject:[WGFMDBColumnModel modelWithName:key OwnClass:ownClass]];
-    }
+    NSArray *columnModels = [WGFMDBColumnModel getColumnsWithClass:ownClass Excepts:nil];
     
     if (columnModels.count==0) {
         WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",NSStringFromClass(ownClass));
         return NO;
     }
     
-    __block BOOL flag = NO;//UPDATE %@ SET %@ = ? WHERE %@ = ?"
+    __block BOOL flag = NO;
     NSString *sql = [dataBase sql_updateModelIntoTableWithColumns:columnModels
-                                                            Where:keys
+                                                            Where:keyValues
                                                          OwnClass:ownClass];
     [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
         flag = [db executeUpdate:sql withParameterDictionary:[model modelValue]
@@ -222,7 +225,7 @@
         return nil;
     }
     
-    WGFMDBDataBase *dataBase = dbBase(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
     if (!dataBase) {
         return nil;
     }
@@ -247,7 +250,7 @@
     
     Class ownClass = [model class];
     
-    WGFMDBDataBase *dataBase = dbBase(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
     if (!dataBase) {
         return NO;
     }
@@ -276,7 +279,7 @@
     
     Class ownClass = [model class];
     
-    WGFMDBDataBase *dataBase = dbBase(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
     if (!dataBase) {
         return NO;
     }
@@ -312,8 +315,11 @@
 - (BOOL)insertIntoTableExceptKeys:(NSArray *)keys{
     return [[WGEasyManager shared]insertIntoTableWithModel:self ExceptKeys:keys];
 }
-- (BOOL)updateIntoTableUsingKeys:(NSArray *)keys{
-    return [[WGEasyManager shared]updateIntoTableWithModel:self UsingKeys:keys];
+- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues{
+    return [[WGEasyManager shared]updateIntoTableWithModel:self Where:keyValues];
+}
+- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues OnlyUpdateThese:(NSArray *)keys{
+    return [[WGEasyManager shared]updateIntoTableWithModel:self Where:keyValues];
 }
 + (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(kQueryOrderBy)orderBy{
     return [[WGEasyManager shared]selectFromTableWithOwnClass:self UsingKeyValues:keyValues OrderBy:(kQueryOrderBy)orderBy];

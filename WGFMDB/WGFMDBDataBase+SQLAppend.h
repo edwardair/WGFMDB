@@ -68,7 +68,7 @@ column顺序是按照model中的属性声明顺序，一旦表创建过，model�
  *
  */
 - (NSString *)sql_updateModelIntoTableWithColumns:(NSArray *)columnModels
-                                            Where:(NSArray *)where
+                                            Where:(NSDictionary *)where
                                          OwnClass:(Class )ownClass;
 /**
  *  查询

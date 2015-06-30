@@ -24,6 +24,19 @@
     }
     return str;
 }
+
+- (NSString *)columnNamesWithArray:(NSArray *)array{
+    NSMutableString *columns = [NSMutableString string];
+    for (int i = 0; i < array.count; i++) {
+        [columns appendFormat:@"%@,",[array[i] columnName]];
+    }
+    
+    if ([columns hasSuffix:@","]) {
+        [columns deleteCharactersInRange:NSMakeRange(columns.length-1, 1)];
+    }
+    
+    return columns;
+}
 - (NSString *)placeHolderWithArray:(NSArray *)array{
     NSMutableString *placeHolder = [NSMutableString string];
     for (int i = 0; i < array.count; i++) {
@@ -61,20 +74,22 @@
 #pragma mark - 插入model
 - (NSString *)sql_insertModelIntoTableWithColumns:(NSArray *)columnModels OwnClass:(Class )ownClass{
     return [NSString
-            stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES (%@)",
+            stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@)  VALUES (%@)",
             NSStringFromClass(ownClass),
+            [self columnNamesWithArray:columnModels],
             [self placeHolderWithArray:columnModels]
             ];
 }
 - (NSString *)sql_updateModelIntoTableWithColumns:(NSArray *)columnModels
-                                            Where:(NSArray *)where
+                                            Where:(NSDictionary *)where
                                          OwnClass:(Class )ownClass{
     
     NSString *sql = [NSString
-            stringWithFormat:
-            @"UPDATE %@ SET VALUES (%@)",
-            NSStringFromClass(ownClass),
-            [self placeHolderWithArray:columnModels]];
+                     stringWithFormat:
+                     @"UPDATE %@ SET (%@) VALUES (%@)",
+                     NSStringFromClass(ownClass),
+                     [self columnNamesWithArray:columnModels],
+                     [self placeHolderWithArray:columnModels]];
     
     for (int i = 0; i < where.count; i++) {
         if (i==0) {
@@ -122,11 +137,11 @@
             break;
         }
     }
-
+    
     return sql;
 }
 - (NSString *)sql_deleteModelFromTableWhere:(NSArray *)where
-                                         OwnClass:(Class )ownClass{
+                                   OwnClass:(Class )ownClass{
     NSString *sql = [NSString
                      stringWithFormat:
                      @"DELETE FROM %@",

@@ -20,9 +20,11 @@
 @property (nonatomic,assign) int aaa;
 //通用
 @property (nonatomic,copy) NSString *WGAuto_MOBILEPHONE;
-@property (nonatomic,copy) NSString *WGAuto_PASSWORD;
 @property (nonatomic,copy) NSString *WGAuto_FULLNAME;
+
 @property (nonatomic,strong) NSNumber *WGAuto_IDKEY;
+@property (nonatomic,copy) NSString *WGAuto_PASSWORD;
+
 @end
 @implementation LocalUserInfoModel
 //+ (NSDictionary *)especialColumnType{
@@ -55,7 +57,7 @@
     m.aaa = 11;
     m.WGAuto_MOBILEPHONE = @"13888887777";
     m.WGAuto_PASSWORD = @"123456";
-    m.WGAuto_FULLNAME = @"全名";
+//    m.WGAuto_FULLNAME = @"全名";
     m.WGAuto_IDKEY = @12;
 
     [LocalUserInfoModel registerTableAtPath:^WGFilePathModel *{

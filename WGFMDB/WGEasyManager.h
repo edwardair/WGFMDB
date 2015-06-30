@@ -13,7 +13,6 @@
 #import "WGFMDBDataBase+SQLAppend.h"
 
 
-
 @interface NSObject(WGEasyManager)
 /**
 *  开库、建表、增加表中没有的字段都会在此时完成，多个表时需要多次调用此方法
@@ -51,13 +50,22 @@
  */
 - (BOOL)insertIntoTableExceptKeys:(NSArray *)keys;
 /**
- *  更新keys条件查询得到的数据
+ *  更新数据库，将把[model modelValue]中所有值更新进数据库
  *
- *  @param keys model的属性名称数组，select条件查询需要
+ *  @param keyValues 查询条件
  *
  *  @return 成功、失败
  */
-- (BOOL)updateIntoTableUsingKeys:(NSArray *)keys;
+- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues;
+/**
+ *  更新数据库
+ *
+ *  @param keyValues 查询条件
+ *  @param keys      只针对keys中包含的字段进行更新
+ *
+ *  @return 成功、失败
+ */
+- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues OnlyUpdateThese:(NSArray *)keys;
 /**
  *  条件查询
  *
