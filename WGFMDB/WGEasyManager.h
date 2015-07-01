@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "WGFilePathModel.h"
-#import "WGEasyEspecialColumnTypeProtocol.h"
 #import "WGFMDBDataBase.h"
 #import "WGFMDBDataBase+SQLAppend.h"
+#import "WGEasyEspecialColumnTypeProtocol.h"
 
 
 @interface NSObject(WGEasyManager)

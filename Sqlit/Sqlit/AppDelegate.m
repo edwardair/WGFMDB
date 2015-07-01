@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "WGFMDB.h"
-#import "WGEasyManager.h"
 
 @interface AA : NSObject
 @property (nonatomic,copy) NSString *test;

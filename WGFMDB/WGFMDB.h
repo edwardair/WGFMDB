@@ -9,10 +9,5 @@
 #ifndef WGFMDB_h
 #define WGFMDB_h
 
-#import "WGFilePathModel.h"
-
-#import "NSObject+WGSQLModelHelper.h"
-#import "WGFMDBBaseDao.h"
-#import "WGFMDBDataBase.h"
-
+#import "WGEasyManager.h"
 #endif

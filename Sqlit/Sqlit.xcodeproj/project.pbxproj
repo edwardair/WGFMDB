@@ -16,7 +16,6 @@
 		F78CF0E41B2298AD00540A8A /* WGFMDBColumnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78CF0E31B2298AD00540A8A /* WGFMDBColumnModel.m */; };
 		F7A4FA581B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */; };
 		F7A4FA5A1B1D74C900B84A4E /* WGFilePathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */; };
-		F7A4FA5C1B1D74C900B84A4E /* WGFMDBBaseDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA551B1D74C900B84A4E /* WGFMDBBaseDao.m */; };
 		F7A4FA5E1B1D74C900B84A4E /* WGFMDBDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */; };
 		F7A836BA1B3D20A9008E2832 /* UserInfoDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B01B3D20A9008E2832 /* UserInfoDao.m */; };
 		F7A836BB1B3D20A9008E2832 /* UserInfoDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B31B3D20A9008E2832 /* UserInfoDataBase.m */; };
@@ -53,8 +52,6 @@
 		F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFilePathModel.h; sourceTree = "<group>"; };
 		F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFilePathModel.m; sourceTree = "<group>"; };
 		F7A4FA531B1D74C900B84A4E /* WGFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDB.h; sourceTree = "<group>"; };
-		F7A4FA541B1D74C900B84A4E /* WGFMDBBaseDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBBaseDao.h; sourceTree = "<group>"; };
-		F7A4FA551B1D74C900B84A4E /* WGFMDBBaseDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBBaseDao.m; sourceTree = "<group>"; };
 		F7A4FA561B1D74C900B84A4E /* WGFMDBDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBDataBase.h; sourceTree = "<group>"; };
 		F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBDataBase.m; sourceTree = "<group>"; };
 		F7A836AC1B3CF00D008E2832 /* WGEasyEspecialColumnTypeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGEasyEspecialColumnTypeProtocol.h; sourceTree = "<group>"; };
@@ -186,8 +183,6 @@
 				F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */,
 				F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */,
 				F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */,
-				F7A4FA541B1D74C900B84A4E /* WGFMDBBaseDao.h */,
-				F7A4FA551B1D74C900B84A4E /* WGFMDBBaseDao.m */,
 				F7A4FA561B1D74C900B84A4E /* WGFMDBDataBase.h */,
 				F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */,
 				F7A836BE1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.h */,
@@ -363,7 +358,6 @@
 				F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */,
 				F7197B5D1AB91D370038A8AD /* main.m in Sources */,
 				F7F03DCF1B3BCC35005963AE /* WGEasyManager.m in Sources */,
-				F7A4FA5C1B1D74C900B84A4E /* WGFMDBBaseDao.m in Sources */,
 				F7A836BB1B3D20A9008E2832 /* UserInfoDataBase.m in Sources */,
 				F7A836BD1B3D20A9008E2832 /* LocalUserInfoModel.m in Sources */,
 				F7A836BC1B3D20A9008E2832 /* SnailUserInfoManager.m in Sources */,
