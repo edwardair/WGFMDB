@@ -54,11 +54,11 @@
 
 - (void)test{
     LocalUserInfoModel *m = [[LocalUserInfoModel alloc]init];
-    m.aaa = 11;
+    m.aaa = 16;
     m.WGAuto_MOBILEPHONE = @"13888887777";
-    m.WGAuto_PASSWORD = @"123456";
+//    m.WGAuto_PASSWORD = @"ggggg";
 //    m.WGAuto_FULLNAME = @"全名";
-    m.WGAuto_IDKEY = @12;
+    m.WGAuto_IDKEY = @13;
 
     [LocalUserInfoModel registerTableAtPath:^WGFilePathModel *{
         WGFilePathModel *filePathModel = [WGFilePathModel modelWithType:kWGPathTypeDocuments FileInDirectory:@"test"];
@@ -66,10 +66,20 @@
         return filePathModel;
     }];
     
-    [m insertIntoTable];
+    //插入
+//    [m insertIntoTable];
+
+    //更新
+//    [m updateIntoTableWhere:@[WGPNAME(WGAuto_MOBILEPHONE)] OnlyUpdateThese:@[WGPNAME(WGAuto_PASSWORD)]];
     
-    m.WGAuto_PASSWORD = @"654321";
-    [m updateIntoTableWhere:@{WGPNAME(WGAuto_MOBILEPHONE):@"13888887777"}];
+    //查找
+    NSArray *a = [LocalUserInfoModel selectFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m.WGAuto_MOBILEPHONE} OrderBy:@[@{WGPNAME(WGAuto_IDKEY):@(kQueryOrderByDESC)}] Offset:1 Len:-1];
+    WGLogValue(a.count);
+    
+    //获取第一个
+    LocalUserInfoModel* m1 = [LocalUserInfoModel selectLastFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m.WGAuto_MOBILEPHONE} OrderBy:nil];
+    
+    [LocalUserInfoModel deleteFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m1.WGAuto_MOBILEPHONE,WGPNAME(WGAuto_IDKEY):@12}];
     
 }
 //- (void)test{

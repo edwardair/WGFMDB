@@ -9,6 +9,7 @@
 
 #import "WGEasyManager.h"
 #import "NSObject+WGModelValue.h"
+
 @interface WGEasyManager : NSObject
 
 #define DATABASEINFO(dbBase,filepath) @{@"database":dbBase,@"filepath":filepath}
@@ -183,7 +184,8 @@
     
     return flag;
 }
-- (BOOL)updateIntoTableWithModel:(id )model Where:(NSDictionary *)keyValues{
+//TODO: 更新操作时，由于[model modelValue]在转化时，不会将空值的属性存入字典，导致key不存在，数据库字段无法对应的问题
+- (BOOL)updateIntoTableWithModel:(id )model Where:(NSArray *)keys OnlyUpdateThese:(NSArray *)theseKeys{
     if (!model) {
         WGLogError(@"存储的model不存在");
         return NO;
@@ -197,20 +199,27 @@
         return NO;
     }
     
-    NSArray *columnModels = [WGFMDBColumnModel getColumnsWithClass:ownClass Excepts:nil];
+    //需要更新的字段，为过滤“全局”“临时”两种情况后的数组
+    NSArray *needUpdateColumnModels = [WGFMDBColumnModel getColumnsWithClass:ownClass Excepts:nil];
+    NSDictionary *modelValue = [model modelValue];
+    //将columnModels第三次过滤modelValue、keys、theseKeys中仅有的key
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(WGFMDBColumnModel *evaluatedObject, NSDictionary *bindings) {
+        return ([modelValue.allKeys containsObject:evaluatedObject.columnName] &&
+        (theseKeys.count?[theseKeys containsObject:evaluatedObject.columnName]:YES));
+    }];
+    needUpdateColumnModels = [needUpdateColumnModels filteredArrayUsingPredicate:predicate];
     
-    if (columnModels.count==0) {
+    if (needUpdateColumnModels.count==0) {
         WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",NSStringFromClass(ownClass));
         return NO;
     }
     
     __block BOOL flag = NO;
-    NSString *sql = [dataBase sql_updateModelIntoTableWithColumns:columnModels
-                                                            Where:keyValues
+    NSString *sql = [dataBase sql_updateModelIntoTableWithColumns:needUpdateColumnModels
+                                                            Where:keys
                                                          OwnClass:ownClass];
     [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
-        flag = [db executeUpdate:sql withParameterDictionary:[model modelValue]
-                ];
+        flag = [db executeUpdate:sql withParameterDictionary:modelValue];
         
         if (!flag) {
             WGLogFormatError(@"%@ 插入、替换失败!",NSStringFromClass(ownClass));
@@ -220,7 +229,12 @@
     
     return flag;
 }
-- (NSArray *)selectFromTableWithOwnClass:(Class )ownClass UsingKeyValues:(NSDictionary *)keyValues OrderBy:(kQueryOrderBy)orderBy{
+
+- (NSArray *)selectFromTableWithOwnClass:(Class )ownClass
+                          UsingKeyValues:(NSDictionary *)keyValues
+                                   OrderBy:(NSArray *)orderBy
+                                    Offset:(int)offset
+                                       Len:(int)len{
     if (ownClass==Nil) {
         return nil;
     }
@@ -233,7 +247,10 @@
     NSMutableArray *models = @[].mutableCopy;
     NSString *sql = [dataBase sql_selectModelFromTableWhere:keyValues.allKeys
                                                    OwnClass:ownClass
-                                                    OrderBy:orderBy];
+                                                    OrderBy:orderBy
+                                                     Offset:offset
+                                                        Len:len];
+    
     [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *result = [db executeQuery:sql withArgumentsInArray:keyValues.allValues];
         while ([result next]) {
@@ -243,12 +260,12 @@
     
     return models;
 }
-- (BOOL)deleteFromTableWithModel:(id )model UsingKeys:(NSArray *)keys{
-    if (!model) {
+
+- (BOOL)deleteFromTableWithOwnClass:(Class )ownClass
+                     UsingKeyValues:(NSDictionary *)keyValues{
+    if (keyValues.allKeys.count==0) {
         return NO;
     }
-    
-    Class ownClass = [model class];
     
     WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
     if (!dataBase) {
@@ -256,10 +273,10 @@
     }
         
     __block BOOL flag = NO;
-    NSString *sql = [dataBase sql_deleteModelFromTableWhere:keys
+    NSString *sql = [dataBase sql_deleteModelFromTableWhere:keyValues.allKeys
                                                          OwnClass:ownClass];
     [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
-        flag = [db executeUpdate:sql withParameterDictionary:[model modelValue]
+        flag = [db executeUpdate:sql withParameterDictionary:keyValues
                 ];
         
         if (!flag) {
@@ -304,6 +321,7 @@
 + (BOOL)registerTableAtPath:(WGFilePathModel *(^)())pathModelBlock{
     return [[WGEasyManager shared]registerTable:self AtPath:pathModelBlock];
 }
+
 + (BOOL)resignTable{
     return [[WGEasyManager shared]resignTable:self];
 }
@@ -315,17 +333,33 @@
 - (BOOL)insertIntoTableExceptKeys:(NSArray *)keys{
     return [[WGEasyManager shared]insertIntoTableWithModel:self ExceptKeys:keys];
 }
-- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues{
-    return [[WGEasyManager shared]updateIntoTableWithModel:self Where:keyValues];
+- (BOOL)updateIntoTableWhere:(NSArray *)keys{
+    return [[WGEasyManager shared]updateIntoTableWithModel:self Where:keys OnlyUpdateThese:nil];
 }
-- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues OnlyUpdateThese:(NSArray *)keys{
-    return [[WGEasyManager shared]updateIntoTableWithModel:self Where:keyValues];
+- (BOOL)updateIntoTableWhere:(NSArray *)keys OnlyUpdateThese:(NSArray *)theseKeys{
+    return [[WGEasyManager shared]updateIntoTableWithModel:self Where:keys OnlyUpdateThese:theseKeys];
 }
-+ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(kQueryOrderBy)orderBy{
-    return [[WGEasyManager shared]selectFromTableWithOwnClass:self UsingKeyValues:keyValues OrderBy:(kQueryOrderBy)orderBy];
+
++ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues
+                                   OrderBy:(NSArray *)orderBy
+                                    Offset:(int)offset
+                                       Len:(int)len {
+    return [[WGEasyManager shared]selectFromTableWithOwnClass:self UsingKeyValues:keyValues OrderBy:orderBy Offset:offset Len:len];
 }
-- (BOOL)deleteFromTableUsingKeys:(NSArray *)keys{
-    return [[WGEasyManager shared]deleteFromTableWithModel:self UsingKeys:keys];
+
++ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy{
+    return [[WGEasyManager shared]selectFromTableWithOwnClass:self UsingKeyValues:keyValues OrderBy:orderBy Offset:-1 Len:-1];
+}
++ (instancetype)selectFirstFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy{
+    return [[WGEasyManager shared]selectFromTableWithOwnClass:self UsingKeyValues:keyValues OrderBy:orderBy Offset:0 Len:1].firstObject;
+}
++ (instancetype)selectLastFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy{
+    //此处len=-1，是使用了  len<=0的情况，不做offset偏移，正常获取到排序后的整组数据，取最后一个
+    return [[WGEasyManager shared]selectFromTableWithOwnClass:self UsingKeyValues:keyValues OrderBy:orderBy Offset:0 Len:-1].lastObject;
+}
++ (BOOL)deleteFromTableUsingKeyValues:(NSDictionary *)keyValues{
+    return [[WGEasyManager shared]deleteFromTableWithOwnClass:self
+                                               UsingKeyValues:keyValues];
 }
 
 #pragma mark - 

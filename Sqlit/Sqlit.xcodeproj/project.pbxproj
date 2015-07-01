@@ -192,9 +192,9 @@
 				F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */,
 				F7A836BE1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.h */,
 				F7A836BF1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.m */,
+				F7A836AC1B3CF00D008E2832 /* WGEasyEspecialColumnTypeProtocol.h */,
 				F7F03DCD1B3BCC35005963AE /* WGEasyManager.h */,
 				F7F03DCE1B3BCC35005963AE /* WGEasyManager.m */,
-				F7A836AC1B3CF00D008E2832 /* WGEasyEspecialColumnTypeProtocol.h */,
 			);
 			name = WGFMDB;
 			path = ../WGFMDB;

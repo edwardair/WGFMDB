@@ -81,34 +81,41 @@
             ];
 }
 - (NSString *)sql_updateModelIntoTableWithColumns:(NSArray *)columnModels
-                                            Where:(NSDictionary *)where
+                                            Where:(NSArray *)where
                                          OwnClass:(Class )ownClass{
-    
-    return @"UPDATE LocalUserInfoModel SET (aaa,WGAuto_FULLNAME,WGAuto_IDKEY,WGAuto_PASSWORD) VALUES (:aaa,:WGAuto_FULLNAME,:WGAuto_IDKEY,:WGAuto_PASSWORD) WHERE WGAuto_MOBILEPHONE = ?";
     
     NSString *sql = [NSString
                      stringWithFormat:
-                     @"UPDATE %@ SET (%@) VALUES (%@)",
-                     NSStringFromClass(ownClass),
-                     [self columnNamesWithArray:columnModels],
-                     [self placeHolderWithArray:columnModels]];
+                     @"UPDATE %@ SET __VALUES__ WHERE __CONDITIONS__",
+                     NSStringFromClass(ownClass)];
     
-    NSArray *keys = where.allKeys;
-    for (int i = 0; i < keys.count; i++) {
-        if (i==0) {
-            sql = [sql stringByAppendingString:@" WHERE "];
-        }
-        sql = [sql stringByAppendingFormat:@"%@ = ?",keys[i]];
-        if (i<where.count-1) {
-            sql = [sql stringByAppendingString:@","];
+    NSMutableString *values = @"".mutableCopy;
+    for (int i = 0; i < columnModels.count; i++) {
+        WGFMDBColumnModel *m = columnModels[i];
+        [values appendFormat:@"%@ = %@ ",m.columnName,m.placeHolder];
+        if (i<columnModels.count-1) {
+            [values appendString:@","];
         }
     }
+    
+    NSMutableString *conditions = @"".mutableCopy;
+    for (int i = 0; i < where.count; i++) {
+        [conditions appendFormat:@"%@ = :%@",where[i],where[i]];
+        if (i<where.count-1) {
+            [conditions appendString:@" and "];
+        }
+    }
+
+    sql = [sql stringByReplacingOccurrencesOfString:@"__VALUES__" withString:values];
+    sql = [sql stringByReplacingOccurrencesOfString:@"__CONDITIONS__" withString:conditions];
     
     return sql;
 }
 - (NSString *)sql_selectModelFromTableWhere:(NSArray *)where
                                    OwnClass:(Class)ownClass
-                                    OrderBy:(kQueryOrderBy)orderBy{
+                                    OrderBy:(NSArray *)orderBy
+                                     Offset:(int)offset
+                                        Len:(int)len{
     NSString *sql = [NSString
                      stringWithFormat:
                      @"SELECT * FROM %@",
@@ -118,26 +125,35 @@
         if (i==0) {
             sql = [sql stringByAppendingString:@" WHERE "];
         }
-        sql = [sql stringByAppendingFormat:@"%@ = ?",where[i]];
+        sql = [sql stringByAppendingFormat:@"%@ = :%@",where[i],where[i]];
         if (i<where.count-1) {
-            sql = [sql stringByAppendingString:@","];
+            sql = [sql stringByAppendingString:@" and "];
         }
     }
     
-    switch (orderBy) {
-        case kQueryOrderByDefault: {
-            break;
+    if (orderBy.count) {
+        NSMutableString *by = @" ORDER BY ".mutableCopy;
+        for (NSDictionary *dic in orderBy) {
+            if ([dic.allValues.firstObject integerValue]==kQueryOrderByDESC) {
+                [by appendFormat:@"%@ DESC,",dic.allKeys.firstObject];
+            }else{
+                [by appendFormat:@"%@,",dic.allKeys.firstObject];
+            }
         }
-        case kQueryOrderByASC: {
-            sql = [sql stringByAppendingString:@" ORDER BY ASC"];
-            break;
+        if ([by hasSuffix:@","]) {
+            [by deleteCharactersInRange:NSMakeRange(by.length-1,1)];
         }
-        case kQueryOrderByDESC: {
-            sql = [sql stringByAppendingString:@" ORDER BY DESC"];
-            break;
-        }
-        default: {
-            break;
+        
+        sql = [sql stringByAppendingString:by];
+
+    }
+
+    //只有长度大于0的情况，SQL才能设置偏量、截取长度
+    if (len>0) {
+        sql = [sql stringByAppendingFormat:@" LIMIT %i",len];
+        
+        if (offset>0) {
+            sql = [sql stringByAppendingFormat:@" OFFSET %i",offset];
         }
     }
     
@@ -154,9 +170,9 @@
         if (i==0) {
             sql = [sql stringByAppendingString:@" WHERE "];
         }
-        sql = [sql stringByAppendingFormat:@"%@ = ?",where[i]];
+        sql = [sql stringByAppendingFormat:@"%@ = :%@",where[i],where[i]];
         if (i<where.count-1) {
-            sql = [sql stringByAppendingString:@","];
+            sql = [sql stringByAppendingString:@" and "];
         }
     }
     

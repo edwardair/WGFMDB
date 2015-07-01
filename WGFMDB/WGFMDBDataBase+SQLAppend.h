@@ -11,9 +11,9 @@
  *  条件查询排序方式
  */
 typedef NS_ENUM(NSInteger, kQueryOrderBy){
-    kQueryOrderByDefault = 0,
-    kQueryOrderByASC,
-    kQueryOrderByDESC,
+    kQueryOrderByASC=0,
+    kQueryOrderByDESC=1,
+    kQueryOrderByDefault = kQueryOrderByASC,
 };
 
 @interface WGFMDBDataBase (SQLAppend)
@@ -68,7 +68,7 @@ column顺序是按照model中的属性声明顺序，一旦表创建过，model�
  *
  */
 - (NSString *)sql_updateModelIntoTableWithColumns:(NSArray *)columnModels
-                                            Where:(NSDictionary *)where
+                                            Where:(NSArray *)where
                                          OwnClass:(Class )ownClass;
 /**
  *  查询
@@ -80,7 +80,9 @@ column顺序是按照model中的属性声明顺序，一旦表创建过，model�
  */
 - (NSString *)sql_selectModelFromTableWhere:(NSArray *)where
                                    OwnClass:(Class)ownClass
-                                    OrderBy:(kQueryOrderBy)orderBy;
+                                    OrderBy:(NSArray *)orderBy
+                                     Offset:(int)offset
+                                        Len:(int)len;
 /**
  *  删除
  *

@@ -219,11 +219,12 @@ placeHolder = _placeHolder;
         [propertyArray addObject:protocolName];
     }
     
-    //过滤不需要存入数据库的字段
+    //过滤临时不需要存入数据库的字段
     if (excepts) {
         [propertyArray removeObjectsInArray:excepts];
     }
 
+    //过滤全局不需要存入数据库的字段
     excepts = nil;
     if ([class conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)]) {
         if ([class instancesRespondToSelector:@selector(excpets)]) {

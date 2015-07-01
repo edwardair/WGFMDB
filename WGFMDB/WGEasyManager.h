@@ -51,21 +51,37 @@
 - (BOOL)insertIntoTableExceptKeys:(NSArray *)keys;
 /**
  *  更新数据库，将把[model modelValue]中所有值更新进数据库
- *
- *  @param keyValues 查询条件
+ *  注：如果model中的属性，比如NSString* ==nil,则效果为将此属性对应的column的值修改为空
+ *  @param keys 查询条件
  *
  *  @return 成功、失败
  */
-- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues;
+- (BOOL)updateIntoTableWhere:(NSArray *)keys;
 /**
  *  更新数据库
  *
- *  @param keyValues 查询条件
- *  @param keys      只针对keys中包含的字段进行更新
+ *  @param keys 查询条件
+ *  @param theseKeys      只针对these中包含的字段进行更新
  *
  *  @return 成功、失败
  */
-- (BOOL)updateIntoTableWhere:(NSDictionary *)keyValues OnlyUpdateThese:(NSArray *)keys;
+- (BOOL)updateIntoTableWhere:(NSArray *)keys OnlyUpdateThese:(NSArray *)theseKeys;
+
+/**
+ *  条件查询，所有以下扩展的条件查询都基于此方法
+ *
+ *  @param keyValues 条件
+ *  @param orderBy   @[ @{property_name:@(kQueryOrderBy)} ]
+ *  @param offset     [(offset<=0) => (从0开始)]
+ *  @param len       len<=0时，offset无效
+ *
+ *  @return @[] if not select
+ */
++ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues
+                                   OrderBy:(NSArray *)orderBy
+                                    Offset:(int)offset
+                                       Len:(int)len;
+
 /**
  *  条件查询
  *
@@ -73,15 +89,35 @@
  *
  *  @return 成功、失败
  */
-+ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(kQueryOrderBy )orderBy;
++ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy;
+/**
+ *  按顺序获取第一个符合条件的model
+ *
+ *  @param keyValues 条件查询
+ *  @param orderBy   排序方式
+ *
+ *  @return @[] if not select
+ */
++ (instancetype)selectFirstFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy;
+
+/**
+ *  按顺序获取第后一个符合条件的model
+ *
+ *  @param keyValues 条件查询
+ *  @param orderBy   排序方式
+ *
+ *  @return @[] if not select
+ */
++ (instancetype)selectLastFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy;
+
 /**
  *  将keys条件查询得到的数据从表中移除
  *
- *  @param keys model的属性名称数组，select条件查询需要
+ *  @param keyValues 条件查询
  *
  *  @return 成功、失败
  */
-- (BOOL)deleteFromTableUsingKeys:(NSArray *)keys;
++ (BOOL)deleteFromTableUsingKeyValues:(NSDictionary *)keyValues;
 
 #pragma mark - 未支持的sql操作暂时使用原生sql语句
 - (BOOL)executeWithModel:(id )model executeBlock:(BOOL (^)(FMDatabase *db_))block;
