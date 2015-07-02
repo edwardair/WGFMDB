@@ -147,7 +147,7 @@
     }
 #endif
     
-    if ([ownClass conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)] && [ownClass instancesRespondToSelector:@selector(especialColumnType)]) {
+    if ([ownClass conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)] && [ownClass respondsToSelector:@selector(especialColumnType)]) {
         NSDictionary *especialColumnType = [ownClass especialColumnType];
         return [NSString handleNetString:especialColumnType[pName]];
     }else{
@@ -227,8 +227,8 @@ placeHolder = _placeHolder;
     //过滤全局不需要存入数据库的字段
     excepts = nil;
     if ([class conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)]) {
-        if ([class instancesRespondToSelector:@selector(excpets)]) {
-            excepts = [class excpets];
+        if ([class respondsToSelector:@selector(excepts)]) {
+            excepts = [class excepts];
             [propertyArray removeObjectsInArray:excepts];
         }
     }
