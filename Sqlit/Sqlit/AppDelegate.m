@@ -24,6 +24,10 @@
 @property (nonatomic,strong) NSNumber *WGAuto_IDKEY;
 @property (nonatomic,copy) NSString *WGAuto_PASSWORD;
 
+@property (nonatomic,copy) NSString *myID;
+@property (nonatomic,copy) NSString *otherID;
+
+
 @end
 @implementation LocalUserInfoModel
 //+ (NSDictionary *)especialColumnType{
@@ -58,7 +62,9 @@
 //    m.WGAuto_PASSWORD = @"ggggg";
 //    m.WGAuto_FULLNAME = @"全名";
     m.WGAuto_IDKEY = @13;
-
+    m.myID = @"12";
+    m.otherID = @"34";
+    
     [LocalUserInfoModel registerTableAtPath:^WGFilePathModel *{
         WGFilePathModel *filePathModel = [WGFilePathModel modelWithType:kWGPathTypeDocuments FileInDirectory:@"test"];
         filePathModel.fileName = @"user.db";
@@ -67,39 +73,41 @@
     
     //插入
 //    [m insertIntoTable];
+//    [m insertIntoTable];
+//    [m insertIntoTable];
 
     //更新
 //    [m updateIntoTableWhere:@[WGPNAME(WGAuto_MOBILEPHONE)] OnlyUpdateThese:@[WGPNAME(WGAuto_PASSWORD)]];
     
     //查找
-    NSArray *a = [LocalUserInfoModel selectFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m.WGAuto_MOBILEPHONE} OrderBy:@[@{WGPNAME(WGAuto_IDKEY):@(kQueryOrderByDESC)}] Offset:1 Len:-1];
-    WGLogValue(a.count);
+//    NSArray *a = [LocalUserInfoModel selectFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m.WGAuto_MOBILEPHONE} OrderBy:@[@{WGPNAME(WGAuto_IDKEY):@(kQueryOrderByDESC)}] Offset:1 Len:-1];
+//    WGLogValue(a.count);
+//    
+//    //获取第一个
+//    LocalUserInfoModel* m1 = [LocalUserInfoModel selectLastFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m.WGAuto_MOBILEPHONE} OrderBy:nil];
+//    
+//    [LocalUserInfoModel deleteFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m1.WGAuto_MOBILEPHONE,WGPNAME(WGAuto_IDKEY):@12}];
     
-    //获取第一个
-    LocalUserInfoModel* m1 = [LocalUserInfoModel selectLastFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m.WGAuto_MOBILEPHONE} OrderBy:nil];
+    //自定义SQL语句实现方式
+    BOOL scuess = [LocalUserInfoModel executeWithBlock:^BOOL(FMDatabase *db_) {
+        NSString *sql = @"select * from LocalUserInfoModel where myID = ? and otherID = ? LIMIT 3 OFFSET 2";
+        FMResultSet *rest = [db_ executeQuery:sql,@12,@34];
+        
+        while ([rest next]) {
+            LocalUserInfoModel *model = [LocalUserInfoModel modelWithResultSet:rest ];
+            [rest close];
+
+            return YES;
+        }
+        
+        
+        return NO;
+        
+    }];
     
-    [LocalUserInfoModel deleteFromTableUsingKeyValues:@{WGPNAME(WGAuto_MOBILEPHONE):m1.WGAuto_MOBILEPHONE,WGPNAME(WGAuto_IDKEY):@12}];
-    
+    NSArray *all = [LocalUserInfoModel allTableModels];
+    WGLogValue(all.count);
 }
-//- (void)test{
-//    
-//    if ([[[SnailUserInfoManager shared] dao] openWithUserMobile:@"13888888888"]) {
-//        
-//        LocalUserInfoModel *model = [[LocalUserInfoModel alloc]init];
-//        model.WGAuto_MOBILEPHONE = @"138120000";
-//        model.WGAuto_PASSWORD = @"123456";
-////        model.WGAuto_FULLNAME = @"全名";
-//        model.WGAuto_IDKEY = @180;
-////        model.WGAuto_HEADPORTRAIT = @"无头像";
-//        model.aaa = 101;
-//        
-//        [[[SnailUserInfoManager shared] dao] asyncInsertLocalUserInfo:model];
-//        
-//    }else{
-//        WGLogError(@"开库失败");
-//    }
-//    
-//}
 
 
 

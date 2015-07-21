@@ -40,7 +40,7 @@
  *
  *  @return 成功、失败
  */
-- (BOOL)insertIntoTable;
+- (BOOL)executeInsertIntoTable;
 /**
  *  将model存入数据库
  *
@@ -48,7 +48,7 @@
  *
  *  @return 成功、失败
  */
-- (BOOL)insertIntoTableExceptKeys:(NSArray *)keys;
+- (BOOL)executeInsertIntoTableExceptKeys:(NSArray *)keys;
 /**
  *  更新数据库，将把[model modelValue]中所有值更新进数据库
  *  注：如果model中的属性，比如NSString* ==nil,则效果为将此属性对应的column的值修改为空
@@ -56,7 +56,7 @@
  *
  *  @return 成功、失败
  */
-- (BOOL)updateIntoTableWhere:(NSArray *)keys;
+- (BOOL)executeUpdateIntoTableWhere:(NSArray *)keys;
 /**
  *  更新数据库
  *
@@ -65,19 +65,19 @@
  *
  *  @return 成功、失败
  */
-- (BOOL)updateIntoTableWhere:(NSArray *)keys OnlyUpdateThese:(NSArray *)theseKeys;
+- (BOOL)executeUpdateIntoTableWhere:(NSArray *)keys OnlyUpdateThese:(NSArray *)theseKeys;
 
 /**
  *  条件查询，所有以下扩展的条件查询都基于此方法
  *
- *  @param keyValues 条件
- *  @param orderBy   @[ @{property_name:@(kQueryOrderBy)} ]
+ *  @param keyValues 查询条件的键值对
+ *  @param orderBy   @[ @{属性名称:@(kQueryOrderBy)} ]，默认可传nil
  *  @param offset     [(offset<=0) => (从0开始)]
  *  @param len       len<=0时，offset无效
  *
  *  @return @[] if not select
  */
-+ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues
++ (NSArray *)executeSelectFromTableUsingKeyValues:(NSDictionary *)keyValues
                                    OrderBy:(NSArray *)orderBy
                                     Offset:(int)offset
                                        Len:(int)len;
@@ -89,7 +89,16 @@
  *
  *  @return 成功、失败
  */
-+ (NSArray *)selectFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy;
++ (NSArray *)executeSelectFromTableUsingKeyValues:(NSDictionary *)keyValues
+                                          OrderBy:(NSArray *)orderBy;
+
+/**
+ *  same as "select * from tablename"
+ *
+ *  @return @[Models]
+ */
++ (NSArray *)allTableModels;
+
 /**
  *  按顺序获取第一个符合条件的model
  *
@@ -98,7 +107,8 @@
  *
  *  @return @[] if not select
  */
-+ (instancetype)selectFirstFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy;
++ (instancetype)firstModelUsingKeyValues:(NSDictionary *)keyValues
+                                 OrderBy:(NSArray *)orderBy;
 
 /**
  *  按顺序获取第后一个符合条件的model
@@ -108,7 +118,8 @@
  *
  *  @return @[] if not select
  */
-+ (instancetype)selectLastFromTableUsingKeyValues:(NSDictionary *)keyValues OrderBy:(NSArray *)orderBy;
++ (instancetype)lastModelUsingKeyValues:(NSDictionary *)keyValues
+                                OrderBy:(NSArray *)orderBy;
 
 /**
  *  将keys条件查询得到的数据从表中移除
@@ -117,9 +128,9 @@
  *
  *  @return 成功、失败
  */
-+ (BOOL)deleteFromTableUsingKeyValues:(NSDictionary *)keyValues;
++ (BOOL)executeDeleteFromTableUsingKeyValues:(NSDictionary *)keyValues;
 
 #pragma mark - 未支持的sql操作暂时使用原生sql语句
-- (BOOL)executeWithModel:(id )model executeBlock:(BOOL (^)(FMDatabase *db_))block;
++ (BOOL)executeWithBlock:(BOOL (^)(FMDatabase *db_))block;
 @end
 
