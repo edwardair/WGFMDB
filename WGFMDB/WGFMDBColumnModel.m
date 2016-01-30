@@ -39,7 +39,7 @@
     u_int outCount;
     objc_property_t *properties  = class_copyPropertyList([WGSQLModelHelper class], &outCount);
     
-    for (int i = 0; i < outCount; i++) {
+    for (u_int i = 0; i < outCount; i++) {
         const char *attributes_name = property_getAttributes(properties[i]);
         const char *property_name = property_getName(properties[i]);
         
@@ -60,7 +60,7 @@
     u_int outCount;
     objc_property_t *properties  = class_copyPropertyList(class, &outCount);
     objc_property_t p;
-    for (int i = 0; i < outCount; i++) {
+    for (u_int i = 0; i < outCount; i++) {
         const char *tmp = property_getName(properties[i]);
         NSString *p_ = [NSString stringWithFormat:@"%s",tmp];
         
@@ -110,7 +110,7 @@
     
     NSString *type = @"";
     
-    for (int i = 0; i < outCount; i++) {
+    for (u_int i = 0; i < outCount; i++) {
         const char *tmp = property_getAttributes(properties[i]);
         //以 ','  号分割的第一个字符串
         char *tmp_pre = [self propertyAttributesPrefixWithAttributes:tmp];
@@ -213,7 +213,7 @@ placeHolder = _placeHolder;
     objc_property_t *properties = class_copyPropertyList(class, &outCount);
     NSMutableArray *propertyArray = @[].mutableCopy;
     //获取所有字段名
-    for (int i = 0; i < outCount; i++) {
+    for (u_int i = 0; i < outCount; i++) {
         const char *protocolName_CStr = property_getName(properties[i]);
         NSString *protocolName = [NSString stringWithUTF8String:protocolName_CStr];
         [propertyArray addObject:protocolName];

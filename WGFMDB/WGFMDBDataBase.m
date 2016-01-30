@@ -176,7 +176,7 @@
     u_int outCount;
     objc_property_t *properties = class_copyPropertyList(ownClass, &outCount);
     BOOL success = YES;
-    for (int i = 0; i < outCount; i++) {
+    for (u_int i = 0; i < outCount; i++) {
         const char *propertyName_CStr = property_getName(properties[i]);
         NSString *propertyName = [NSString stringWithUTF8String:propertyName_CStr];
         if (![db columnExists:propertyName
