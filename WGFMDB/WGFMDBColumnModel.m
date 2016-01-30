@@ -59,7 +59,7 @@
 + (objc_property_t )propertyInClass:(Class )class WithName:(NSString *)pName{
     u_int outCount;
     objc_property_t *properties  = class_copyPropertyList(class, &outCount);
-    objc_property_t p;
+    objc_property_t p = NULL;
     for (u_int i = 0; i < outCount; i++) {
         const char *tmp = property_getName(properties[i]);
         NSString *p_ = [NSString stringWithFormat:@"%s",tmp];
