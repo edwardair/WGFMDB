@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FMResultSet.h"
+#import <FMDB/FMDB.h>
 #import <WGKit/WGDefines.h>
 
 /**

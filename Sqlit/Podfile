@@ -1,10 +1,13 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '6.0'
+ platform :ios, '8.0'
+use_frameworks!
+inhibit_all_warnings!
 
 
 
 target :'Sqlit' do
-pod 'WGKit', :git => 'https://github.com/edwardair/WGCategory.git'
- pod 'FMDB', '~> 2.5'
+    pod 'FMDB', '~> 2.5'
+    pod 'WGKit', :git => 'https://github.com/edwardair/WGCategory.git'
+    pod 'WGFMDB', :git => 'https://github.com/edwardair/WGFMDB.git', :tag => '0.2'
 end
 

@@ -7,27 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0425A72D618215D777FFF427 /* libPods-Sqlit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8F40E084849AC225CDF5F7 /* libPods-Sqlit.a */; };
+		2890C77EC9D83286617B7D6F /* Pods_Sqlit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4783BA293E5AC2CE781454B8 /* Pods_Sqlit.framework */; };
 		F7197B5D1AB91D370038A8AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5C1AB91D370038A8AD /* main.m */; };
 		F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5F1AB91D370038A8AD /* AppDelegate.m */; };
 		F7197B621AB91D370038A8AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7197B611AB91D370038A8AD /* Images.xcassets */; };
 		F7197B651AB91D370038A8AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7197B631AB91D370038A8AD /* LaunchScreen.xib */; };
 		F7197BBE1AB921180038A8AD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7197BBD1AB921180038A8AD /* libsqlite3.dylib */; };
-		F78CF0E41B2298AD00540A8A /* WGFMDBColumnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78CF0E31B2298AD00540A8A /* WGFMDBColumnModel.m */; };
-		F7A4FA581B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */; };
-		F7A4FA5A1B1D74C900B84A4E /* WGFilePathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */; };
-		F7A4FA5E1B1D74C900B84A4E /* WGFMDBDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */; };
 		F7A836BA1B3D20A9008E2832 /* UserInfoDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B01B3D20A9008E2832 /* UserInfoDao.m */; };
 		F7A836BB1B3D20A9008E2832 /* UserInfoDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B31B3D20A9008E2832 /* UserInfoDataBase.m */; };
 		F7A836BC1B3D20A9008E2832 /* SnailUserInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B61B3D20A9008E2832 /* SnailUserInfoManager.m */; };
 		F7A836BD1B3D20A9008E2832 /* LocalUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B91B3D20A9008E2832 /* LocalUserInfoModel.m */; };
-		F7A836C01B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836BF1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.m */; };
-		F7F03DCF1B3BCC35005963AE /* WGEasyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F03DCE1B3BCC35005963AE /* WGEasyManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3974E68049B5492967F2306C /* Pods-Sqlit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sqlit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit.debug.xcconfig"; sourceTree = "<group>"; };
-		7B8F40E084849AC225CDF5F7 /* libPods-Sqlit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sqlit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4783BA293E5AC2CE781454B8 /* Pods_Sqlit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sqlit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F384054CC3944DB5AC9DE774 /* Pods-Sqlit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sqlit.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit.release.xcconfig"; sourceTree = "<group>"; };
 		F7197B571AB91D360038A8AD /* Sqlit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sqlit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7197B5B1AB91D370038A8AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,17 +35,8 @@
 		F7220FD11B1FD41300EB9AD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7220FD21B1FD41300EB9AD4 /* SqlitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SqlitTests.m; sourceTree = "<group>"; };
 		F7220FD91B1FD53400EB9AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		F78CF0E21B2298AD00540A8A /* WGFMDBColumnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBColumnModel.h; sourceTree = "<group>"; };
-		F78CF0E31B2298AD00540A8A /* WGFMDBColumnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBColumnModel.m; sourceTree = "<group>"; };
 		F78DE5D1219138F100AF835C /* WGFMDB.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = WGFMDB.podspec; path = ../WGFMDB.podspec; sourceTree = "<group>"; };
-		F7A4FA4F1B1D74C900B84A4E /* NSObject+WGSQLModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WGSQLModelHelper.h"; sourceTree = "<group>"; };
-		F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WGSQLModelHelper.m"; sourceTree = "<group>"; };
-		F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFilePathModel.h; sourceTree = "<group>"; };
-		F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFilePathModel.m; sourceTree = "<group>"; };
-		F7A4FA531B1D74C900B84A4E /* WGFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDB.h; sourceTree = "<group>"; };
-		F7A4FA561B1D74C900B84A4E /* WGFMDBDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBDataBase.h; sourceTree = "<group>"; };
-		F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBDataBase.m; sourceTree = "<group>"; };
-		F7A836AC1B3CF00D008E2832 /* WGEasyEspecialColumnTypeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGEasyEspecialColumnTypeProtocol.h; sourceTree = "<group>"; };
+		F78DE5EF21918B8000AF835C /* WGFMDB */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WGFMDB; path = ../WGFMDB; sourceTree = "<group>"; };
 		F7A836AF1B3D20A9008E2832 /* UserInfoDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoDao.h; sourceTree = "<group>"; };
 		F7A836B01B3D20A9008E2832 /* UserInfoDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoDao.m; sourceTree = "<group>"; };
 		F7A836B21B3D20A9008E2832 /* UserInfoDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoDataBase.h; sourceTree = "<group>"; };
@@ -60,10 +45,6 @@
 		F7A836B61B3D20A9008E2832 /* SnailUserInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailUserInfoManager.m; sourceTree = "<group>"; };
 		F7A836B81B3D20A9008E2832 /* LocalUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalUserInfoModel.h; sourceTree = "<group>"; };
 		F7A836B91B3D20A9008E2832 /* LocalUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalUserInfoModel.m; sourceTree = "<group>"; };
-		F7A836BE1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WGFMDBDataBase+SQLAppend.h"; sourceTree = "<group>"; };
-		F7A836BF1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WGFMDBDataBase+SQLAppend.m"; sourceTree = "<group>"; };
-		F7F03DCD1B3BCC35005963AE /* WGEasyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGEasyManager.h; sourceTree = "<group>"; };
-		F7F03DCE1B3BCC35005963AE /* WGEasyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGEasyManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7197BBE1AB921180038A8AD /* libsqlite3.dylib in Frameworks */,
-				0425A72D618215D777FFF427 /* libPods-Sqlit.a in Frameworks */,
+				2890C77EC9D83286617B7D6F /* Pods_Sqlit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				F7220FD91B1FD53400EB9AD4 /* libPods.a */,
-				7B8F40E084849AC225CDF5F7 /* libPods-Sqlit.a */,
+				4783BA293E5AC2CE781454B8 /* Pods_Sqlit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -100,9 +81,9 @@
 		F7197B4E1AB91D360038A8AD = {
 			isa = PBXGroup;
 			children = (
+				F78DE5EF21918B8000AF835C /* WGFMDB */,
 				F7197BBD1AB921180038A8AD /* libsqlite3.dylib */,
 				F78DE5D1219138F100AF835C /* WGFMDB.podspec */,
-				F7A4FA4E1B1D74C900B84A4E /* WGFMDB */,
 				F7197B591AB91D370038A8AD /* Sqlit */,
 				F7220FCF1B1FD41300EB9AD4 /* SqlitTests */,
 				F7197B581AB91D370038A8AD /* Products */,
@@ -176,28 +157,6 @@
 			children = (
 			);
 			name = DataModels;
-			sourceTree = "<group>";
-		};
-		F7A4FA4E1B1D74C900B84A4E /* WGFMDB */ = {
-			isa = PBXGroup;
-			children = (
-				F7A4FA531B1D74C900B84A4E /* WGFMDB.h */,
-				F78CF0E21B2298AD00540A8A /* WGFMDBColumnModel.h */,
-				F78CF0E31B2298AD00540A8A /* WGFMDBColumnModel.m */,
-				F7A4FA4F1B1D74C900B84A4E /* NSObject+WGSQLModelHelper.h */,
-				F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */,
-				F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */,
-				F7A4FA521B1D74C900B84A4E /* WGFilePathModel.m */,
-				F7A4FA561B1D74C900B84A4E /* WGFMDBDataBase.h */,
-				F7A4FA571B1D74C900B84A4E /* WGFMDBDataBase.m */,
-				F7A836BE1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.h */,
-				F7A836BF1B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.m */,
-				F7A836AC1B3CF00D008E2832 /* WGEasyEspecialColumnTypeProtocol.h */,
-				F7F03DCD1B3BCC35005963AE /* WGEasyManager.h */,
-				F7F03DCE1B3BCC35005963AE /* WGEasyManager.m */,
-			);
-			name = WGFMDB;
-			path = ../WGFMDB;
 			sourceTree = "<group>";
 		};
 		F7A836AD1B3D20A9008E2832 /* Dao */ = {
@@ -336,9 +295,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/WGFMDB/WGFMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/WGKit/WGKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WGFMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WGKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -367,17 +333,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7A4FA581B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m in Sources */,
 				F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */,
 				F7197B5D1AB91D370038A8AD /* main.m in Sources */,
-				F7F03DCF1B3BCC35005963AE /* WGEasyManager.m in Sources */,
 				F7A836BB1B3D20A9008E2832 /* UserInfoDataBase.m in Sources */,
 				F7A836BD1B3D20A9008E2832 /* LocalUserInfoModel.m in Sources */,
 				F7A836BC1B3D20A9008E2832 /* SnailUserInfoManager.m in Sources */,
-				F7A4FA5E1B1D74C900B84A4E /* WGFMDBDataBase.m in Sources */,
-				F7A4FA5A1B1D74C900B84A4E /* WGFilePathModel.m in Sources */,
-				F78CF0E41B2298AD00540A8A /* WGFMDBColumnModel.m in Sources */,
-				F7A836C01B3D217D008E2832 /* WGFMDBDataBase+SQLAppend.m in Sources */,
 				F7A836BA1B3D20A9008E2832 /* UserInfoDao.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,7 +390,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -465,7 +425,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
