@@ -9,7 +9,7 @@
 #define Component @"/"
 
 #import "WGFilePathModel.h"
-#import <WGDefines.h>
+#import <WGKit/WGDefines.h>
 @interface WGFilePathModel()
 /**
  *  目录是否可用

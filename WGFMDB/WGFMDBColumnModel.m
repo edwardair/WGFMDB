@@ -8,7 +8,7 @@
 
 #import "WGFMDBColumnModel.h"
 #import <objc/runtime.h>
-#import <WGDefines.h>
+#import <WGKit/WGDefines.h>
 #import "NSObject+WGSQLModelHelper.h"
 #import "WGEasyEspecialColumnTypeProtocol.h"
 

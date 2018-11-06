@@ -9,7 +9,7 @@
 //#import "UserInfoDataBase.h"
 //#import "LocalUserInfoModel.h"
 //#import "Define.h"
-//#import <WGDefines.h>
+//#import <WGKit/WGDefines.h>
 //
 //#define UserInfoTableName @"USERINFO_TABLE"
 //

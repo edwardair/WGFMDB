@@ -9,7 +9,7 @@
 //#import "UserInfoDao.h"
 //#import "UserInfoDataBase.h"
 //#import "Define.h"
-//#import <WGDefines.h>
+//#import <WGKit/WGDefines.h>
 //#import "NSObject+WGSQLModelHelper.h"
 //
 //@implementation UserInfoDao
