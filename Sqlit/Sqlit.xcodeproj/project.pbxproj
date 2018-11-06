@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9FBC5384142D84C70855E232 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74575CC3E47D5CA27D174021 /* libPods.a */; };
+		0425A72D618215D777FFF427 /* libPods-Sqlit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8F40E084849AC225CDF5F7 /* libPods-Sqlit.a */; };
 		F7197B5D1AB91D370038A8AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5C1AB91D370038A8AD /* main.m */; };
 		F7197B601AB91D370038A8AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7197B5F1AB91D370038A8AD /* AppDelegate.m */; };
 		F7197B621AB91D370038A8AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7197B611AB91D370038A8AD /* Images.xcassets */; };
@@ -26,13 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0103E9027844EA6450737579 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		0C91963F5D626246C34F490A /* libPods-Sqlit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sqlit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		163FD20F81AFA9DAA81D4A40 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		1712046D9EB2B95D5258CD17 /* Pods-SqlitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SqlitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SqlitTests/Pods-SqlitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		74575CC3E47D5CA27D174021 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEF1CEB39E38167F8CC3A3C0 /* libPods-SqlitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SqlitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BEE07C03EA5F2ECD214A3192 /* Pods-SqlitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SqlitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SqlitTests/Pods-SqlitTests.release.xcconfig"; sourceTree = "<group>"; };
+		3974E68049B5492967F2306C /* Pods-Sqlit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sqlit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit.debug.xcconfig"; sourceTree = "<group>"; };
+		7B8F40E084849AC225CDF5F7 /* libPods-Sqlit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sqlit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F384054CC3944DB5AC9DE774 /* Pods-Sqlit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sqlit.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit.release.xcconfig"; sourceTree = "<group>"; };
 		F7197B571AB91D360038A8AD /* Sqlit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sqlit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7197B5B1AB91D370038A8AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7197B5C1AB91D370038A8AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,6 +43,7 @@
 		F7220FD91B1FD53400EB9AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		F78CF0E21B2298AD00540A8A /* WGFMDBColumnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBColumnModel.h; sourceTree = "<group>"; };
 		F78CF0E31B2298AD00540A8A /* WGFMDBColumnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBColumnModel.m; sourceTree = "<group>"; };
+		F78DE5D1219138F100AF835C /* WGFMDB.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = WGFMDB.podspec; path = ../WGFMDB.podspec; sourceTree = "<group>"; };
 		F7A4FA4F1B1D74C900B84A4E /* NSObject+WGSQLModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WGSQLModelHelper.h"; sourceTree = "<group>"; };
 		F7A4FA501B1D74C900B84A4E /* NSObject+WGSQLModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WGSQLModelHelper.m"; sourceTree = "<group>"; };
 		F7A4FA511B1D74C900B84A4E /* WGFilePathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFilePathModel.h; sourceTree = "<group>"; };
@@ -75,7 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7197BBE1AB921180038A8AD /* libsqlite3.dylib in Frameworks */,
-				9FBC5384142D84C70855E232 /* libPods.a in Frameworks */,
+				0425A72D618215D777FFF427 /* libPods-Sqlit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,23 +83,31 @@
 			isa = PBXGroup;
 			children = (
 				F7220FD91B1FD53400EB9AD4 /* libPods.a */,
-				74575CC3E47D5CA27D174021 /* libPods.a */,
-				0C91963F5D626246C34F490A /* libPods-Sqlit.a */,
-				AEF1CEB39E38167F8CC3A3C0 /* libPods-SqlitTests.a */,
+				7B8F40E084849AC225CDF5F7 /* libPods-Sqlit.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D651C573641357BDFE9FB1BD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3974E68049B5492967F2306C /* Pods-Sqlit.debug.xcconfig */,
+				F384054CC3944DB5AC9DE774 /* Pods-Sqlit.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		F7197B4E1AB91D360038A8AD = {
 			isa = PBXGroup;
 			children = (
 				F7197BBD1AB921180038A8AD /* libsqlite3.dylib */,
+				F78DE5D1219138F100AF835C /* WGFMDB.podspec */,
 				F7A4FA4E1B1D74C900B84A4E /* WGFMDB */,
 				F7197B591AB91D370038A8AD /* Sqlit */,
 				F7220FCF1B1FD41300EB9AD4 /* SqlitTests */,
 				F7197B581AB91D370038A8AD /* Products */,
-				FF9DC9FDF7F3A1F73A3531A5 /* Pods */,
 				183E1250F2EE63916CEF1E19 /* Frameworks */,
+				D651C573641357BDFE9FB1BD /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,17 +244,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		FF9DC9FDF7F3A1F73A3531A5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0103E9027844EA6450737579 /* Pods.debug.xcconfig */,
-				163FD20F81AFA9DAA81D4A40 /* Pods.release.xcconfig */,
-				1712046D9EB2B95D5258CD17 /* Pods-SqlitTests.debug.xcconfig */,
-				BEE07C03EA5F2ECD214A3192 /* Pods-SqlitTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -257,11 +251,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F7197B741AB91D370038A8AD /* Build configuration list for PBXNativeTarget "Sqlit" */;
 			buildPhases = (
-				2E470B9057B29C370489C757 /* Check Pods Manifest.lock */,
+				1863FA53971F0814819F3074 /* [CP] Check Pods Manifest.lock */,
 				F7197B531AB91D360038A8AD /* Sources */,
 				F7197B541AB91D360038A8AD /* Frameworks */,
 				F7197B551AB91D360038A8AD /* Resources */,
-				855183A1F10DCC0FDA7D9C94 /* Copy Pods Resources */,
+				6E64A220DA54CBA298C5C92C /* [CP] Embed Pods Frameworks */,
+				9C47699788619CCB6CFAE9A5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -317,34 +312,52 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2E470B9057B29C370489C757 /* Check Pods Manifest.lock */ = {
+		1863FA53971F0814819F3074 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sqlit-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		855183A1F10DCC0FDA7D9C94 /* Copy Pods Resources */ = {
+		6E64A220DA54CBA298C5C92C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C47699788619CCB6CFAE9A5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sqlit/Pods-Sqlit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -461,7 +474,7 @@
 		};
 		F7197B751AB91D370038A8AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0103E9027844EA6450737579 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 3974E68049B5492967F2306C /* Pods-Sqlit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Sqlit/Info.plist;
@@ -472,7 +485,7 @@
 		};
 		F7197B761AB91D370038A8AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 163FD20F81AFA9DAA81D4A40 /* Pods.release.xcconfig */;
+			baseConfigurationReference = F384054CC3944DB5AC9DE774 /* Pods-Sqlit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Sqlit/Info.plist;

@@ -51,7 +51,11 @@
     [self.window makeKeyAndVisible];
     
     [self test];
-    
+    [[UIApplication sharedApplication] openURL:nil
+                                       options:nil
+                             completionHandler:^(BOOL success) {
+                                 
+                             }];
     return YES;
 }
 
@@ -64,7 +68,7 @@
     m.WGAuto_IDKEY = @13;
     m.myID = @"12";
     m.otherID = @"34";
-    
+
     [LocalUserInfoModel registerTableAtPath:^WGFilePathModel *{
         WGFilePathModel *filePathModel = [WGFilePathModel modelWithType:kWGPathTypeDocuments FileInDirectory:@"test"];
         filePathModel.fileName = @"user.db";
@@ -72,7 +76,7 @@
     }];
     
     //插入
-//    [m insertIntoTable];
+//    [m executeInsertIntoTable];
 //    [m insertIntoTable];
 //    [m insertIntoTable];
 
