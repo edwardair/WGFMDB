@@ -7,7 +7,7 @@
 //
 
 #import "WGFMDBDataBase.h"
-#import "WGDefines.h"
+#import <WGDefines.h>
 #import "WGEasyEspecialColumnTypeProtocol.h"
 #import "WGFMDBDataBase+SQLAppend.h"
 

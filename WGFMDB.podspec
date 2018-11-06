@@ -79,6 +79,7 @@ Pod::Spec.new do |s|
   #
 
   s.source       = { :git => "https://github.com/edwardair/WGFMDB.git"}
+  s.source  = { :git => 'https://github.com/edwardair/WGCategory.git', :tag => '0.2.1' }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -132,5 +133,6 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   s.dependency 'FMDB', '~> 2.5'
+  s.dependency 'WGKit'
 
 end
