@@ -129,7 +129,7 @@
     }
     
     if (type.length==0) {
-        WGLogFormatError(@"WGSQLModelHelper中定义的基本类型不支持当前属性申明：class:%@,property_name:%@",NSStringFromClass(self),pName);
+        WGLogFormatError(@"WGSQLModelHelper中定义的基本类型不支持当前属性申明：class:%@,property_name:%@",[self getTableName],pName);
     }
     
     free(column_pre);

@@ -41,7 +41,7 @@
 - (BOOL)registerTable:(Class )class AtPath:(WGFilePathModel *(^)())pathModelBlock{
     @synchronized(self){
         //表 名称
-        NSString *tableName = NSStringFromClass(class);
+        NSString *tableName = [class getTableName];
         
         WGFilePathModel *pathModel = pathModelBlock();
         if (!pathModel) {
@@ -107,7 +107,7 @@
     
     if (success) {
         //存入临时数组
-        [_DBs setObject:DATABASEINFO(dataBase, pathModel) forKey:NSStringFromClass(ownClass)];
+        [_DBs setObject:DATABASEINFO(dataBase, pathModel) forKey:[ownClass getTableName]];
     }
     
     return success;
@@ -117,11 +117,11 @@
         WGLogError(@"class不存在，无法删除");
         return NO;
     }
-    NSString *tableName = NSStringFromClass(class);
+    NSString *tableName = [class getTableName];
     NSDictionary *exist = _DBs[tableName];
 
     if (exist) {
-        [_DBs removeObjectForKey:NSStringFromClass(class)];
+        [_DBs removeObjectForKey:tableName];
         
         WGFMDBDataBase *existDbBase = DATABASE(exist);
         BOOL close = YES;
@@ -155,7 +155,7 @@
     
     Class ownClass = [model class];
     
-    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[[ownClass getTableName]]);
     if (!dataBase) {
         WGLogError(@"dataBase 不存在，无法使用数据库");
         return NO;
@@ -164,7 +164,7 @@
     NSArray *columnModels =
     [WGFMDBColumnModel getColumnsWithClass:ownClass Excepts:keys];
     if (columnModels.count==0) {
-        WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",NSStringFromClass(ownClass));
+        WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",[ownClass getTableName]);
         return NO;
     }
     //二次过滤model属性对应的值为空时，对应的key将不存在字典中，此时需要将columnModels中对应的过滤掉
@@ -183,7 +183,7 @@
                 ];
         
         if (!flag) {
-            WGLogFormatError(@"%@ 插入、替换失败!",NSStringFromClass(ownClass));
+            WGLogFormatError(@"%@ 插入、替换失败!",[ownClass getTableName]);
         }
         
     }];
@@ -201,7 +201,7 @@
     
     Class ownClass = [model class];
     
-    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[[ownClass getTableName]]);
     if (!dataBase) {
         WGLogError(@"dataBase不存在，无法使用数据库");
         return NO;
@@ -218,7 +218,7 @@
     needUpdateColumnModels = [needUpdateColumnModels filteredArrayUsingPredicate:predicate];
     
     if (needUpdateColumnModels.count==0) {
-        WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",NSStringFromClass(ownClass));
+        WGLogFormatError(@"%@未查找到需要存入数据库中的属性字段",[ownClass getTableName]);
         return NO;
     }
     
@@ -231,7 +231,7 @@
          withParameterDictionary:modelValue];
         
         if (!flag) {
-            WGLogFormatError(@"%@ 插入、替换失败!",NSStringFromClass(ownClass));
+            WGLogFormatError(@"%@ 插入、替换失败!",[ownClass getTableName]);
         }
         
     }];
@@ -248,7 +248,7 @@
         return nil;
     }
     
-    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[[ownClass getTableName]]);
     if (!dataBase) {
         return nil;
     }
@@ -278,7 +278,7 @@
         return NO;
     }
     
-    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[[ownClass getTableName]]);
     if (!dataBase) {
         return NO;
     }
@@ -292,7 +292,7 @@
                 ];
         
         if (!flag) {
-            WGLogFormatError(@"%@ 插入、替换失败!",NSStringFromClass(ownClass));
+            WGLogFormatError(@"%@ 插入、替换失败!",[ownClass getTableName]);
         }
         
     }];
@@ -307,7 +307,7 @@
         return NO;
     }
     
-    WGFMDBDataBase *dataBase = DATABASE(_DBs[NSStringFromClass(ownClass)]);
+    WGFMDBDataBase *dataBase = DATABASE(_DBs[[ownClass getTableName]]);
     if (!dataBase) {
         return NO;
     }

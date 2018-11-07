@@ -160,7 +160,7 @@
     }
     
     __block BOOL flag = NO;
-    if ([db tableExists:NSStringFromClass(tableClass)]) {
+    if ([db tableExists:[tableClass getTableName]]) {
         flag = [self appendTableColumnIfNotExistWithOwnClass:tableClass InDataBase:db];
     }else{
         NSString *sql = [self sql_getTableCreatStringWithOwnClass:tableClass];
@@ -180,7 +180,7 @@
         const char *propertyName_CStr = property_getName(properties[i]);
         NSString *propertyName = [NSString stringWithUTF8String:propertyName_CStr];
         if (![db columnExists:propertyName
-              inTableWithName:NSStringFromClass(ownClass)]) {
+              inTableWithName:[ownClass getTableName]]) {
             NSString *sql = [self sql_getAddANewColumnWithName:propertyName OwnClass:ownClass];
             
             success = [db executeUpdate:sql];

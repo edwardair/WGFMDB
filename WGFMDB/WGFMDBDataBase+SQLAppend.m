@@ -56,7 +56,7 @@
 - (NSString *)sql_getTableCreatStringWithOwnClass:(Class )class {
     NSString *sql = [NSString
                      stringWithFormat:
-                     @"CREATE TABLE IF NOT EXISTS %@ (%@)", NSStringFromClass(class),
+                     @"CREATE TABLE IF NOT EXISTS %@ (%@)", [class getTableName],
                      [self columnNames:[WGFMDBColumnModel
                                         getColumnsWithClass:class Excepts:nil]
                       appendColumnType:YES]];
@@ -68,14 +68,14 @@
     WGFMDBColumnModel *model_ = [WGFMDBColumnModel modelWithName:columnName OwnClass:ownClass];
     return [NSString
             stringWithFormat:
-            @"ALTER TABLE %@ ADD %@ %@ %@", NSStringFromClass(ownClass), columnName,
+            @"ALTER TABLE %@ ADD %@ %@ %@", [ownClass getTableName], columnName,
             model_.columnType,model_.especialColumnType];
 }
 #pragma mark - 插入model
 - (NSString *)sql_insertModelIntoTableWithColumns:(NSArray *)columnModels OwnClass:(Class )ownClass{
     return [NSString
             stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@)  VALUES (%@)",
-            NSStringFromClass(ownClass),
+            [ownClass getTableName],
             [self columnNamesWithArray:columnModels],
             [self placeHolderWithArray:columnModels]
             ];
@@ -87,7 +87,7 @@
     NSString *sql = [NSString
                      stringWithFormat:
                      @"UPDATE %@ SET __VALUES__ WHERE __CONDITIONS__",
-                     NSStringFromClass(ownClass)];
+                     [ownClass getTableName]];
     
     NSMutableString *values = @"".mutableCopy;
     for (int i = 0; i < columnModels.count; i++) {
@@ -119,7 +119,7 @@
     NSString *sql = [NSString
                      stringWithFormat:
                      @"SELECT * FROM %@",
-                     NSStringFromClass(ownClass)];
+                     [ownClass getTableName]];
     
     for (int i = 0; i < where.count; i++) {
         if (i==0) {
@@ -164,7 +164,7 @@
     NSString *sql = [NSString
                      stringWithFormat:
                      @"DELETE FROM %@",
-                     NSStringFromClass(ownClass)];
+                     [ownClass getTableName]];
     
     for (int i = 0; i < where.count; i++) {
         if (i==0) {

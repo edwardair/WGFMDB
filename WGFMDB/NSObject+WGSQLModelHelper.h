@@ -114,6 +114,8 @@ __a;\
 
 + (instancetype)modelWithResultSet:(FMResultSet*)rs;
 
++(NSString *)getTableName;
+
 @end
 
 

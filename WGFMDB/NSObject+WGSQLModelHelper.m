@@ -17,6 +17,12 @@
     return name;
 }
 
++(NSString *)getTableName{
+    NSString *table = NSStringFromClass(self);
+    table = [table stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+    return table;
+}
+
 + (instancetype)modelWithResultSet:(FMResultSet *)rs{
     id model = [[self alloc]init];
     
