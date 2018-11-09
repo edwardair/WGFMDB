@@ -59,7 +59,10 @@
 
 - (void)setValueWithResultSet:(FMResultSet *)rs forColumnName:(NSString *)columnName WithArgType:(char *)argumentType{
     //MARK: argumentType暂时未用到，后期测试setValue是否可用再确定此参数是否使用
-    [self setValue:[rs objectForColumnName:columnName] forKey:columnName];
+    id value = [rs objectForColumn:columnName];
+    if (![value isKindOfClass:[NSNull class]]) {
+        [self setValue:value forKey:columnName];
+    }
 }
 
 @end
