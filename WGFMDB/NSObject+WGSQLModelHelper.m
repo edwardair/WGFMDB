@@ -8,6 +8,7 @@
 
 #import "NSObject+WGSQLModelHelper.h"
 #import <objc/runtime.h>
+#import "WGEasyEspecialColumnTypeProtocol.h"
 
 #pragma mark -
 @implementation NSObject (WGSQLModelHelper)
@@ -18,7 +19,13 @@
 }
 
 +(NSString *)getTableName{
-    NSString *table = NSStringFromClass(self);
+    NSString *table;
+    if ([self conformsToProtocol:@protocol(WGEasyEspecialColumnTypeProtocol)]
+        && [self respondsToSelector:@selector(tableName)]) {
+        table = [self performSelector:@selector(tableName) withObject:nil];
+    }else{
+        table = NSStringFromClass(self);
+    }
     table = [table stringByReplacingOccurrencesOfString:@"." withString:@"_"];
     return table;
 }

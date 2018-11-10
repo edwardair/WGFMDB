@@ -152,24 +152,23 @@
 
 
 #pragma mark - 需要子类实现具体方法  一般无须overwrite
-- (BOOL)createTable:(Class)tableClass InDataBase:(FMDatabase *)db{
-    //重复调用open，不会引起重复开库
-    if (![self open]) {
-        WGLogError(@"建表前，尝试开库失败！！");
-        return NO;
-    }
-    
+- (BOOL)createTable:(Class)tableClass{
     __block BOOL flag = NO;
-    if ([db tableExists:[tableClass getTableName]]) {
-        flag = [self appendTableColumnIfNotExistWithOwnClass:tableClass InDataBase:db];
-    }else{
-        NSString *sql = [self sql_getTableCreatStringWithOwnClass:tableClass];
-        
-        flag = [db executeUpdate:sql];
-    }
-    
+    [self.writeableQueue inDatabase:^(FMDatabase *db) {
+        //重复调用open，不会引起重复开库
+        if (![self open]) {
+            WGLogError(@"建表前，尝试开库失败！！");
+            return;
+        }
+        if ([db tableExists:[tableClass getTableName]]) {
+            flag = [self appendTableColumnIfNotExistWithOwnClass:tableClass InDataBase:db];
+        }else{
+            NSString *sql = [self sql_getTableCreatStringWithOwnClass:tableClass];
+            
+            flag = [db executeUpdate:sql];
+        }
+    }];
     return flag;
-    
 }
 
 - (BOOL)appendTableColumnIfNotExistWithOwnClass:(Class )ownClass InDataBase:(FMDatabase *)db{

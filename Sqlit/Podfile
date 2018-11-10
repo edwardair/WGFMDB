@@ -8,6 +8,6 @@ inhibit_all_warnings!
 target :'Sqlit' do
     pod 'FMDB', '~> 2.5'
     pod 'WGKit', :git => 'https://github.com/edwardair/WGCategory.git'
-    pod 'WGFMDB', :git => 'https://github.com/edwardair/WGFMDB.git', :tag => '0.2'
+    #pod 'WGFMDB', :git => 'https://github.com/edwardair/WGFMDB.git', :tag => '0.2'
 end
 

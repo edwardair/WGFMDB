@@ -21,4 +21,11 @@
  *  @return model中不需要存入数据库的属性名数组
  */
 + (NSArray *)excepts;
+/**
+ 自定义表名
+
+ @return 自定义表名
+ */
++ (NSString *)tableName;
+
 @end

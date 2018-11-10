@@ -78,16 +78,30 @@
                 return success;
             }
         }else{
-            //开库
-            BOOL success = [self openDBWithFilePathModel:pathModel
-                                                OwnClass:class
-                            ExistDataBase:existDbBase];
-            return success;
+            //检测是否存在相同路径的数据库
+            WGFMDBDataBase *existDbBase = [self getDatabaseWithFullPath:pathModel.fullPath];
+            if (existDbBase) {
+                //数据库已开库，则尝试注册动态表
+                return [existDbBase createTable:class];
+            }else{
+                //开库
+                BOOL success = [self openDBWithFilePathModel:pathModel
+                                                    OwnClass:class
+                                               ExistDataBase:existDbBase];
+                return success;
+            }
         }
-        
-        
         return NO;
     }
+}
+- (WGFMDBDataBase *)getDatabaseWithFullPath:(NSString *)path{
+    for (NSDictionary *dic in _DBs.allValues) {
+        WGFMDBDataBase *existDbBase = DATABASE(dic);
+        if ([existDbBase.pathModel.fullPath isEqualToString:path]) {
+            return existDbBase;
+        }
+    }
+    return nil;
 }
 - (BOOL)openDBWithFilePathModel:(WGFilePathModel *)pathModel
                        OwnClass:(Class )ownClass
@@ -99,10 +113,7 @@
     __block BOOL success = [dataBase open];
     if (success) {
         //成功，继续检测table是否存在
-        [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
-            success = [dataBase createTable:ownClass
-                                 InDataBase:db];
-        }];
+        success = [dataBase createTable:ownClass];
     }
     
     if (success) {

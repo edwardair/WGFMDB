@@ -49,7 +49,7 @@
  *
  *  @return 成功、失败
  */
-- (BOOL)createTable:(Class )tableClass InDataBase:(FMDatabase *)db;
+- (BOOL)createTable:(Class )tableClass;
 /**
  *  检测表的column是否都存在，不存在的，需要添加
  */
