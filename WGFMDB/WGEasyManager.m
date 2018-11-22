@@ -82,7 +82,12 @@
             WGFMDBDataBase *existDbBase = [self getDatabaseWithFullPath:pathModel.fullPath];
             if (existDbBase) {
                 //数据库已开库，则尝试注册动态表
-                return [existDbBase createTable:class];
+                BOOL success = [existDbBase createTable:class];
+                if (success) {
+                    //存入临时数组
+                    [_DBs setObject:DATABASEINFO(dataBase, pathModel) forKey:[ownClass getTableName]];
+                }
+                return success;
             }else{
                 //开库
                 BOOL success = [self openDBWithFilePathModel:pathModel

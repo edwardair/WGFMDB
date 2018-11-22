@@ -18,7 +18,6 @@
 		F78576AE219679A700BBC68B /* WGFMDBDataBase+SQLAppend.m in Sources */ = {isa = PBXBuildFile; fileRef = F78576A3219679A600BBC68B /* WGFMDBDataBase+SQLAppend.m */; };
 		F78576AF219679A700BBC68B /* WGFMDBDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F78576A6219679A600BBC68B /* WGFMDBDataBase.m */; };
 		F78576B0219679A700BBC68B /* WGFMDBColumnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78576A7219679A700BBC68B /* WGFMDBColumnModel.m */; };
-		F78576B1219679A700BBC68B /* WGFMDB.podspec in Resources */ = {isa = PBXBuildFile; fileRef = F78576AA219679A700BBC68B /* WGFMDB.podspec */; };
 		F78576B2219679A700BBC68B /* WGEasyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F78576AB219679A700BBC68B /* WGEasyManager.m */; };
 		F7A836BA1B3D20A9008E2832 /* UserInfoDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B01B3D20A9008E2832 /* UserInfoDao.m */; };
 		F7A836BB1B3D20A9008E2832 /* UserInfoDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A836B31B3D20A9008E2832 /* UserInfoDataBase.m */; };
@@ -55,7 +54,6 @@
 		F78576A7219679A700BBC68B /* WGFMDBColumnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGFMDBColumnModel.m; sourceTree = "<group>"; };
 		F78576A8219679A700BBC68B /* WGFMDBColumnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGFMDBColumnModel.h; sourceTree = "<group>"; };
 		F78576A9219679A700BBC68B /* NSObject+WGSQLModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WGSQLModelHelper.h"; sourceTree = "<group>"; };
-		F78576AA219679A700BBC68B /* WGFMDB.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WGFMDB.podspec; sourceTree = "<group>"; };
 		F78576AB219679A700BBC68B /* WGEasyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGEasyManager.m; sourceTree = "<group>"; };
 		F78DE5D1219138F100AF835C /* WGFMDB.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = WGFMDB.podspec; path = ../WGFMDB.podspec; sourceTree = "<group>"; };
 		F7A836AF1B3D20A9008E2832 /* UserInfoDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoDao.h; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 				F78576A2219679A600BBC68B /* WGFilePathModel.h */,
 				F785769F219679A600BBC68B /* WGFilePathModel.m */,
 				F785769D219679A600BBC68B /* WGFMDB.h */,
-				F78576AA219679A700BBC68B /* WGFMDB.podspec */,
 				F78576A8219679A700BBC68B /* WGFMDBColumnModel.h */,
 				F78576A7219679A700BBC68B /* WGFMDBColumnModel.m */,
 				F78576A5219679A600BBC68B /* WGFMDBDataBase.h */,
@@ -306,7 +303,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F78576B1219679A700BBC68B /* WGFMDB.podspec in Resources */,
 				F7197B651AB91D370038A8AD /* LaunchScreen.xib in Resources */,
 				F7197B621AB91D370038A8AD /* Images.xcassets in Resources */,
 			);
