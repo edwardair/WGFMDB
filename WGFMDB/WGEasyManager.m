@@ -85,7 +85,7 @@
                 BOOL success = [existDbBase createTable:class];
                 if (success) {
                     //存入临时数组
-                    [_DBs setObject:DATABASEINFO(dataBase, pathModel) forKey:tableName];
+                    [_DBs setObject:DATABASEINFO(existDbBase, pathModel) forKey:tableName];
                 }
                 return success;
             }else{
