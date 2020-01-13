@@ -112,6 +112,8 @@
     [self checkTypeUseable:type];
     
     switch (type) {
+        case kWGPathTypeEnableStart:
+            return @"";
         case kWGPathTypeHome:
             return NSHomeDirectory();
         case kWGPathTypeDocuments:
@@ -120,13 +122,14 @@
             return NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
         case kWGPathTypeTmp:
             return NSTemporaryDirectory();
-            case kWGPathTypeCaches:
+        case kWGPathTypeCaches:
             return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-        default:{
-            WGLogWarn(@"WGPathType定义，但未实现具体路径！！");
-        }
-            return @"";//返回空值
+        case kWGPathTypeMainBoundle:
+            return [[NSBundle mainBundle] bundlePath];
+        case kWGPathTypeEnableEnd:
+            return @"";
     }
+    return @"";
 }
 
 

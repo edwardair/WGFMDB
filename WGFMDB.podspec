@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "WGFMDB"
-  s.version      = "0.7"
+  s.version      = "0.7.1"
   s.summary      = "A short description of WGFMDB."
 
   s.description  = <<-DESC

@@ -2,21 +2,21 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - WGKit (0.2.0):
-    - WGKit/Core (= 0.2.0)
-    - WGKit/Other (= 0.2.0)
-    - WGKit/UIKit (= 0.2.0)
-    - WGKit/WGJSONModel (= 0.2.0)
-  - WGKit/Core (0.2.0)
-  - WGKit/Other (0.2.0)
-  - WGKit/UIKit (0.2.0):
-    - WGKit/UIKit/Category (= 0.2.0)
-    - WGKit/UIKit/View (= 0.2.0)
-  - WGKit/UIKit/Category (0.2.0)
-  - WGKit/UIKit/View (0.2.0):
-    - WGKit/UIKit/View/WGTableController (= 0.2.0)
-  - WGKit/UIKit/View/WGTableController (0.2.0)
-  - WGKit/WGJSONModel (0.2.0)
+  - WGKit (0.4.1):
+    - WGKit/Core (= 0.4.1)
+    - WGKit/Other (= 0.4.1)
+    - WGKit/UIKit (= 0.4.1)
+    - WGKit/WGJSONModel (= 0.4.1)
+  - WGKit/Core (0.4.1)
+  - WGKit/Other (0.4.1)
+  - WGKit/UIKit (0.4.1):
+    - WGKit/UIKit/Category (= 0.4.1)
+    - WGKit/UIKit/View (= 0.4.1)
+  - WGKit/UIKit/Category (0.4.1)
+  - WGKit/UIKit/View (0.4.1):
+    - WGKit/UIKit/View/WGTableController (= 0.4.1)
+  - WGKit/UIKit/View/WGTableController (0.4.1)
+  - WGKit/WGJSONModel (0.4.1)
 
 DEPENDENCIES:
   - FMDB (~> 2.5)
@@ -32,13 +32,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WGKit:
-    :commit: cd25d52e244a971c6bdeba328370d40e3912e436
+    :commit: 29b18b0d729f2db45115cfb232ffedd3020fb506
     :git: https://github.com/edwardair/WGCategory.git
 
 SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  WGKit: 1a467387a80b26d2ac7cf2a40ba398d97de197a0
+  WGKit: 74a78fa5ceaebeb87f79331f4a992108375b9e39
 
 PODFILE CHECKSUM: 572536fde0f9ffbd9ec171e118bcc7147211c0f5
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.6.1

@@ -19,6 +19,8 @@ typedef NS_ENUM(NSInteger, WGPathType) {
     kWGPathTypeTmp,
     kWGPathTypeCaches,
     
+    kWGPathTypeMainBoundle,
+
     //...后期可扩展
     
     kWGPathTypeEnableEnd,//验证 model是否支持设置的路径，不支持则报错
