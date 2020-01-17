@@ -206,7 +206,7 @@
     
     return flag;
 }
-//TODO: 更新操作时，由于[model modelValue]在转化时，不会将空值的属性存入字典，导致key不存在，数据库字段无法对应的问题
+
 - (BOOL)updateIntoTableWithModel:(id )model
                            Where:(NSArray *)keys
                  OnlyUpdateThese:(NSArray *)theseKeys{
@@ -224,11 +224,11 @@
     }
     
     //需要更新的字段，为过滤“全局”“临时”两种情况后的数组
-    NSArray *needUpdateColumnModels = [WGFMDBColumnModel getColumnsWithClass:ownClass Excepts:nil];
-    NSDictionary *modelValue = [model modelValue];
+    NSArray<WGFMDBColumnModel *> *needUpdateColumnModels = [WGFMDBColumnModel getColumnsWithClass:ownClass Excepts:nil];
+//    NSDictionary *modelValue = [model modelValue];
     //将columnModels第三次过滤modelValue、keys、theseKeys中仅有的key
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(WGFMDBColumnModel *evaluatedObject, NSDictionary *bindings) {
-        return ([modelValue.allKeys containsObject:evaluatedObject.columnName] &&
+        return ([[model wg_properties] containsObject:evaluatedObject.columnName] &&
         (theseKeys.count?[theseKeys containsObject:evaluatedObject.columnName]:YES));
     }];
     needUpdateColumnModels = [needUpdateColumnModels filteredArrayUsingPredicate:predicate];
@@ -238,13 +238,20 @@
         return NO;
     }
     
+    //获取需要的values
+    NSMutableArray *allKeys = [NSMutableArray arrayWithArray:keys];
+    [allKeys addObjectsFromArray:[needUpdateColumnModels wg_map:^NSString *_Nonnull(WGFMDBColumnModel * _Nonnull obj, NSUInteger idx) {
+        return obj.columnName;
+    }]];
+    NSDictionary *params = [model modelValueForKeys:allKeys];
+
     __block BOOL flag = NO;
     NSString *sql = [dataBase sql_updateModelIntoTableWithColumns:needUpdateColumnModels
                                                             Where:keys
                                                          OwnClass:ownClass];
     [dataBase.writeableQueue inDatabase:^(FMDatabase *db) {
         flag = [db executeUpdate:sql
-         withParameterDictionary:modelValue];
+         withParameterDictionary:params];
         
         if (!flag) {
             WGLogFormatError(@"%@ 插入、替换失败!",[ownClass getTableName]);

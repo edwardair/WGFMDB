@@ -36,5 +36,5 @@
  *
  *  @return @[WGFMDBColumnModel]
  */
-+ (NSArray *)getColumnsWithClass:(Class)class Excepts:(NSArray *)excepts;
++ (NSArray<WGFMDBColumnModel *> *)getColumnsWithClass:(Class)class Excepts:(NSArray *)excepts;
 @end

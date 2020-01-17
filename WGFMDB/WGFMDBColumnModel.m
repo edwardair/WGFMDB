@@ -92,7 +92,7 @@
 + (NSString *)getColumnTypeWithPropertyName:(NSString *)pName OwnClass:(Class )ownClass{
     
 #if DEBUG
-    if ([[NSString handleNetString:pName] isEqualToString:WGNull]) {
+    if ([[NSString handleNetString:pName] isEqualToString:@""]) {
         WGLogError(@"pName不可为空");
     }
     if (ownClass==Nil) {
@@ -139,7 +139,7 @@
 }
 + (NSString *)getEspecialColumnTypeWithPropertyName:(NSString *)pName OwnClass:(Class )ownClass{
 #if DEBUG
-    if ([[NSString handleNetString:pName] isEqualToString:WGNull]) {
+    if ([[NSString handleNetString:pName] isEqualToString:@""]) {
         WGLogError(@"pName不可为空");
     }
     if (ownClass==Nil) {
@@ -179,7 +179,7 @@ placeHolder = _placeHolder;
 #pragma mark - getter
 - (NSString *)columnType{
     if (!_columnType) {
-        if ([[NSString handleNetString:_columnName] isEqualToString:WGNull]) {
+        if ([[NSString handleNetString:_columnName] isEqualToString:@""]) {
             WGLogError(@"WGFMDBColumnModel._columnName不可为空");
             return @"";
         }

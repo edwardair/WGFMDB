@@ -2,43 +2,56 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - WGKit (0.4.1):
-    - WGKit/Core (= 0.4.1)
-    - WGKit/Other (= 0.4.1)
-    - WGKit/UIKit (= 0.4.1)
-    - WGKit/WGJSONModel (= 0.4.1)
-  - WGKit/Core (0.4.1)
-  - WGKit/Other (0.4.1)
-  - WGKit/UIKit (0.4.1):
-    - WGKit/UIKit/Category (= 0.4.1)
-    - WGKit/UIKit/View (= 0.4.1)
-  - WGKit/UIKit/Category (0.4.1)
-  - WGKit/UIKit/View (0.4.1):
-    - WGKit/UIKit/View/WGTableController (= 0.4.1)
-  - WGKit/UIKit/View/WGTableController (0.4.1)
-  - WGKit/WGJSONModel (0.4.1)
+  - WGFMDB (0.8.2):
+    - FMDB (~> 2.5)
+    - WGKit (~> 0.5.2)
+  - WGKit (0.5.2):
+    - WGKit/Constant (= 0.5.2)
+    - WGKit/Core (= 0.5.2)
+    - WGKit/Other (= 0.5.2)
+    - WGKit/UIKit (= 0.5.2)
+    - WGKit/WGJSONModel (= 0.5.2)
+  - WGKit/Constant (0.5.2)
+  - WGKit/Core (0.5.2):
+    - WGKit/Constant
+  - WGKit/Other (0.5.2):
+    - WGKit/Constant
+    - WGKit/Core
+    - WGKit/UIKit/Category
+  - WGKit/UIKit (0.5.2):
+    - WGKit/UIKit/Category (= 0.5.2)
+    - WGKit/UIKit/View (= 0.5.2)
+  - WGKit/UIKit/Category (0.5.2)
+  - WGKit/UIKit/View (0.5.2):
+    - WGKit/Constant
+    - WGKit/Core
+    - WGKit/UIKit/Category
+    - WGKit/UIKit/View/WGTableController (= 0.5.2)
+  - WGKit/UIKit/View/WGTableController (0.5.2):
+    - WGKit/Constant
+    - WGKit/Core
+    - WGKit/UIKit/Category
+  - WGKit/WGJSONModel (0.5.2):
+    - WGKit/Core
 
 DEPENDENCIES:
-  - FMDB (~> 2.5)
-  - WGKit (from `https://github.com/edwardair/WGCategory.git`)
+  - WGFMDB (from `../WGFMDB.podspec`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - FMDB
+  https://github.com/edwardair/Specs.git:
+    - WGKit
 
 EXTERNAL SOURCES:
-  WGKit:
-    :git: https://github.com/edwardair/WGCategory.git
-
-CHECKOUT OPTIONS:
-  WGKit:
-    :commit: 29b18b0d729f2db45115cfb232ffedd3020fb506
-    :git: https://github.com/edwardair/WGCategory.git
+  WGFMDB:
+    :path: "../WGFMDB.podspec"
 
 SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  WGKit: 74a78fa5ceaebeb87f79331f4a992108375b9e39
+  WGFMDB: 519a7739e7fd7a7aa96ea211619f2d905c5aa921
+  WGKit: f8cdacf8de908baecc67f0859af26aa8dab80888
 
-PODFILE CHECKSUM: 572536fde0f9ffbd9ec171e118bcc7147211c0f5
+PODFILE CHECKSUM: e6b9e454e8a60084ed0430be64b8eca4a43b3e5a
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.4
