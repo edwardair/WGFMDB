@@ -2,7 +2,7 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - WGFMDB (0.8.2):
+  - WGFMDB (0.8.3):
     - FMDB (~> 2.5)
     - WGKit (~> 0.5.2)
   - WGKit (0.5.2):
@@ -35,23 +35,20 @@ PODS:
     - WGKit/Core
 
 DEPENDENCIES:
-  - WGFMDB (from `../WGFMDB.podspec`)
+  - WGFMDB (~> 0.8.3)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - FMDB
   https://github.com/edwardair/Specs.git:
+    - WGFMDB
     - WGKit
-
-EXTERNAL SOURCES:
-  WGFMDB:
-    :path: "../WGFMDB.podspec"
 
 SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  WGFMDB: 519a7739e7fd7a7aa96ea211619f2d905c5aa921
+  WGFMDB: 9be5a14fd67757c8647decb0bdd02d52b34496bc
   WGKit: f8cdacf8de908baecc67f0859af26aa8dab80888
 
-PODFILE CHECKSUM: e6b9e454e8a60084ed0430be64b8eca4a43b3e5a
+PODFILE CHECKSUM: bb2a949330f89834b6c91b827736d0d92a0c7e70
 
 COCOAPODS: 1.8.4

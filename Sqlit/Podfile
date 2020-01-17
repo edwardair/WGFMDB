@@ -7,7 +7,9 @@ source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/edwardair/Specs.git'
 
 target :'Sqlit' do
-  pod 'WGFMDB', :path => '../WGFMDB.podspec'
+#  pod 'WGFMDB', :path => '../WGFMDB.podspec'
+pod 'WGFMDB', '~> 0.8.3'
+
 #    pod 'FMDB', '~> 2.5'
 #    pod 'WGKit', :git => 'https://github.com/edwardair/WGCategory.git', :tag => '0.4.0'
     #pod 'WGFMDB', :git => 'https://github.com/edwardair/WGFMDB.git', :tag => '0.2'
